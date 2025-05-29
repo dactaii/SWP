@@ -1,0 +1,231 @@
+/*--------------------------------------------------------------
+# About Section
+--------------------------------------------------------------*/
+.about {
+  padding-top: 50px;
+}
+
+.about-title h2 {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  position: relative;
+}
+
+.about-title h2::after {
+  content: "";
+  position: absolute;
+  width: 80px;
+  height: 3px;
+  background: var(--accent-color);
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -10px;
+  border-radius: 2px;
+}
+
+.about .content h3 {
+  font-size: 1.75rem;
+  font-weight: 700;
+}
+
+.about h2 {
+  text-align: center;
+}
+
+.about .about-title p {
+  text-align: center;
+}
+
+.about .content ul {
+  list-style: none;
+  padding: 0;
+}
+
+.about .content ul li {
+  padding: 10px 0 0 0;
+  display: flex;
+}
+
+.about .content ul i {
+  color: var(--accent-color);
+  margin-right: 0.5rem;
+  line-height: 1.2;
+  font-size: 1.25rem;
+}
+
+.about .content p:last-child {
+  margin-bottom: 0;
+}
+
+.about .pulsating-play-btn {
+  position: absolute;
+  left: calc(50% - 47px);
+  top: calc(50% - 47px);
+}
+
+.pulsating-play-btn {
+  width: 94px;
+  height: 94px;
+  background: radial-gradient(
+    var(--accent-color) 50%,
+    color-mix(in srgb, var(--accent-color), transparent 75%) 52%
+  );
+  border-radius: 50%;
+  display: block;
+  position: relative;
+  overflow: hidden;
+}
+
+.pulsating-play-btn:before {
+  content: "";
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  animation-delay: 0s;
+  animation: pulsate-play-btn 2s;
+  animation-direction: forwards;
+  animation-iteration-count: infinite;
+  animation-timing-function: steps;
+  opacity: 1;
+  border-radius: 50%;
+  border: 5px solid color-mix(in srgb, var(--accent-color), transparent 30%);
+  top: -15%;
+  left: -15%;
+  background: rgba(198, 16, 0, 0);
+}
+
+.pulsating-play-btn:after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-40%) translateY(-50%);
+  width: 0;
+  height: 0;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-left: 15px solid #fff;
+  z-index: 100;
+  transition: all 400ms cubic-bezier(0.55, 0.055, 0.675, 0.19);
+}
+
+.pulsating-play-btn:hover:before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-40%) translateY(-50%);
+  width: 0;
+  height: 0;
+  border: none;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-left: 15px solid #fff;
+  z-index: 200;
+  animation: none;
+  border-radius: 0;
+}
+
+.pulsating-play-btn:hover:after {
+  border-left: 15px solid var(--accent-color);
+  transform: scale(20);
+}
+
+@keyframes pulsate-play-btn {
+  0% {
+    transform: scale(0.6, 0.6);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1, 1);
+    opacity: 0;
+  }
+}
+
+/*--------------------------------------------------------------
+# About Section - Accordion
+--------------------------------------------------------------*/
+.about .accordion-item {
+  border: 1px solid #ddd;
+  border-radius: 0.375rem;
+  margin-bottom: 1rem;
+  overflow: hidden;
+  box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 0.075);
+  transition: box-shadow 0.3s ease;
+}
+
+.about .accordion-item:hover {
+  box-shadow: 0 0.25rem 0.5rem rgb(0 0 0 / 0.15);
+}
+
+.about .accordion-button {
+  background-color: transparent;
+  color: var(--accent-color);
+  font-weight: 600;
+  font-size: 1.125rem;
+  padding: 1rem 1.5rem;
+  border: 1.5px solid #d7a6a6;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  box-shadow: none;
+}
+
+.about .accordion-button:not(.collapsed) {
+  background-color: transparent;
+  border-color: #b84545;
+  font-weight: 700;
+  color: var(--background-color);
+}
+
+.about .accordion-button:hover {
+  border-color: #8b2c2c;
+  color: #8b2c2c;
+  background-color: rgba(139, 44, 44, 0.1);
+}
+
+.about .accordion-button:not(.collapsed) {
+  background-color: var(--accent-color);
+  box-shadow: inset 0 -1px 0 rgb(0 0 0 / 0.125);
+}
+
+.about .accordion-button:hover {
+  background-color: #d43f3f;
+  color: #fff;
+}
+
+.about .accordion-body {
+  background-color: #fff;
+  color: #333;
+  padding: 1rem 1.5rem;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.about .accordion-body ul {
+  padding-left: 1rem;
+}
+
+.about .accordion-body ul li {
+  margin-bottom: 0.5rem;
+}
+
+.about .accordion-body ul li strong {
+  font-weight: 700;
+  color: var(--accent-color);
+}
+
+/* Responsive: nhỏ hơn 576px (mobile) */
+@media (max-width: 575.98px) {
+  .about .accordion-button {
+    font-size: 1rem;
+    padding: 0.75rem 1rem;
+  }
+
+  .about .accordion-body {
+    font-size: 0.9rem;
+    padding: 0.75rem 1rem;
+  }
+}

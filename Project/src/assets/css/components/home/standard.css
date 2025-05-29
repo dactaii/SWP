@@ -1,0 +1,100 @@
+/*--------------------------------------------------------------
+# Standard Section - Grid 3x3 Layout
+--------------------------------------------------------------*/
+.standard{
+    padding: 70px 0;
+    background-color: var(--background-color);
+}
+
+.standard h2 {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  position: relative;
+}
+
+.standard h2::after {
+  content: "";
+  position: absolute;
+  width: 80px;           
+  height: 3px;           
+  background: var(--accent-color);
+  left: 50%;           
+  transform: translateX(-50%);
+  bottom: -10px;         
+  border-radius: 2px;    
+}
+
+.standard h2,
+.standard p  {
+    text-align: center;
+}
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  padding-bottom: 40px; /* giống padding-bottom cũ cho khoảng cách */
+}
+
+/* Responsive: 2 cột cho tablet, 1 cột cho mobile */
+@media (max-width: 1199px) {
+  .grid-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 767px) {
+  .grid-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --- Item Box --- */
+.standard-item {
+  background-color: rgba(216, 212, 212, 0.45); 
+  border-radius: 16px;                          
+  padding: 20px 16px;
+  min-height: 220px;
+  box-shadow: 0 4px 15px color-mix(in srgb, var(--default-color), transparent 90%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  cursor: default;
+}
+
+.standard-item:hover {
+  box-shadow: 0 10px 25px color-mix(in srgb, var(--default-color), transparent 50%);
+  transform: translateY(-4px);
+}
+
+/* --- Icon SVG --- */
+.standard-item svg {
+  fill: var(--accent-color);
+  width: 56px !important;
+  height: 56px !important;
+  transition: fill 0.3s ease, transform 0.3s ease;
+  background-color: var(--accent-color);
+  border-radius: 4px;
+  color: var(--background-color);
+}
+
+.standard-item:hover svg {
+  fill: color-mix(in srgb, var(--accent-color), black 10%);
+  transform: scale(1.05);
+}
+
+/* --- Text --- */
+.standard-item p {
+  margin-top: 15px;
+  font-size: 1rem;
+  color: var(--default-color);
+  line-height: 1.5;
+  font-weight: 500;
+  max-width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}

@@ -1,0 +1,42 @@
+
+/* Global Colors */
+:root {
+    --background-color: #ffffff; /* Màu nền cho toàn bộ web */
+    --default-color: #444444; /* Màu mặc định cho văn bản */
+    --accent-color: #d8232a; /* Màu cho phần brand, nút, liên kết, làm nổi bật */ 
+    --contrast-color: #ffffff; /* Màu tương phản cho văn bản trên nền của accent, heading, default */
+    --heading-color: #555555; /* Màu cho tiêu đề, tiêu đề phụ */
+}
+
+/* Nav Menu Colors */
+:root{
+    --nav-corlor: #444444;
+    --nav-hover-color: #d8232a;
+    --nav-dropdown-hover-color: #d8232a;
+    --nav-dropdown-background-color: #ffffff;
+    --nav-dropdown-color: #444444;
+
+}
+/* Font */
+:root{
+    --default-font: "Roboto",  system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --heading-font: "Raleway",  sans-serif;
+    --nav-font: "Poppins",  sans-serif;
+}
+
+/* General Styling */
+body{
+    color: var(--default-color);
+    background-color: var(--background-color);
+    font-family: var(--default-font);
+}
+a{
+    color: var(--accent-color);
+    text-decoration: none !important;
+    transition: 0.3s;
+}
+
+a:hover{
+    color: color-mix(in srgb, var(--accent-color), transparent 25%);
+    text-decoration: none;
+}

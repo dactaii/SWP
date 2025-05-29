@@ -1,0 +1,36 @@
+{
+  "name": "project",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "@mdi/js": "^7.4.47",
+    "@mdi/react": "^1.6.1",
+    "aos": "^2.3.4",
+    "axios": "^1.9.0",
+    "bootstrap": "^5.3.6",
+    "bootstrap-icons": "^1.13.1",
+    "glightbox": "^3.3.1",
+    "jwt-decode": "^4.0.0",
+    "react": "^18.x.x",
+    "react-dom": "^18.x.x",
+    "react-helmet": "^6.1.0",
+    "react-router-dom": "^7.6.0",
+    "react-scripts": "latest",
+    "swiper": "^11.2.8"
+  },
+  "scripts": {
+    "start": "react-scripts start"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
