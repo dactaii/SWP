@@ -1,5 +1,13 @@
 import React from "react";
-
+import oposi from "../../assets/img/icons/oposi.png";
+import onega from "../../assets/img/icons/onega.png";
+import aposi from "../../assets/img/icons/aposi.png";
+import anega from "../../assets/img/icons/anega.png";
+import bposi from "../../assets/img/icons/bposi.png";
+import bnega from "../../assets/img/icons/bnega.png";
+import abposi from "../../assets/img/icons/abposi.png";
+import abnega from "../../assets/img/icons/abnega.png";
+import rareblood from "../../assets/img/icons/rareblood.png";
 const TypeOfBlood = () => {
   const bloodTypes = [
     { type: "Nhóm Máu O+", percentage: 36 },
@@ -14,55 +22,55 @@ const TypeOfBlood = () => {
 
   const bloodCards = [
     {
-      img: "https://via.placeholder.com/150", // thay bằng link ảnh thật nếu có
+      img: oposi, 
       title: "Nhóm máu O+",
       description: "O+ là nhóm máu phổ biến nhất.",
       link: "#",
     },
     {
-      img: "https://via.placeholder.com/150",
+      img: onega,
       title: "Nhóm máu O-",
       description: "O- là nhóm máu có thể hiến cho mọi người.",
       link: "#",
     },
     {
-      img: "https://via.placeholder.com/150",
+      img: aposi,
       title: "Nhóm máu A+",
       description: "A+ là nhóm máu phổ biến thứ hai.",
       link: "#",
     },
     {
-      img: "https://via.placeholder.com/150",
+      img: anega,
       title: "Nhóm máu A-",
       description: "A- phù hợp với A- và AB-.",
       link: "#",
     },
     {
-      img: "https://via.placeholder.com/150",
+      img: bposi,
       title: "Nhóm máu B+",
       description: "B+ có thể nhận từ O+ và B+.",
       link: "#",
     },
     {
-      img: "https://via.placeholder.com/150",
+      img: bnega,
       title: "Nhóm máu B-",
       description: "Hiếm, chỉ chiếm 3% dân số.",
       link: "#",
     },
     {
-      img: "https://via.placeholder.com/150",
+      img: abposi,
       title: "Nhóm máu AB+",
       description: "AB+ là người nhận phổ quát.",
       link: "#",
     },
     {
-      img: "https://via.placeholder.com/150",
+      img: abnega,
       title: "Nhóm máu AB-",
       description: "AB- là nhóm máu hiếm nhất.",
       link: "#",
     },
     {
-      img: "https://via.placeholder.com/150",
+      img: rareblood,
       title: "Nhóm máu Hiếm",
       description: "Điều gì làm cho một nhóm máu trở nên hiếm?",
       link: "#",
@@ -70,7 +78,7 @@ const TypeOfBlood = () => {
   ];
 
   return (
-    <section>
+    <section className="blood-section">
       <h2>Nhóm máu</h2>
       <h3>Tìm hiểu nhóm máu của bạn</h3>
       <p>Bạn sẽ biết nhóm máu của mình sau lần hiến máu đầu tiên.</p>
@@ -95,7 +103,7 @@ const TypeOfBlood = () => {
       </p>
 
       <h3>Về các nhóm máu</h3>
-      <p>Tìm hiểu thêm về nhóm máu của bạn.</p>
+      <p classname="blood-btn">Tìm hiểu thêm về nhóm máu của bạn.</p>
 
       <div className="blood-grid">
         {bloodCards.map((card, index) => (
@@ -104,9 +112,9 @@ const TypeOfBlood = () => {
               <img src={card.img} alt={card.title} />
             </div>
             <div className="card_body">
-              <h2>{card.title}</h2>
+              <h4>{card.title}</h4>
               <p>{card.description}</p>
-              <span className="btn">Tìm hiểu về {card.title}</span>
+              <span className="btn"><i className="bi bi-arrow-right-circle-fill" style={{ marginRight: '6px' }}></i>Tìm hiểu về {card.title}</span>
             </div>
           </div>
         ))}
