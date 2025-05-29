@@ -12,8 +12,6 @@ function LoginForm() {
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState("");
 
-  const fakeToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTmd1eeG7hW4gVsSDbiBBIiwidXNlcm5hbWUiOiJ1c2VybmFtZSIsInJvbGUiOiJ1c2VyIiwiZXhwIjoxNzU0MDA2NDAwfQ.LzmZlXODzOn9UvUlx-2XNGfGlrxqf3U8VdPikN6opwQ";
-
   /* ===== Add class no-scroll ======*/
   useEffect(() => {
     document.body.classList.add("no-scroll"); 
@@ -25,11 +23,20 @@ function LoginForm() {
     const handleLogin= async (e) =>{
       e.preventDefault();
 
-    if (username === "username" && password === "12345") {
+        try{
+      const res = await axios.post("http://localhost:8000/api/login",{
+        username,
+        password
+      });
 
-      localStorage.setItem("token",fakeToken);
+      const token = res.data.token;
+      if(!token){
+        alert("Đăng nhập thất bại!");
+        return;
+      }
+      localStorage.setItem("token",token);
 
-      const decoded = jwtDecode(fakeToken);
+      const decoded = jwtDecode(token);
       const role = decoded.role;
 
       if (role === "admin"){
@@ -41,7 +48,7 @@ function LoginForm() {
       }else {
         setErrorMessage("Vai trò không hợp lệ!");
       }
-    } else{
+    } catch(err){
       setErrorMessage("Sai tài khoản hoặc mật khẩu!");
     }
   }
@@ -52,9 +59,8 @@ function LoginForm() {
         <title>Login Page</title>
       </Helmet>
       <div className="login-page">
-        <div
-          className={`container ${rightPanelActive ? "right-panel-active" : ""}`}id="container"
-        >
+        <div id="container" className={`container ${rightPanelActive ? "right-panel-active" : ""}`}>
+
           <div className="form-container sign-up-container">
             <form action="#">
               <h1>Register as a Donor</h1>
