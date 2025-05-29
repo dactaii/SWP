@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 function LoginForm() {
 
   const [rightPanelActive, setRightPanelActive] = useState(false);
-  const [username, setUsername] = useState("");
+  const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState("");
@@ -24,12 +24,13 @@ function LoginForm() {
       e.preventDefault();
 
         try{
-      const res = await axios.post("http://localhost:8000/api/login",{
-        username,
+      const res = await axios.post("http://localhost:8080/api/login",{
+        userName,
         password
       });
-
-      const token = res.data.token;
+      console.log("Server response:", res);
+      const token = res.data.data;
+      console.log("token", token)
       if(!token){
         alert("Đăng nhập thất bại!");
         return;
@@ -39,11 +40,11 @@ function LoginForm() {
       const decoded = jwtDecode(token);
       const role = decoded.role;
 
-      if (role === "admin"){
+      if (role === "ROLE_ADMIN"){
         navigate("/adminPage");
-      }else if(role === "user"){
+      }else if(role === "ROLE_MEMBER"){
         navigate("/");
-      }else if(role ==="staff"){
+      }else if(role ==="ROLE_STAFF"){
         navigate("/staffHome");
       }else {
         setErrorMessage("Vai trò không hợp lệ!");
@@ -89,11 +90,10 @@ function LoginForm() {
               <span>Or use your account</span>
 
             {/*================ Input login ================*/}
-              <input 
-                type="text" 
+              <input type="text" 
                 placeholder="Tên Đăng Nhập"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)} 
+                value={userName}
+                onChange={(e) => setUserName(e.target.value)} 
                 />
 
               <input 
