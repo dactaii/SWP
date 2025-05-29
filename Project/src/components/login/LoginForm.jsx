@@ -30,7 +30,7 @@ function LoginForm() {
       });
       console.log("Server response:", res);
       const token = res.data.data;
-      console.log("token", token)
+      console.log("token", token);
       if(!token){
         alert("Đăng nhập thất bại!");
         return;
@@ -94,6 +94,7 @@ function LoginForm() {
                 placeholder="Tên Đăng Nhập"
                 value={userName}
                 onChange={(e) => setUserName(e.target.value)} 
+                required
                 />
 
               <input 
@@ -101,6 +102,7 @@ function LoginForm() {
                 placeholder="Mật Khẩu" 
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                required
                 />
             {/*================ End Input login ================*/}
 
