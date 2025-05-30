@@ -61,6 +61,13 @@
   gap: 3px;
 }
 
+@media (min-width: 1400px) {
+  header .container {
+    max-width: 80% !important;
+
+  }
+}
+
 /* Header_menu */
 
 .navmenu {

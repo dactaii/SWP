@@ -3,6 +3,7 @@ import logo from "../../assets/img/logos/logo.png";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import logoDefault from "../../assets/img/icons/logoDefault.png";
+import ScrollToAnchorLink from "../../assets/js/ScrollToAnchorLink";
 
 const Default_Avata = logoDefault;
 const Header = () => {
@@ -97,7 +98,11 @@ const Header = () => {
           <nav id="navmenu" className="navmenu">
             <ul>
               <li>
-                <Link to="/" className={isActive("/")}>
+                <Link
+                  to="/"
+                  state={{ forceScrollTop: true }}
+                  className={isActive("/")}
+                >
                   Trang Chủ
                 </Link>
               </li>
@@ -108,20 +113,25 @@ const Header = () => {
                 </a>
                 <ul>
                   <li>
-                    <a href="#gioithieu">Giới Thiệu</a>
+                    <ScrollToAnchorLink to="/" anchorId="gioithieu">
+                      Giới Thiệu
+                    </ScrollToAnchorLink>
                   </li>
                   <li>
-                    <a href="#tieuchuan">Tiêu Chuẩn Hiến Máu</a>
+                    <ScrollToAnchorLink to="/" anchorId="tieuchuan">
+                      Tiêu Chuẩn Hiến Máu
+                    </ScrollToAnchorLink>
                   </li>
                   <li>
-                    <a href="#lienhe">Liên Hệ</a>
+                    <ScrollToAnchorLink to="/" anchorId="lienhe">
+                      Liên Hệ
+                    </ScrollToAnchorLink>
                   </li>
                 </ul>
               </li>
 
               <li className="dropdown">
                 <a
-                  href="#"
                   className={
                     isSubActive("/dangkyhienmau") ||
                     isSubActive("/dangkycanmau")
@@ -132,18 +142,13 @@ const Header = () => {
                 </a>
                 <ul>
                   <li>
-                    <Link
-                      to="/bloodtype"
-                      onClick={(e) => handleAccessLink(e, "/bloodtype")}
-                      className={isActive("/bloodtype")}
-                    >
+                    <Link to="/bloodtype" className={isActive("/bloodtype")}>
                       Các Loại Máu
                     </Link>
                   </li>
                   <li>
                     <Link
                       to="/cachsudungmau"
-                      onClick={(e) => handleAccessLink(e, "/cachsudungmau")}
                       className={isActive("/cachsudungmau")}
                     >
                       Cách Sử Dụng Máu
@@ -154,7 +159,6 @@ const Header = () => {
 
               <li className="dropdown">
                 <a
-                  href="#"
                   className={
                     isSubActive("/dangkyhienmau") ||
                     isSubActive("/dangkycanmau")
@@ -175,7 +179,7 @@ const Header = () => {
                   </li>
                   <li>
                     <Link
-                      to="/dangkycanmau"
+                      to="/dangkytimmau"
                       onClick={(e) => handleAccessLink(e, "/dangkycanmau")}
                       className={isActive("/dangkycanmau")}
                     >
@@ -187,7 +191,6 @@ const Header = () => {
               <li className="dropdown">
                 {" "}
                 <a
-                  href="#"
                   className={isSubActive("/tracuu") || isSubActive("/timnguoi")}
                 >
                   <span>Tìm Máu</span>{" "}

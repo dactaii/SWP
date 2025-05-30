@@ -4,6 +4,7 @@ import "aos/dist/aos.css";
 import GLightbox from "glightbox";
 import "glightbox/dist/css/glightbox.min.css";
 import banner3 from "../../assets/img/banners/banner3.png";
+import { Link } from "react-router-dom";
 
 const About = () => {
   useEffect(() => {
@@ -94,34 +95,46 @@ const About = () => {
               <div className="accordion-body">
                 <ul className="mb-0">
                   <li>
-                    <strong>Kiến thức về máu</strong> giúp bạn hiểu nhanh về các
-                    nhóm và thành phần máu.
+                    <Link to="/bloodtype" className="underline-important">
+                      <strong>Kiến thức về máu</strong>
+                    </Link>{" "}
+                    giúp bạn hiểu nhanh về các nhóm và thành phần máu.
                   </li>
                   <li>
-                    <strong>Đăng ký hiến máu</strong> để chọn nhóm máu và thời
-                    gian bạn sẵn sàng hiến.
+                    <Link to="/dangkyhienmau" className="underline-important">
+                      <strong>Đăng ký hiến máu</strong>
+                    </Link>{" "}
+                    để chọn nhóm máu và thời gian bạn sẵn sàng hiến.
                   </li>
                   <li>
-                    <strong>Đăng ký tìm máu</strong> cho người cần máu đăng ký
-                    yêu cầu nhanh chóng.
+                    <Link to="/dangkytimnmau" className="underline-important">
+                      <strong>Đăng ký tìm máu</strong>
+                    </Link>{" "}
+                    cho người cần máu đăng ký yêu cầu nhanh chóng.
                   </li>
                   <li>
-                    <strong>Tra cứu nhóm máu phù hợp</strong> giúp tìm nhóm và
-                    thành phần máu cần thiết.
+                    <Link to="/tracuu" className="underline-important">
+                      <strong>Tra cứu nhóm máu phù hợp</strong>
+                    </Link>{" "}
+                    giúp tìm nhóm và thành phần máu cần thiết.
                   </li>
                   <li>
-                    <strong>Tìm người hiến máu gần bạn</strong> kết nối bạn với
-                    người hiến máu gần nhất.
+                    <Link to="/timnguoiHM" className="underline-important">
+                      <strong>Tìm người hiến máu gần bạn</strong>
+                    </Link>{" "}
+                    kết nối bạn với người hiến máu gần nhất.
                   </li>
                   <li>
-                    <strong>Tìm người cần máu</strong> giúp người hiến dễ tìm
-                    người cần máu quanh đây.
+                    <Link to="/timnguoiCM" className="underline-important">
+                      <strong>Tìm người cần máu</strong>
+                    </Link>{" "}
+                    giúp người hiến dễ tìm người cần máu quanh đây.
                   </li>
                   <li>
-                    <strong>
-                      Đăng ký hiến máu khẩn cấp khi cơ sở y tế cần
-                    </strong>{" "}
-                    hỗ trợ đăng ký ngay các trường hợp cấp cứu.
+                    <Link to="/DKmauKC" className="underline-important">
+                      <strong>Đăng ký hiến máu khẩn cấp</strong>
+                    </Link>{" "}
+                    khi cơ sở y tế cần hỗ trợ đăng ký ngay các trường hợp cấp cứu.
                   </li>
                 </ul>
               </div>

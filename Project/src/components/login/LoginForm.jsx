@@ -12,6 +12,8 @@ function LoginForm() {
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState("");
 
+  const fakeToken = "eyJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoiTmd1eeG7hW4gVsSDbiBBIiwicm9sZSI6IlJPTEVfTUVNQkVSIiwiZXhwIjoxNzU0MDA2NDAwfQ.KmkUnLMzhK9Im9OdSwPNxvqHtwwESXbmFksXX-nh8EU";
+  
   /* ===== Add class no-scroll ======*/
   useEffect(() => {
     document.body.classList.add("no-scroll"); 
@@ -23,21 +25,10 @@ function LoginForm() {
     const handleLogin= async (e) =>{
       e.preventDefault();
 
-        try{
-      const res = await axios.post("http://localhost:8080/api/login",{
-        userName,
-        password
-      });
-      console.log("Server response:", res);
-      const token = res.data.data;
-      console.log("token", token);
-      if(!token){
-        alert("Đăng nhập thất bại!");
-        return;
-      }
-      localStorage.setItem("token",token);
+    if (userName === "username" && password === "12345") {
+      localStorage.setItem("token",fakeToken);
 
-      const decoded = jwtDecode(token);
+      const decoded = jwtDecode(fakeToken);
       const role = decoded.role;
 
       if (role === "ROLE_ADMIN"){
@@ -49,7 +40,7 @@ function LoginForm() {
       }else {
         setErrorMessage("Vai trò không hợp lệ!");
       }
-    } catch(err){
+    } else{
       setErrorMessage("Sai tài khoản hoặc mật khẩu!");
     }
   }

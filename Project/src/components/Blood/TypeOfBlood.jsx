@@ -1,4 +1,5 @@
-import React from "react";
+import React, {useEffect}from "react";
+import { Link } from "react-router-dom";
 import oposi from "../../assets/img/icons/oposi.png";
 import onega from "../../assets/img/icons/onega.png";
 import aposi from "../../assets/img/icons/aposi.png";
@@ -8,7 +9,11 @@ import bnega from "../../assets/img/icons/bnega.png";
 import abposi from "../../assets/img/icons/abposi.png";
 import abnega from "../../assets/img/icons/abnega.png";
 import rareblood from "../../assets/img/icons/rareblood.png";
+
 const TypeOfBlood = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const bloodTypes = [
     { type: "Nhóm Máu O+", percentage: 36 },
     { type: "Nhóm Máu O-", percentage: 14 },
@@ -25,55 +30,55 @@ const TypeOfBlood = () => {
       img: oposi,
       title: "Nhóm máu O+",
       description: "O+ là nhóm máu phổ biến nhất.",
-      link: "#",
+      link: "/blood/opositive",
     },
     {
       img: onega,
       title: "Nhóm máu O-",
       description: "O- là nhóm máu có thể hiến cho mọi người.",
-      link: "#",
+      link: "/blood/onegative",
     },
     {
       img: aposi,
       title: "Nhóm máu A+",
       description: "A+ là nhóm máu phổ biến thứ hai.",
-      link: "#",
+      link: "/blood/apositive",
     },
     {
       img: anega,
       title: "Nhóm máu A-",
       description: "A- phù hợp với A- và AB-.",
-      link: "#",
+      link: "/blood/anegative",
     },
     {
       img: bposi,
       title: "Nhóm máu B+",
       description: "B+ có thể nhận từ O+ và B+.",
-      link: "#",
+      link: "/blood/bpositive",
     },
     {
       img: bnega,
       title: "Nhóm máu B-",
       description: "Hiếm, chỉ chiếm 3% dân số.",
-      link: "#",
+      link: "/blood/bnegative",
     },
     {
       img: abposi,
       title: "Nhóm máu AB+",
       description: "AB+ là người nhận phổ quát.",
-      link: "#",
+      link: "/blood/abpositive",
     },
     {
       img: abnega,
       title: "Nhóm máu AB-",
       description: "AB- là nhóm máu hiếm nhất.",
-      link: "#",
+      link: "/blood/abnegative",
     },
     {
       img: rareblood,
       title: "Nhóm máu Hiếm",
       description: "Điều gì làm cho một nhóm máu trở nên hiếm?",
-      link: "#",
+      link: "/blood/rareblood",
     },
   ];
 
@@ -114,13 +119,13 @@ const TypeOfBlood = () => {
             <div className="card_body">
               <h4>{card.title}</h4>
               <p>{card.description}</p>
-              <span className="btn">
+              <Link to={card.link} className="btn">
                 <i
                   className="bi bi-arrow-right-circle-fill"
                   style={{ marginRight: "6px" }}
                 ></i>
                 Tìm hiểu về {card.title}
-              </span>
+              </Link>
             </div>
           </div>
         ))}
@@ -187,6 +192,28 @@ const TypeOfBlood = () => {
       <p>
         Chính sự hiện diện của kháng nguyên A và B, cùng với các kháng thể tương
         ứng, quyết định nhóm máu ABO của bạn.
+      </p>
+      <h3>Nhóm máu dương tính và âm tính</h3>
+      <p>
+        Kháng nguyên D trong hệ Rh quyết định xem bạn có nhóm máu dương tính hay
+        âm tính.
+      </p>
+
+      <p>
+        Nếu bạn có kháng nguyên Rh D, nhóm máu của bạn là dương tính. Nếu bạn
+        không có kháng nguyên Rh D, nhóm máu của bạn là <strong>âm tính</strong>
+        .
+      </p>
+
+      <p>
+        77% người hiến máu của chúng tôi có nhóm máu{" "}
+        <strong>Rh D dương tính</strong>.
+      </p>
+
+      <p>
+        Ngoài kháng nguyên D, hệ Rh còn có bốn kháng nguyên chính khác. Sự kết
+        hợp giữa các kháng nguyên này tạo nên <strong>kiểu phụ nhóm máu</strong>{" "}
+        của bạn.
       </p>
     </section>
   );

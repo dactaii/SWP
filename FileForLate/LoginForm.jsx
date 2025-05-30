@@ -7,9 +7,10 @@ import { useNavigate } from "react-router-dom";
 function LoginForm() {
 
   const [rightPanelActive, setRightPanelActive] = useState(false);
-  const [username, setUsername] = useState("");
+  const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState("");
 
   /* ===== Add class no-scroll ======*/
   useEffect(() => {
@@ -22,13 +23,14 @@ function LoginForm() {
     const handleLogin= async (e) =>{
       e.preventDefault();
 
-    try{
-      const res = await axios.post("http://localhost:8000/api/login",{
-        username,
+        try{
+      const res = await axios.post("http://localhost:8080/api/login",{
+        userName,
         password
       });
-
-      const token = res.data.token;
+      console.log("Server response:", res);
+      const token = res.data.data;
+      console.log("token", token);
       if(!token){
         alert("Đăng nhập thất bại!");
         return;
@@ -38,17 +40,17 @@ function LoginForm() {
       const decoded = jwtDecode(token);
       const role = decoded.role;
 
-      if (role === "admin"){
+      if (role === "ROLE_ADMIN"){
         navigate("/adminPage");
-      }else if(role === "user"){
-        navigate("/userHome");
-      }else if(role ==="staff"){
+      }else if(role === "ROLE_MEMBER"){
+        navigate("/");
+      }else if(role ==="ROLE_STAFF"){
         navigate("/staffHome");
       }else {
-        alert("Vai trò không hợp lệ!");
+        setErrorMessage("Vai trò không hợp lệ!");
       }
-    } catch (err){
-      alert("Sai tài khoản hoặc mật khẩu!")
+    } catch(err){
+      setErrorMessage("Sai tài khoản hoặc mật khẩu!");
     }
   }
 
@@ -58,35 +60,29 @@ function LoginForm() {
         <title>Login Page</title>
       </Helmet>
       <div className="login-page">
-        <div
-          className={`container ${rightPanelActive ? "right-panel-active" : ""}`}id="container"
-        >
+        <div id="container" className={`container ${rightPanelActive ? "right-panel-active" : ""}`}>
+
           <div className="form-container sign-up-container">
             <form action="#">
               <h1>Register as a Donor</h1>
               <div className="social-container">
                 <a href="#" className="social">
-                  <i className="bi bi-facebook"></i>
-                </a>
-                <a href="#" className="social">
                   <i className="bi bi-google"></i>
                 </a>
               </div>
               <span>or use your email for registration</span>
-              <input type="text" placeholder="Name" />
-              <input type="email" placeholder="Email" />
-              <input type="password" placeholder="Password" />
+              <input type="text" placeholder="Họ và Tên" />
+              <input type="text" placeholder="Tên Người dùng" />
+              <input type="password" placeholder="Mật Khẩu" />
+              <input type="password" placeholder="Xác Nhận Mật Khẩu" />
               <button>Sign Up</button>
             </form>
           </div>
 
           <div className="form-container sign-in-container">
             <form onSubmit={handleLogin}>
-              <h1>Sign In</h1>
+              <h1>Đăng Nhập</h1>
               <div className="social-container">
-                <a href="#" className="social">
-                  <i className="bi bi-facebook"></i>
-                </a>
                 <a href="#" className="social">
                   <i className="bi bi-google"></i>
                 </a>
@@ -94,23 +90,25 @@ function LoginForm() {
               <span>Or use your account</span>
 
             {/*================ Input login ================*/}
-              <input 
-                type="text" 
-                placeholder="Username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)} 
+              <input type="text" 
+                placeholder="Tên Đăng Nhập"
+                value={userName}
+                onChange={(e) => setUserName(e.target.value)} 
+                required
                 />
 
               <input 
                 type="password" 
-                placeholder="Password" 
+                placeholder="Mật Khẩu" 
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                required
                 />
             {/*================ End Input login ================*/}
 
               <a href="#">Forgot your password?</a>
               <button type="submit">Đăng Nhập</button>
+              {errorMessage && <p className="error-message">{errorMessage}</p>}
             </form>
           </div>
 
