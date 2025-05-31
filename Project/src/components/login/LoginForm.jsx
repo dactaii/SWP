@@ -31,7 +31,7 @@ function LoginForm() {
       .get("http://localhost:8080/api/auth/social?loginType=google")
       .then((res) => {
         if (res.data.code === 200 && res.data.data) {
-          window.location.href = res.data.data; 
+          window.location.href = res.data.data + "&prompt=select_account"; 
         }
       })
       .catch((err) => {

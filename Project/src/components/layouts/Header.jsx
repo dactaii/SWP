@@ -6,6 +6,7 @@ import logoDefault from "../../assets/img/icons/logoDefault.png";
 import ScrollToAnchorLink from "../../assets/js/ScrollToAnchorLink";
 
 const Default_Avata = logoDefault;
+
 const Header = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [name, setName] = useState("");
@@ -31,20 +32,33 @@ const Header = () => {
         if (decoded.role) setRole(decoded.role);
         if (decoded.exp && decoded.exp * 1000 < Date.now()) {
           localStorage.removeItem("token");
+          localStorage.removeItem("avatar_url");
+          localStorage.removeItem("email");
+          localStorage.removeItem("name");
           navigate("/login");
+          return;
         }
-        if (decoded.avatar_url) {
-          setAvatar(
-            decoded.avatar_url.trim() !== ""
-              ? decoded.avatar_url
-              : Default_Avata
-          );
+
+        const avatarFromLocalStorage = localStorage.getItem("avatar_url");
+        if (avatarFromLocalStorage && avatarFromLocalStorage.trim() !== "") {
+          setAvatar(avatarFromLocalStorage);
+        } else {
+          // Lấy avatar từ decoded token (key avatar)
+          const tokenAvatar = decoded.avatar || "";
+          setAvatar(tokenAvatar.trim() !== "" ? tokenAvatar : Default_Avata);
         }
       } catch (error) {
         console.error("Token không hợp lệ", error);
+        setName("");
+        setAvatar(Default_Avata);
+        setRole(null);
       }
+    } else {
+      setName("");
+      setAvatar(Default_Avata);
+      setRole(null);
     }
-  }, []);
+  }, [location.pathname, navigate]);
 
   /*Đóng dropdown khi click ra ngoài*/
   useEffect(() => {
@@ -263,8 +277,24 @@ const Header = () => {
                       <a
                         onClick={(e) => {
                           e.preventDefault();
-                          localStorage.removeItem("token");
-                          window.location.href = "/";
+                          const token = localStorage.getItem("token");
+                          const email = localStorage.getItem("email");
+
+                          if (window.google && email) {
+                            window.google.accounts.id.revoke(email, () => {
+                              console.log("Google session revoked.");
+                              cleanupAndRedirect();
+                            });
+                          } else {
+                            cleanupAndRedirect();
+                          }
+
+                          function cleanupAndRedirect() {
+                            localStorage.removeItem("token");
+                            localStorage.removeItem("email");
+                            localStorage.removeItem("avatar_url");
+                            window.location.href = "/login";
+                          }
                         }}
                       >
                         Đăng Xuất

@@ -26,6 +26,12 @@ function OAuth2RedirectHandler() {
           localStorage.setItem("token", token);
 
           const decoded = jwtDecode(token);
+          // Lưu chính xác theo key token payload
+          localStorage.setItem("avatar_url", decoded.avatar || "");
+          localStorage.setItem("email", decoded.email || "");
+          localStorage.setItem("name", decoded.name || "");
+          console.log("Decoded token payload:", decoded);
+
           const role = decoded.role;
           if (role === "ROLE_ADMIN") {
             navigate("/adminPage");
@@ -46,7 +52,41 @@ function OAuth2RedirectHandler() {
     }
   }, [location]);
 
-  return <div>Đang xử lý đăng nhập bằng Google...</div>;
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        height: "100vh",
+      }}
+    >
+      <div
+        className="spinner"
+        style={{
+          border: "6px solid #f3f3f3",
+          borderTop: "6px solid #3498db",
+          borderRadius: "50%",
+          width: "50px",
+          height: "50px",
+          animation: "spin 1s linear infinite",
+          marginBottom: "20px",
+        }}
+      ></div>
+      <p style={{ fontSize: "18px", color: "#333" }}>
+        Đang đăng nhập bằng Google...
+      </p>
+      <style>
+        {`
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+      `}
+      </style>
+    </div>
+  );
 }
 
 export default OAuth2RedirectHandler;

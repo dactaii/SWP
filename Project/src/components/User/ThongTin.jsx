@@ -2,8 +2,14 @@ import React, { useState, useEffect } from "react";
 import logoDefault from "../../assets/img/icons/logoDefault.png";
 import { jwtDecode } from "jwt-decode";
 import axios from "axios";
+
 const Default_Avata = logoDefault;
+
 const ThongTin = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+  
   const [avatar, setAvatar] = useState(Default_Avata);
   const [avatarFile, setAvatarFile] = useState(null);
   const [formData, setFormData] = useState({
@@ -22,22 +28,45 @@ const ThongTin = () => {
     if (token) {
       try {
         const decoded = jwtDecode(token);
-        if (decoded.name) {
-          setFormData((prev) => ({
-            ...prev,
-            fullName: decoded.name,
-          }));
+
+        if (decoded.exp && decoded.exp * 1000 < Date.now()) {
+          localStorage.removeItem("token");
+          localStorage.removeItem("avatar_url");
+          localStorage.removeItem("email");
+          localStorage.removeItem("name");
+          setAvatar(Default_Avata);
+          setFormData({
+            fullName: "",
+            gender: "",
+            birthDate: "",
+            email: "",
+            address: "",
+            phoneNumber: "",
+            bloodGroup: "",
+          });
+          return;
         }
-        if (decoded.avatar_url) {
-          setAvatar(
-            decoded.avatar_url.trim() !== ""
-              ? decoded.avatar_url
-              : Default_Avata
-          );
+
+        setFormData((prev) => ({
+          ...prev,
+          fullName: decoded.name || prev.fullName,
+          email: decoded.email || prev.email,
+        }));
+
+        const avatarFromLocalStorage = localStorage.getItem("avatar_url");
+        if (avatarFromLocalStorage && avatarFromLocalStorage.trim() !== "") {
+          setAvatar(avatarFromLocalStorage);
+        } else {
+          // Nếu không có avatar trong localStorage thì lấy từ token
+          const tokenAvatar = decoded.avatar_url || decoded.avatar || "";
+          setAvatar(tokenAvatar.trim() !== "" ? tokenAvatar : Default_Avata);
         }
       } catch (error) {
         console.error("Token không hợp lệ", error);
+        setAvatar(Default_Avata);
       }
+    } else {
+      setAvatar(Default_Avata);
     }
   }, []);
 
