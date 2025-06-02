@@ -265,7 +265,7 @@ const Header = () => {
                 {dropdownOpen && (
                   <ul className="dropdown-menu">
                     <li>
-                      <Link to="/thongtinnd">Thông Tin Cá Nhân</Link>
+                      <Link to="/thongtin">Thông Tin Cá Nhân</Link>
                     </li>
                     <li>
                       <Link to="/history">Lịch Sử Hiến Máu</Link>

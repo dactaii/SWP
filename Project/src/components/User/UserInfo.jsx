@@ -5,11 +5,11 @@ import axios from "axios";
 
 const Default_Avata = logoDefault;
 
-const ThongTin = () => {
+const UserInfo = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  
+
   const [avatar, setAvatar] = useState(Default_Avata);
   const [avatarFile, setAvatarFile] = useState(null);
   const [formData, setFormData] = useState({
@@ -128,21 +128,12 @@ const ThongTin = () => {
   };
 
   return (
-    <div className="registration-page">
-      <aside>
+      <div className="main-content">
+        <h1>Thông tin người dùng</h1>
         <div className="avatar-container">
           <img src={avatar} alt="avatar" className="avatar" />
           <input type="file" accept="image/*" onChange={handleAvatarChange} />
         </div>
-        <nav className="slidebar-nav">
-          <a href="#thongtin">Thông tin người dùng</a>
-          <a href="#lichsu">Lịch sử hiến máu</a>
-          <a href="#nhacnho">Nhắc nhở hiến máu</a>
-        </nav>
-      </aside>
-
-      <div className="main-content">
-        <h1>Thông tin người dùng</h1>
         <form className="regis-form" onSubmit={handleSubmit}>
           <div className="row">
             <div className="col-md-7">
@@ -216,7 +207,6 @@ const ThongTin = () => {
           <button type="submit">Cập Nhật</button>
         </form>
       </div>
-    </div>
   );
 };
-export default ThongTin;
+export default UserInfo;
