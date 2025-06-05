@@ -1,2 +1,1 @@
-npm install swiper
-npm install @mdi/react @mdi/js
+String userName = jwtHelper.getUsername(auHeader); UPDATE

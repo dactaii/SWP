@@ -7,6 +7,7 @@ import './assets/css/main.css';
 /* Bootstrap */
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import ThongTin from './pages/ThongTin';
 
 function App() {
     return (

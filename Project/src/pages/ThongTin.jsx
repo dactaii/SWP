@@ -18,7 +18,6 @@ const ThongTin = () => {
             <a href="#canmau">Thông Báo Cần Máu</a>
           </nav>
         </aside>
-
         <UserInfo />
       </div>
     </UserLayout>
