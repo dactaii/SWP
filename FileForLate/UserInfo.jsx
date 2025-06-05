@@ -95,36 +95,21 @@ const UserInfo = () => {
     e.preventDefault();
 
     try {
-      const data = new FormData();
-      Object.entries(formData).forEach(([key, value]) => {
-        data.append(key, value);
-      });
-
-      if (avatarFile) {
-        data.append("avatarFile", avatarFile);
-      }
-
-      console.log("TOKEN:", localStorage.getItem("token"));
-      console.log("HEADER:", {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      });
+      const token = localStorage.getItem("token");
 
       const response = await axios.post(
         "http://localhost:8080/api/updateProfile/update",
-        data,
+        formData,
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
         }
       );
 
       const result = response.data;
       alert(result.message || "Cập nhật thành công!");
-
-      if (result.avatarPath) {
-        localStorage.setItem("avatar_url", result.avatarPath);
-      }
     } catch (error) {
       const status = error.response?.status;
 
