@@ -1,0 +1,91 @@
+/*--------------------------------------------------------------
+# Blog Section
+--------------------------------------------------------------*/
+#blog {
+  padding-top: 50px;
+  padding-bottom: 50px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#blog .container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+#blog h2 {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  position: relative;
+  text-align: center;
+
+}
+
+#blog h2::after {
+  content: "";
+  position: absolute;
+  width: 80px;
+  height: 3px;
+  background: var(--accent-color);
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -10px;
+  border-radius: 2px;
+}
+
+#blog article {
+  margin-bottom: 30px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #ddd;
+}
+
+#blog article:last-child {
+  border-bottom: none;
+}
+
+#blog article h3 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+#blog article p {
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+#blog article p strong {
+  color: var(--accent-color);
+}
+
+#blog article div {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #444;
+}
+
+/* Error message */
+#blog p[style*="color: red"] {
+  text-align: center;
+  font-weight: 600;
+}
+
+/* Responsive */
+@media (max-width: 575.98px) {
+  #blog h2 {
+    font-size: 28px;
+  }
+
+  #blog article h3 {
+    font-size: 1.5rem;
+  }
+
+  #blog article p,
+  #blog article div {
+    font-size: 0.9rem;
+  }
+}

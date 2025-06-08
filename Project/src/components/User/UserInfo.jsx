@@ -168,8 +168,8 @@ const UserInfo = () => {
               required
             >
               <option value="">Chọn giới tính</option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
+              <option value="Male">Nam</option>
+              <option value="Female">Nữ</option>
             </select>
           </div>
         </div>

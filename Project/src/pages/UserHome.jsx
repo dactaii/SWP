@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import UserLayout from "../layouts/UserLayout";
 import Standard from "../components/home/standard";
 import { useLocation } from "react-router-dom";
+import Blog from "../components/home/blog";
 
 const UserHome = () => {
   const location = useLocation();
@@ -24,6 +25,7 @@ const UserHome = () => {
       <Hero />
       <About />
       <Standard />
+      <Blog />
     </UserLayout>
   );
 };
