@@ -1,15 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import UserInfo from "../components/User/UserInfo";
+import UpdateUserInfo from "../components/User/UpdateUserInfo";
 import UserLayout from "../layouts/UserLayout";
 
 const ThongTin = () => {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  const [activeComponent, setActiveComponent] = useState("userInfo");
 
   return (
     <UserLayout>
-      <div className="registration-page">
+      <div className="registration-page" style={{ display: "flex" }}>
         <aside>
           <nav className="slidebar-nav">
             <a href="#thongtin">Thông tin người dùng</a>
@@ -18,7 +17,34 @@ const ThongTin = () => {
             <a href="#canmau">Thông Báo Cần Máu</a>
           </nav>
         </aside>
-        <UserInfo />
+
+        <main style={{ flex: 1, paddingLeft: "20px" }}>
+          {activeComponent === "userInfo" && (
+            <>
+              <UserInfo />
+              <button
+                onClick={() => setActiveComponent("updateUserInfo")}
+                className="btn btn-primary"
+                style={{ marginTop: "20px" }}
+              >
+                Chỉnh sửa thông tin người dùng
+              </button>
+            </>
+          )}
+
+          {activeComponent === "updateUserInfo" && (
+            <>
+              <UpdateUserInfo />
+              <button
+                onClick={() => setActiveComponent("userInfo")}
+                className="btn btn-secondary"
+                style={{ marginTop: "20px" }}
+              >
+                Hủy / Quay lại
+              </button>
+            </>
+          )}
+        </main>
       </div>
     </UserLayout>
   );

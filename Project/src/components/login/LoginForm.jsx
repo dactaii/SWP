@@ -3,6 +3,8 @@ import { Helmet } from "react-helmet";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 function LoginForm() {
   const [rightPanelActive, setRightPanelActive] = useState(false);
@@ -14,6 +16,7 @@ function LoginForm() {
   const [fullName, setFullName] = useState("");
   const [signUpUserName, setSignUpUserName] = useState("");
   const [signUpPassword, setSignUpPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState("");
   const [signUpError, setSignUpError] = useState("");
 
@@ -31,7 +34,7 @@ function LoginForm() {
       .get("http://localhost:8080/api/auth/social?loginType=google")
       .then((res) => {
         if (res.data.code === 200 && res.data.data) {
-          window.location.href = res.data.data + "&prompt=select_account"; 
+          window.location.href = res.data.data + "&prompt=select_account";
         }
       })
       .catch((err) => {
@@ -141,13 +144,23 @@ function LoginForm() {
                 onChange={(e) => setSignUpUserName(e.target.value)}
                 required
               />
-              <input
-                type="password"
-                placeholder="Mật Khẩu"
-                value={signUpPassword}
-                onChange={(e) => setSignUpPassword(e.target.value)}
-                required
-              />
+              <div className="input-wrapper">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Mật Khẩu"
+                  value={signUpPassword}
+                  onChange={(e) => setSignUpPassword(e.target.value)}
+                  required
+                />
+                <span
+                  className="show-password-toggle"
+                  onClick={() => setShowPassword(!showPassword)}
+                  title={showPassword ? "Ẩn mật khẩu" : "Hiện mật khẩu"}
+                >
+                  <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+                </span>
+              </div>
+
               <input
                 type="password"
                 placeholder="Xác Nhận Mật Khẩu"
