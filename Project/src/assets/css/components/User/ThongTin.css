@@ -7,18 +7,20 @@
 }
 
 .registration-page aside {
-  width: 380px;
-  background-color: #dfdfdf;
-  border-right: none;
+  width: 420px;
+  background-color: #f4bcbc; /* sidebar đậm hơn */
   padding: 2.5rem 1.5rem;
-  box-sizing: border-box;
+  border-radius: 16px 0 0 16px;
+  box-shadow: 2px 0 12px rgba(0, 0, 0, 0.06);
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-shadow: 2px 0 12px rgba(0, 0, 0, 0.06);
-  border-radius: 16px 0 0 16px;
   gap: 2rem;
+  box-sizing: border-box;
 }
+
+
+
 
 .avatar-container {
   margin-bottom: 2rem;
@@ -47,7 +49,7 @@
 .slidebar-nav a {
   font-family: var(--nav-font);
   font-size: 1.05rem;
-  color: #b91c1c; 
+  color: #7f1d1d;
   padding: 0.7rem 1rem;
   border-radius: 10px;
   text-decoration: none;
@@ -56,12 +58,12 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  background-color: #ffffff;
+  background-color: #fff5f5;
   border: 1px solid transparent;
 }
 .slidebar-nav a:hover {
-  background-color: #fef2f2; 
-  color: #991b1b; 
+  background-color: #fde0e0;
+  color: #991b1b;
   transform: scale(1.02);
   border: 1px solid #f14e4e;
   box-shadow: 0 2px 6px rgba(0,0,0,0.06);
@@ -123,5 +125,25 @@
   transition: background-color 0.3s ease;
 }
 .regis-form button:hover {
+  background-color: color-mix(in srgb, var(--accent-color), black 15%);
+}
+
+.edit-user-btn {
+  margin-top: 20px;
+  background-color: var(--accent-color);
+  color: var(--contrast-color);
+  border: none;
+  padding: 0.85rem 1.5rem;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  font-weight: 700;
+  transition: background-color 0.3s ease;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.edit-user-btn:hover {
   background-color: color-mix(in srgb, var(--accent-color), black 15%);
 }

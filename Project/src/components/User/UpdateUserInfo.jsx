@@ -16,6 +16,7 @@ const UpdateUserInfo = () => {
     address: "",
     phoneNumber: "",
   });
+  const [isGoogleUser, setIsGoogleUser] = useState(false);
 
   // Scroll to top
   useEffect(() => {
@@ -89,6 +90,9 @@ const UpdateUserInfo = () => {
         ...prev,
         email: decoded.email || prev.email,
       }));
+      if (decoded.googleID) {
+        setIsGoogleUser(true);
+      }
     } catch (error) {
       console.error("Invalid token:", error);
       resetState();
@@ -155,7 +159,7 @@ const UpdateUserInfo = () => {
       if (result.avatarPath) {
         localStorage.setItem("avatar_url", result.avatarPath);
       }
-       window.location.reload();
+      window.location.reload();
     } catch (error) {
       const status = error.response?.status;
 
@@ -176,10 +180,18 @@ const UpdateUserInfo = () => {
   return (
     <div className="main-content">
       <h1>Thông tin người dùng</h1>
+
       <div className="avatar-container">
         <img src={avatar} alt="avatar" className="avatar" />
-        <input type="file" accept="image/*" onChange={handleAvatarChange} />
+        {isGoogleUser ? (
+          <p style={{ color: "gray", fontStyle: "italic" }}>
+            Bạn đã đăng nhập bằng Google – không thể thay đổi ảnh đại diện.
+          </p>
+        ) : (
+          <input type="file" accept="image/*" onChange={handleAvatarChange} />
+        )}
       </div>
+
       <form className="regis-form" onSubmit={handleSubmit}>
         <div className="row">
           <div className="col-md-7">

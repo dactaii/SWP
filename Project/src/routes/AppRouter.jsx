@@ -6,6 +6,7 @@ import ThongTin from "../pages/ThongTin";
 import BloodType from "../pages/BloodType";
 import OAuth2RedirectHandler from "../components/login/OAuth2RedirectHandler";
 import RenderForBlood from "../components/Blood/RenderForBlood";
+import UpdateUserInfo from "../components/User/UpdateUserInfo"
 function AppRouter() {
     return (
             <Routes>
@@ -15,6 +16,7 @@ function AppRouter() {
                 <Route path="/bloodtype" element={<BloodType/>} />
                 <Route path="/blood/:bloodType" element={<RenderForBlood />} />
                 <Route path="/auth/social/callback/google" element={<OAuth2RedirectHandler />} />
+                <Route path="/UpdateUserInfo" element={<UpdateUserInfo/>} />
             </Routes>
     );
 };
