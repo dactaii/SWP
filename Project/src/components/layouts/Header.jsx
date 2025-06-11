@@ -197,14 +197,16 @@ const Header = () => {
                 </a>
                 <ul>
                   <li>
-                    <Link to="/bloodtype" className={isActive("/bloodtype")}>
+                    <Link 
+                      to="/bloodtype" 
+                      className={isActive("/bloodtype")}>
                       Các Loại Máu
                     </Link>
                   </li>
                   <li>
                     <Link
-                      to="/cachsudungmau"
-                      className={isActive("/cachsudungmau")}
+                      to="/BloodTypeFake"
+                      className={isActive("/BloodTypeFake")}
                     >
                       Cách Sử Dụng Máu
                     </Link>

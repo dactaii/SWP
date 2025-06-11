@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Bài viết - Giới thiệu cơ sở y tế</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f8f8f8;
+      padding: 20px;
+    }
+    .card {
+      background: white;
+      padding: 16px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      display: flex;
+      gap: 16px;
+    }
+    .card img {
+      width: 150px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 4px;
+    }
+    .card-content {
+      flex: 1;
+    }
+    .card h3 {
+      margin: 0 0 8px;
+    }
+    .card p {
+      margin: 4px 0;
+    }
+    .date {
+      font-size: 0.9em;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Danh sách bài viết: Giới thiệu cơ sở y tế</h1>
+  <div id="article-container">Đang tải dữ liệu...</div>
+
+  <script>
+    const token = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjQsInJvbGUiOiJST0xFX01FTUJFUiIsInVzZXJuYW1lIjoiZGFjdGFpIiwibmFtZSI6IlBoYW4gRGFjIFRhaSIsImF2YXRhciI6Ii4vdXBsb2FkL3VzZXJhdmF0YXJzL0lNR18yMDIyMDExNl8wNzMyMzNfODAzLndlYnAiLCJpYXQiOjE3NDk2MDc4NDEsImV4cCI6MTc0OTYxMTQ0MX0.sQvup7_-C6bTmIe58MPP3tYBuD1_S9V03CVGq0484mI";
+
+    fetch("http://localhost:8080/api/article/category?category=giới%20thiệu%20cơ%20sở%20y%20tế", {
+      headers: {
+        'Authorization': token
+      }
+    })
+    .then(response => response.json())
+    .then(data => {
+      const container = document.getElementById('article-container');
+      container.innerHTML = ''; // Xoá nội dung cũ
+
+      const articles = data.data;
+      if (!articles || articles.length === 0) {
+        container.innerHTML = "<p>Không có bài viết nào.</p>";
+        return;
+      }
+
+      articles.forEach(article => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <img src="${article.imgPath}" alt="Ảnh bài viết">
+          <div class="card-content">
+            <h3>${article.title}</h3>
+            <p>Tác giả: ${article.author}</p>
+            <p class="date">Ngày đăng: ${new Date(article.publishDate).toLocaleDateString()}</p>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    })
+    .catch(error => {
+      console.error("Lỗi khi gọi API:", error);
+      document.getElementById('article-container').innerHTML = "<p style='color:red;'>Không thể tải dữ liệu.</p>";
+    });
+  </script>
+
+</body>
+</html>
