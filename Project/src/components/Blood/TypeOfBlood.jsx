@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import extractBloodPercentage from "../../assets/js/Percentage";
-
+import extractListFromColonToDot from "../../assets/js/extractListFromColonToDot";
+import splitText from "../../assets/js/splitText";
 
 const TypeOfBlood = () => {
   const [articles, setArticles] = useState([]);
@@ -22,9 +22,15 @@ const TypeOfBlood = () => {
 
         const rawData = res.data?.data || [];
 
-        const updatedArticles = rawData.map((item) => // tìm và tách phần hiển thị phần trăm nhóm máu
-          item.title === "Nhóm máu nào là hiếm nhất?"
-            ? extractBloodPercentage(item)
+        //extractList
+        const titlesToExtract = [
+          "Nhóm máu nào là hiếm nhất?",
+          "Hệ thống nhóm máu ABO",
+        ];
+
+        const updatedArticles = rawData.map((item) =>
+          titlesToExtract.includes(item.title)
+            ? extractListFromColonToDot(item)
             : item
         );
 
@@ -44,21 +50,40 @@ const TypeOfBlood = () => {
         articles.map((item, index) => (
           <div className="article-block" key={index}>
             <h3>{item.title}</h3>
-            {item.bloodTypes ? (
+
+            {item.listItems ? (
               <>
-                <p>{item.intro}</p>
+                {splitText(item.intro).map((s, i) => (
+                  <React.Fragment key={i}>
+                    - {s}
+                    <br />
+                  </React.Fragment>
+                ))}
+
                 <ul>
-                  {item.bloodTypes.map((blood, i) => (
-                    <li key={i}>
-                      <strong>{blood.type}</strong>: {blood.percentage}%
-                    </li>
+                  {item.listItems.map((list, i) => (
+                    <li key={i}>{list}</li>
                   ))}
                 </ul>
-                <p>{item.outro}</p>
+
+                {splitText(item.outro).map((s, i) => (
+                  <React.Fragment key={i}>
+                    {s}
+                    <br />
+                  </React.Fragment>
+                ))}
+
               </>
             ) : (
-              <p>{item.content}</p>
+              splitText(item.content).map((s, i) => (
+                <React.Fragment key={i}>
+                  - {s}
+                  <br />
+                  
+                </React.Fragment>
+              ))
             )}
+
           </div>
         ))
       ) : (
