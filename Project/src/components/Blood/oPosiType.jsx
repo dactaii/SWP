@@ -3,7 +3,7 @@ import axios from "axios";
 import extractListFromColonToDot from "../../assets/js/extractListFromColonToDot";
 import splitText from "../../assets/js/splitText";
 
-const TypeOfBlood = () => {
+const oPosiType = () => {
   const [articles, setArticles] = useState([]);
 
   useEffect(() => {
@@ -12,7 +12,7 @@ const TypeOfBlood = () => {
     const fetchArticles = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:8080/api/article/category?category=tài liệu về các loại máu",
+          "http://localhost:8080/api/article/category?category=nhóm máu o+",
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -24,8 +24,7 @@ const TypeOfBlood = () => {
 
         //extractList
         const titlesToExtract = [
-          "Nhóm máu nào là hiếm nhất?",
-          "Hệ thống nhóm máu ABO",
+          "Người có nhóm máu O+ có thể nhận máu từ những nhóm nào?",
         ];
 
         const updatedArticles = rawData.map((item) =>
@@ -39,13 +38,11 @@ const TypeOfBlood = () => {
         console.error("Lỗi khi tải bài viết:", err);
       }
     };
-
     fetchArticles();
   }, []);
-
   return (
     <section className="blood-section">
-      <h2>Nhóm máu</h2>
+      <h2>Nhóm máu O+</h2>
       {articles.length > 0 ? (
         articles.map((item, index) => (
           <div className="article-block" key={index}>
@@ -81,11 +78,6 @@ const TypeOfBlood = () => {
                 </React.Fragment>
               ))
             )}
-            {item.imgPath && item.imgPath.includes("/upload/") && (
-              <div className="article-image">
-                <img src={item.imgPath} alt={item.title} />
-              </div>
-            )}
           </div>
         ))
       ) : (
@@ -94,5 +86,4 @@ const TypeOfBlood = () => {
     </section>
   );
 };
-
-export default TypeOfBlood;
+export default oPosiType;
