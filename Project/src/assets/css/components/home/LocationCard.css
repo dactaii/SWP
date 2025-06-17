@@ -1,0 +1,152 @@
+.lc-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  backdrop-filter: blur(2px);
+}
+
+.lc-card {
+  width: 90%;
+  max-width: 420px;
+  background-color: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  padding: 32px 24px;
+  text-align: center;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.lc-icon-wrapper {
+  height: 60px;
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.lc-icon {
+  position: relative;
+  width: 52px;
+  height: 52px;
+  margin: 0 auto;
+}
+
+.lc-icon svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 52px;
+  transition: all 0.6s ease-in-out;
+}
+
+/* Icon 1: Map Alt - xuất hiện đầu, sau đó mờ đi */
+.icon-alt {
+  opacity: 1;
+  transform: scale(1);
+  animation: fadeOutIcon 2s ease-in-out infinite;
+  background: linear-gradient(135deg, #f97316, #facc15);
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+/* Icon 2: Map Pin - xuất hiện sau, thay thế icon-alt */
+.icon-pin {
+  opacity: 0;
+  transform: scale(0.5);
+  animation: fadeInIcon 2s ease-in-out infinite;
+  color: #f97316;
+}
+
+@keyframes fadeOutIcon {
+  0% {
+    opacity: 1;
+    transform: scale(1) translateY(-50px);
+  }
+  50% {
+    opacity: 0;
+    transform: scale(0.5) translateY(10px);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.5) translateY(10px);
+  }
+}
+
+@keyframes fadeInIcon {
+  0% {
+    opacity: 0;
+    transform: scale(0.5) translateY(-50px);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2) translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(16px);
+  }
+}
+
+.lc-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333333;
+  margin-bottom: 28px;
+  line-height: 1.5;
+}
+
+.lc-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.lc-btn {
+  padding: 10px 24px;
+  font-size: 15px;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 100px;
+}
+
+.lc-accept {
+  background-color: #ddad81;
+  color: #fff;
+}
+
+.lc-accept:hover {
+  background-color: #c38f6a;
+}
+
+.lc-decline {
+  background-color: #f1f1f1;
+  color: #333;
+}
+
+.lc-decline:hover {
+  background-color: #ddd;
+}
+
+.lc-error {
+  margin-top: 16px;
+  font-size: 14px;
+  color: red;
+}

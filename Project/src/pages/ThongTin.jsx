@@ -6,29 +6,79 @@ import EmergencyForm from "../components/staff/emergencyForm";
 
 const ThongTin = () => {
   const [activeComponent, setActiveComponent] = useState("userInfo");
+  const [isCollapsed, setIsCollapsed] = useState(false);
 
   const handleEmergencyClick = () => {
     setActiveComponent("emergencyForm");
   };
 
+  const toggleSidebar = () => {
+    setIsCollapsed(!isCollapsed);
+  };
+
   return (
     <UserLayout>
-      <div className="registration-page" style={{ display: "flex" }}>
-        <aside>
-          <nav className="slidebar-nav">
-            <a href="#" onClick={() => setActiveComponent("userInfo")}>
-              Thông tin người dùng
-            </a>
-            <a href="#lichsu">Lịch sử hiến máu</a>
-            <a href="#nhacnho">Nhắc nhở hiến máu</a>
-            <a href="#canmau">Thông Báo Cần Máu</a>
-            <a href="#" onClick={handleEmergencyClick}>
-              Cần Máu Khẩn Cấp
-            </a>
-          </nav>
-        </aside>
+      <div className="page-thongtin">
+        <div className={`slidebar-user ${isCollapsed ? "collapsed" : ""}`}>
+          <div className="logo_content">
+            <div className="logo">
+              <i className="bi bi-list" onClick={toggleSidebar}></i>
+              {!isCollapsed && <div className="logo_name">Hello</div>}
+            </div>
+          </div>
 
-        <main style={{ flex: 1, paddingLeft: "20px" }}>
+          <ul className="nav">
+            <li>
+              <a
+                href="#"
+                onClick={() => setActiveComponent("userInfo")}
+                className={activeComponent === "userInfo" ? "active" : ""}
+              >
+                <i className="bi bi-person-circle"></i>
+                <span className="link_name">Thông tin người dùng</span>
+              </a>
+              <span className="tooltip">Thông tin người dùng</span>
+            </li>
+
+            <li>
+              <a href="#" className={activeComponent === "history" ? "active" : ""}>
+                <i className="bi bi-calendar3"></i>
+                <span className="link_name">Lịch sử hiến máu</span>
+              </a>
+              <span className="tooltip">Lịch sử hiến máu</span>
+            </li>
+
+            <li>
+              <a href="#" className={activeComponent === "reminder" ? "active" : ""}>
+                <i className="bi bi-journal-bookmark-fill"></i>
+                <span className="link_name">Nhắc nhở hiến máu</span>
+              </a>
+              <span className="tooltip">Nhắc nhở hiến máu</span>
+            </li>
+
+            <li>
+              <a href="#" className={activeComponent === "notification" ? "active" : ""}>
+                <i className="bi bi-bell-fill"></i>
+                <span className="link_name">Thông Báo Cần Máu</span>
+              </a>
+              <span className="tooltip">Thông Báo Cần Máu</span>
+            </li>
+
+            <li>
+              <a
+                href="#"
+                onClick={handleEmergencyClick}
+                className={activeComponent === "emergencyForm" ? "active" : ""}
+              >
+                <i className="bi bi-exclamation-square-fill"></i>
+                <span className="link_name">Cần Máu Khẩn Cấp</span>
+              </a>
+              <span className="tooltip">Cần Máu Khẩn Cấp</span>
+            </li>
+          </ul>
+        </div>
+
+        <main style={{ flex: 1, paddingLeft: "20px", transition: "all 0.4s ease" }}>
           {activeComponent === "userInfo" && (
             <>
               <UserInfo />

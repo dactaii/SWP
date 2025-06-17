@@ -11,19 +11,32 @@ import UserMap from "../components/home/UserMap";
 const UserHome = () => {
   const location = useLocation();
   const [showLocation, setShowLocationCard] = useState(false);
+  const [locationUpdated, setLocationUpdated] = useState(0);
 
   useEffect(() => {
+    if (location.state?.scrollToId) {
+      const element = document.getElementById(location.state.scrollToId);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+      window.history.replaceState({}, document.title);
+    } else {
+      window.scrollTo(0, 0);
+    }
+
     if (location.state?.justLoggedIn) {
       setShowLocationCard(true);
       window.history.replaceState({}, document.title);
     }
   }, [location]);
+
   return (
     <UserLayout>
       {showLocation && (
         <LocationCard
           onClose={() => {
             setShowLocationCard(false);
+            setLocationUpdated((prev) => prev + 1);
           }}
         />
       )}
@@ -31,6 +44,7 @@ const UserHome = () => {
       <About />
       <Standard />
       <Blog />
+      <UserMap key={locationUpdated} />
     </UserLayout>
   );
 };

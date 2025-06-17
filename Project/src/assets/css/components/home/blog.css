@@ -89,3 +89,24 @@
     font-size: 0.9rem;
   }
 }
+
+/* Image inside blog article */
+#blog .article-image {
+  margin-top: 15px;
+  text-align: center;
+}
+
+#blog .article-image img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  object-fit: cover;
+}
+
+/* Responsive image */
+@media (max-width: 575.98px) {
+  #blog .article-image img {
+    border-radius: 6px;
+  }
+}

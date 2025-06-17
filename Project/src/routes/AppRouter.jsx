@@ -8,6 +8,7 @@ import OAuth2RedirectHandler from "../components/login/OAuth2RedirectHandler";
 import RenderForBlood from "../components/Blood/RenderForBlood";
 import UpdateUserInfo from "../components/User/UpdateUserInfo";
 import BloodTypeFake from "../pages/BloodTypeFake";
+
 function AppRouter() {
     return (
             <Routes>

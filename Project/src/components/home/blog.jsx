@@ -8,7 +8,7 @@ const Blog = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/api/article/latest")
+      .get("http://localhost:8080/api/article/category?category=blog chia sẻ kinh nghiệm")
       .then((response) => {
         if (response.status === 200 && response.data.code === 200) {
           setArticles(response.data.data);
@@ -44,6 +44,11 @@ const Blog = () => {
                 {new Date(article.publishDate).toLocaleDateString()}
               </p>
               <div>{article.content}</div>
+              {article.imgPath && article.imgPath.includes("/upload/") && (
+                <div className="article-image">
+                  <img src={article.imgPath} alt={article.title} />
+                </div>
+              )}
             </article>
           ))
         )}

@@ -97,7 +97,7 @@ function LoginForm() {
       if (role === "ROLE_ADMIN") {
         navigate("/adminPage");
       } else if (role === "ROLE_MEMBER") {
-        navigate("/");
+        navigate("/", { state: { justLoggedIn: true } });
       } else if (role === "ROLE_STAFF") {
         navigate("/staffHome");
       } else {

@@ -8,15 +8,20 @@
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@mdi/js": "^7.4.47",
     "@mdi/react": "^1.6.1",
+    "@react-google-maps/api": "^2.20.6",
     "aos": "^2.3.4",
     "axios": "^1.9.0",
     "bootstrap": "^5.3.6",
     "bootstrap-icons": "^1.13.1",
+    "boxicons": "^2.1.4",
     "glightbox": "^3.3.1",
     "jwt-decode": "^4.0.0",
+    "leaflet": "^1.9.4",
     "react": "^18.x.x",
     "react-dom": "^18.x.x",
     "react-helmet": "^6.1.0",
+    "react-icons": "^5.5.0",
+    "react-leaflet": "^4.2.1",
     "react-router-dom": "^7.6.0",
     "react-scripts": "latest",
     "swiper": "^11.2.8"
@@ -35,5 +40,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.5",
+    "tailwindcss": "^4.1.10"
   }
 }
