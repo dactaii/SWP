@@ -3,8 +3,25 @@ import axios from "axios";
 import extractListFromColonToDot from "../../assets/js/extractListFromColonToDot";
 import splitText from "../../assets/js/splitText";
 
+const BloodCardGrid = ({ card }) => (
+  <div className="blood-grid">
+    {card.map((card, index) => (
+      <div className="card" key={index}>
+        <div className="card_image">
+          <img src={card.imgPath} alt={card.title}></img>
+        </div>
+        <div className="card_body">
+          <h4>{card.title}</h4>
+          <p>{card.content}</p>
+        </div>
+      </div>
+    ))}
+  </div>
+);
+
 const TypeOfBlood = () => {
   const [articles, setArticles] = useState([]);
+  const [bloodCards, setBloodCards] = useState([]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -16,7 +33,7 @@ const TypeOfBlood = () => {
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
+            },s
           }
         );
 
@@ -40,57 +57,93 @@ const TypeOfBlood = () => {
       }
     };
 
+    const fetchBloodCards = async () => {
+      try {
+        const res = await axios.get(
+          "http://localhost:8080/api/article/category?category=card nhóm máu",
+          {
+            header: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+
+        setBloodCards(res.data?.data || []);
+      } catch (err) {
+        console.error("Lỗi khi tải Blood Card:", err);
+      }
+    };
+
+    fetchBloodCards();
     fetchArticles();
   }, []);
+
+  const renderArticle = (item, index) => (
+    <div className="article-block" key={index}>
+      <h3>{item.title}</h3>
+
+      {item.listItems ? (
+        <>
+          {splitText(item.intro).map((s, i) => (
+            <React.Fragment key={i}>
+              - {s}
+              <br />
+            </React.Fragment>
+          ))}
+
+          <ul>
+            {item.listItems.map((list, i) => (
+              <li key={i}>{list}</li>
+            ))}
+          </ul>
+
+          {splitText(item.outro).map((s, i) => (
+            <React.Fragment key={i}>
+              {s}
+              <br />
+            </React.Fragment>
+          ))}
+        </>
+      ) : (
+        splitText(item.content).map((s, i) => (
+          <React.Fragment key={i}>
+            - {s}
+            <br />
+          </React.Fragment>
+        ))
+      )}
+      {item.imgPath && item.imgPath.includes("/upload/") && (
+        <div className="article-image">
+          <img src={item.imgPath} alt={item.title} />
+        </div>
+      )}
+    </div>
+  );
+
+  // tạo form render cho bloodCard
+  const beforeCards =[];
+  const afterCards =[];
+  let foundInsertPoint = false;
+
+  for (let article of articles){
+    if (article.title === "Các nhóm máu nào tương thích?"){
+      foundInsertPoint = true;
+    }
+    if (!foundInsertPoint){
+      beforeCards.push(article);
+    } else{
+      afterCards.push(article);
+    }
+  }
 
   return (
     <section className="blood-section">
       <h2>Nhóm máu</h2>
-      {articles.length > 0 ? (
-        articles.map((item, index) => (
-          <div className="article-block" key={index}>
-            <h3>{item.title}</h3>
+      {beforeCards.map((item, index) => renderArticle(item, index))}
 
-            {item.listItems ? (
-              <>
-                {splitText(item.intro).map((s, i) => (
-                  <React.Fragment key={i}>
-                    - {s}
-                    <br />
-                  </React.Fragment>
-                ))}
+      {bloodCards.length >0 && <BloodCardGrid card={bloodCards}/>}
 
-                <ul>
-                  {item.listItems.map((list, i) => (
-                    <li key={i}>{list}</li>
-                  ))}
-                </ul>
-
-                {splitText(item.outro).map((s, i) => (
-                  <React.Fragment key={i}>
-                    {s}
-                    <br />
-                  </React.Fragment>
-                ))}
-              </>
-            ) : (
-              splitText(item.content).map((s, i) => (
-                <React.Fragment key={i}>
-                  - {s}
-                  <br />
-                </React.Fragment>
-              ))
-            )}
-            {item.imgPath && item.imgPath.includes("/upload/") && (
-              <div className="article-image">
-                <img src={item.imgPath} alt={item.title} />
-              </div>
-            )}
-          </div>
-        ))
-      ) : (
-        <p>Đang tải nội dung...</p>
-      )}
+      {afterCards.map((item, index) => renderArticle(item, beforeCards.length + index))}
     </section>
   );
 };
