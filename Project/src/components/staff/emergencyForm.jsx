@@ -30,9 +30,11 @@ function EmergencyForm() {
     const token = localStorage.getItem("token"); // Lấy token từ localStorage
 
     if (!token) {
-      setMessage("❌ Không tìm thấy token đăng nhập.");
+      setMessage(" Không tìm thấy token đăng nhập.");
       return;
     }
+    console.log("Dữ liệu form gửi đi:", form);
+
 
     try {
       const response = await fetch("http://localhost:8080/api/emergency/register", {
@@ -44,12 +46,15 @@ function EmergencyForm() {
         body: JSON.stringify(form),
       });
 
-      const data = await response.json();
+
 
       if (response.ok) {
+        const data = await response.json();
         setMessage("Yêu cầu máu khẩn cấp đã được gửi thành công!");
         setMessageType("success");
       } else {
+        const text = await response.text();
+        console.error("Response lỗi:", text);
         setMessage("Đã xảy ra lỗi khi gửi yêu cầu");
         setMessageType("error");
       }
@@ -89,9 +94,9 @@ function EmergencyForm() {
           value={form.componentType}
           onChange={handleChange}
           required
-          placeholder="Tiểu cầu, Hồng cầu..."
-        >
 
+        >
+          <option value="">-- Chọn thành phần máu --</option>
           <option value="Whole" >Toàn phần</option>
           <option value="RBC"  >Hồng Cầu </option>
           <option value="Plasma"  >Huyết tương</option>
