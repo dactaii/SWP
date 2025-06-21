@@ -1,6 +1,6 @@
 @import './base/variables.css';
 @import './components/Layout/header.css';
-@import './components/Layout/footer.css'; 
+@import './components/Layout/footer.css';
 @import './pages/login.css';
 @import './components/home/hero.css';
 @import './components/home/about.css';
@@ -13,3 +13,4 @@
 @import './components/staff/emergencyForm.css';
 @import './components/home/LocationCard.css';
 @import './components/User/NewThongTin.css';
+@import './components/Blood/BloodDonation.css';

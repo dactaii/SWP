@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import logo from "../../assets/img/logos/logo.png";
 import logoDefault from "../../assets/img/icons/logoDefault.png";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import {jwtDecode} from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 import axios from "axios";
 import ScrollToAnchorLink from "../../assets/js/ScrollToAnchorLink";
 
@@ -197,8 +197,8 @@ const Header = () => {
                 </a>
                 <ul>
                   <li>
-                    <Link 
-                      to="/bloodtype" 
+                    <Link
+                      to="/bloodtype"
                       className={isActive("/bloodtype")}>
                       Các Loại Máu
                     </Link>
@@ -227,9 +227,9 @@ const Header = () => {
                 <ul>
                   <li>
                     <Link
-                      to="/dangkyhienmau"
-                      onClick={(e) => handleAccessLink(e, "/dangkyhienmau")}
-                      className={isActive("/dangkyhienmau")}
+                      to="/BloodDonation"
+                      onClick={(e) => handleAccessLink(e, "/BloodDonation")}
+                      className={isActive("/BloodDonation")}
                     >
                       Đăng ký hiến máu
                     </Link>

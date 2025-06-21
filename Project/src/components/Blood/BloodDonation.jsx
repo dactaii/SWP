@@ -157,7 +157,7 @@ function BloodDonation() {
                 </div>
 
                 <button type="submit" className="submit-btn">Gửi đăng ký</button>
-                {message && <p className="message" style={{ marginTop: "1rem", color: message.startsWith("") ? "green" : "blue" }}>{message}</p>}
+                {message && <p className="message" style={{ marginTop: "1rem", color: message.startsWith("") ? "green" : "Green" }}>{message}</p>}
             </form>
         </div>
     );
