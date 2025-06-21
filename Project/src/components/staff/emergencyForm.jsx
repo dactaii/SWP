@@ -16,12 +16,7 @@ function EmergencyForm() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
-    // Ensure quantity is non-negative
-    if (name === "quantity" && Number(value) < 0) {
-      return;
-    }
-
+    if (name === "quantity" && Number(value) < 0) return;
     setForm({ ...form, [name]: value });
   };
 
@@ -29,26 +24,32 @@ function EmergencyForm() {
     e.preventDefault();
     setMessage("Đang gửi...");
 
+    const token = localStorage.getItem("token"); // Lấy token từ localStorage
+
+    if (!token) {
+      setMessage("❌ Không tìm thấy token đăng nhập.");
+      return;
+    }
+
     try {
-      const response = await fetch(
-        "http://localhost:8080/api/emergency/register",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(form),
-        }
-      );
+      const response = await fetch("http://localhost:8080/api/emergency/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(form),
+      });
 
       const data = await response.json();
+
       if (response.ok) {
         setMessage("✅ " + data.message);
       } else {
         setMessage("❌ " + data.message);
       }
     } catch (error) {
+      console.error("Fetch error:", error);
       setMessage("❌ Lỗi kết nối tới server");
     }
   };
@@ -58,34 +59,38 @@ function EmergencyForm() {
       <h2>Đăng ký yêu cầu máu khẩn cấp</h2>
       <form onSubmit={handleSubmit}>
         <label>Nhóm máu</label>
-        <input
-          list="bloodtype"
+        <select
           name="bloodType"
           value={form.bloodType}
           onChange={handleChange}
-          placeholder="-- Chọn nhóm máu --"
           required
-        />
-
-        <datalist id="bloodtype">
-          <option value="Nhóm máu A+" />
-          <option value="Nhóm máu A-" />
-          <option value="Nhóm máu B+" />
-          <option value="Nhóm máu B-" />
-          <option value="Nhóm máu AB+" />
-          <option value="Nhóm máu AB-" />
-          <option value="Nhóm máu O+" />
-          <option value="Nhóm máu O-" />
-        </datalist>
+        >
+          <option value="">-- Chọn nhóm máu --</option>
+          <option value="A+">A+</option>
+          <option value="A-">A-</option>
+          <option value="B+">B+</option>
+          <option value="B-">B-</option>
+          <option value="AB+">AB+</option>
+          <option value="AB-">AB-</option>
+          <option value="O+">O+</option>
+          <option value="O-">O-</option>
+        </select>
 
         <label>Loại thành phần máu</label>
-        <input
+        <select
           name="componentType"
+          list="componentType"
           value={form.componentType}
           onChange={handleChange}
           required
           placeholder="Tiểu cầu, Hồng cầu..."
-        />
+        >
+
+          <option value="Whole" >Toàn phần</option>
+          <option value="RBC"  >Hồng Cầu </option>
+          <option value="Plasma"  >Huyết tương</option>
+          <option value="Platelet"  > Tiểu cầu</option>
+        </select>
 
         <label>Số lượng (đơn vị)</label>
         <input
