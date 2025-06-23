@@ -1,6 +1,7 @@
 const splitText = (text) => {
+  if (typeof text !== "string") return [];
+
   return text
-  // regex: ".", "?", "!", s+: khoảng trắng
     .split(/(?<=[.?!])\s+/)
     .filter((sentence) => sentence.trim() !== "");
 };

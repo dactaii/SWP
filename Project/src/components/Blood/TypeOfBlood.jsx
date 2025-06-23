@@ -33,7 +33,7 @@ const TypeOfBlood = () => {
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },s
+            },
           }
         );
 
