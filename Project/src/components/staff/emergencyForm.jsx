@@ -11,6 +11,7 @@ function EmergencyForm() {
   });
 
   const [message, setMessage] = useState("");
+  const [messageType, setMessageType] = useState("");
 
   const todayISO = new Date().toISOString().slice(0, 16); // YYYY-MM-DDTHH:mm
 
@@ -27,9 +28,10 @@ function EmergencyForm() {
     const token = localStorage.getItem("token"); // Lấy token từ localStorage
 
     if (!token) {
-      setMessage("❌ Không tìm thấy token đăng nhập.");
+      setMessage(" Không tìm thấy token đăng nhập.");
       return;
     }
+    console.log("Submitting form:", form); // Debugging line
 
     try {
       const response = await fetch("http://localhost:8080/api/emergency/register", {
@@ -44,13 +46,16 @@ function EmergencyForm() {
       const data = await response.json();
 
       if (response.ok) {
-        setMessage("✅ " + data.message);
+        setMessage("Yêu cầu máu khẩn cấp đã được gửi thành công!");
+        setMessageType("success");
       } else {
-        setMessage("❌ " + data.message);
+        setMessage("Đã xảy ra lỗi khi gửi yêu cầu");
+        setMessageType("error");
       }
+
     } catch (error) {
       console.error("Fetch error:", error);
-      setMessage("❌ Lỗi kết nối tới server");
+      setMessage("Lỗi kết nối tới server");
     }
   };
 
@@ -85,7 +90,7 @@ function EmergencyForm() {
           required
           placeholder="Tiểu cầu, Hồng cầu..."
         >
-
+          <option value="">-- Chọn loại thành phần máu --</option>
           <option value="Whole" >Toàn phần</option>
           <option value="RBC"  >Hồng Cầu </option>
           <option value="Plasma"  >Huyết tương</option>
@@ -130,7 +135,12 @@ function EmergencyForm() {
 
         <button type="submit">Gửi yêu cầu</button>
       </form>
-      <p className="message">{message}</p>
+      {message && (
+        <p className={`message ${messageType}`}>
+          {message}
+        </p>
+      )}
+
     </div>
   );
 }

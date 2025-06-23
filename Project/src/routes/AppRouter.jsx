@@ -8,6 +8,7 @@ import OAuth2RedirectHandler from "../components/login/OAuth2RedirectHandler";
 import RenderForBlood from "../components/Blood/RenderForBlood";
 import UpdateUserInfo from "../components/User/UpdateUserInfo";
 import BloodTypeFake from "../pages/BloodTypeFake";
+import BloodDonation from "../pages/BloodDonation";
 function AppRouter() {
     return (
         <Routes>
@@ -19,6 +20,7 @@ function AppRouter() {
             <Route path="/auth/social/callback/google" element={<OAuth2RedirectHandler />} />
             <Route path="/UpdateUserInfo" element={<UpdateUserInfo />} />
             <Route path="/BloodTypeFake" element={<BloodTypeFake />} />
+            <Route path="/BloodDonation" element={<BloodDonation />} />
 
         </Routes>
     );
