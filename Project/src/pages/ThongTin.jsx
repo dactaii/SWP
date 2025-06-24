@@ -3,6 +3,7 @@ import UserInfo from "../components/User/UserInfo";
 import UpdateUserInfo from "../components/User/UpdateUserInfo";
 import UserLayout from "../layouts/UserLayout";
 import EmergencyForm from "../components/staff/emergencyForm";
+import ScheduleManagement from "../components/staff/ScheduleManagement";
 
 const ThongTin = () => {
   const [activeComponent, setActiveComponent] = useState("userInfo");
@@ -41,12 +42,18 @@ const ThongTin = () => {
             </li>
 
             <li>
-              <a href="#" className={activeComponent === "history" ? "active" : ""}>
+              <a
+                href="#"
+                onClick={() => setActiveComponent("ScheduleManagement")}
+                className={activeComponent === "ScheduleManagement" ? "active" : ""}
+              >
                 <i className="bi bi-calendar3"></i>
                 <span className="link_name">Lịch sử hiến máu</span>
               </a>
               <span className="tooltip">Lịch sử hiến máu</span>
             </li>
+
+
 
             <li>
               <a href="#" className={activeComponent === "reminder" ? "active" : ""}>
@@ -103,6 +110,7 @@ const ThongTin = () => {
               </button>
             </>
           )}
+          {activeComponent === "ScheduleManagement" && <ScheduleManagement />}
 
           {activeComponent === "emergencyForm" && <EmergencyForm />}
         </main>

@@ -311,7 +311,7 @@ const Header = () => {
                       <Link to="/thongtin">Thông Tin Cá Nhân</Link>
                     </li>
                     <li>
-                      <Link to="/history">Lịch Sử Hiến Máu</Link>
+                      <Link to="/ScheduleManagement">Lịch Sử Hiến Máu</Link>
                     </li>
                     <li>
                       <Link to="/note">Nhắc Nhở Hiến Máu</Link>

@@ -1,0 +1,48 @@
+.schedule-management {
+    width: 100%;
+}
+
+.schedule-management h2 {
+    color: #c53030;
+    margin-bottom: 1rem;
+}
+
+.schedule-table {
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0 4px 8px rgb(0 0 0 / 0.05);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.schedule-table th,
+.schedule-table td {
+    padding: 1rem 1.2rem;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.schedule-table th {
+    background-color: #f7fafc;
+    font-weight: 600;
+    color: #4a5568;
+}
+
+.schedule-table tbody tr:hover {
+    background-color: #fef2f2;
+}
+
+.btn {
+    background-color: #e53e3e;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #c53030;
+}
