@@ -9,6 +9,7 @@ import RenderForBlood from "../components/Blood/RenderForBlood";
 import UpdateUserInfo from "../components/User/UpdateUserInfo";
 import BloodTypeFake from "../pages/BloodTypeFake";
 import BloodDonation from "../pages/BloodDonation";
+import ScheduleManagement from "../components/staff/ScheduleManagement";
 function AppRouter() {
     return (
         <Routes>
@@ -21,6 +22,7 @@ function AppRouter() {
             <Route path="/UpdateUserInfo" element={<UpdateUserInfo />} />
             <Route path="/BloodTypeFake" element={<BloodTypeFake />} />
             <Route path="/BloodDonation" element={<BloodDonation />} />
+            <Route path="/ScheduleManagement" element={<ScheduleManagement />} />
 
         </Routes>
     );
