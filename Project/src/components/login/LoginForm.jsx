@@ -99,7 +99,7 @@ function LoginForm() {
       } else if (role === "ROLE_MEMBER") {
         navigate("/", { state: { justLoggedIn: true } });
       } else if (role === "ROLE_STAFF") {
-        navigate("/staffHome");
+        navigate("/", { state: { justLoggedIn: true } });
       } else {
         setErrorMessage("Vai trò không hợp lệ!");
       }
@@ -117,9 +117,8 @@ function LoginForm() {
       <div className="login-page">
         <div
           id="container"
-          className={`container ${
-            rightPanelActive ? "right-panel-active" : ""
-          }`}
+          className={`container ${rightPanelActive ? "right-panel-active" : ""
+            }`}
         >
           <div className="form-container sign-up-container">
             <form onSubmit={handleSignUp}>
