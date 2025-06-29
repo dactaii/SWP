@@ -1,0 +1,169 @@
+.schedule-management {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.schedule-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    /* bảng nổi nhẹ */
+    overflow: hidden;
+}
+
+.schedule-table th,
+.schedule-table td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    /* viền mờ giữa các dòng */
+    font-size: 15px;
+}
+
+/* Dòng cuối không cần viền */
+.schedule-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* Header đẹp hơn */
+.schedule-table th {
+    background-color: #f4f6f8;
+    font-weight: 600;
+}
+
+.schedule-table tr:hover {
+    background-color: #f5d8d8;
+}
+
+
+
+/* Nền mờ */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* ⬅️ Canh giữa màn hình luôn */
+    z-index: 999;
+    animation: fadeIn 0.3s ease;
+}
+
+/* Form popup nằm giữa và to hơn */
+.contact-form {
+    background: #fff;
+    padding: 30px;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 600px;
+    /* ⬅️ To hơn */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    animation: scaleUp 0.3s ease;
+}
+
+.contact-form h3 {
+    margin-top: 0;
+    font-size: 1.5rem;
+}
+
+.contact-form label {
+    display: block;
+    margin: 15px 0 5px;
+    font-weight: bold;
+}
+
+.contact-form input,
+.contact-form select {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+.form-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    background-color: #e24c4c;
+    color: white;
+    transition: background-color 0.2s;
+}
+
+button:hover {
+    background-color: #f1baac;
+}
+
+button.cancel {
+    background-color: #999;
+}
+
+button.cancel:hover {
+    background-color: #666;
+}
+
+/* Hiệu ứng xuất hiện */
+@keyframes fadeIn {
+    from {
+        background: rgba(0, 0, 0, 0);
+    }
+
+    to {
+        background: rgba(0, 0, 0, 0.5);
+    }
+}
+
+@keyframes scaleUp {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.custom-alert {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #4caf50;
+    color: white;
+    padding: 20px 32px;
+    font-size: 18px;
+    border-radius: 10px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+    z-index: 9999;
+    animation: fadeOut 3s forwards;
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+
+    70% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}

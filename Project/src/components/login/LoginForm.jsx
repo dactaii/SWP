@@ -117,9 +117,8 @@ function LoginForm() {
       <div className="login-page">
         <div
           id="container"
-          className={`container ${
-            rightPanelActive ? "right-panel-active" : ""
-          }`}
+          className={`container ${rightPanelActive ? "right-panel-active" : ""
+            }`}
         >
           <div className="form-container sign-up-container">
             <form onSubmit={handleSignUp}>

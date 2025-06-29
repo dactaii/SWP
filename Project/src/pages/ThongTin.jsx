@@ -3,7 +3,8 @@ import UserInfo from "../components/User/UserInfo";
 import UpdateUserInfo from "../components/User/UpdateUserInfo";
 import UserLayout from "../layouts/UserLayout";
 import EmergencyForm from "../components/staff/emergencyForm";
-
+import ScheduleManagement from "../components/staff/ScheduleManagement";
+import AppointmentList from "../components/staff/AppointmentList";
 const ThongTin = () => {
   const [activeComponent, setActiveComponent] = useState("userInfo");
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -41,19 +42,27 @@ const ThongTin = () => {
             </li>
 
             <li>
-              <a href="#" className={activeComponent === "history" ? "active" : ""}>
+              <a
+                href="#"
+                onClick={() => setActiveComponent("ScheduleManagement")}
+                className={activeComponent === "ScheduleManagement" ? "active" : ""}
+              >
                 <i className="bi bi-calendar3"></i>
-                <span className="link_name">Lịch sử hiến máu</span>
+                <span className="link_name">Quản lí lịch hẹn </span>
               </a>
-              <span className="tooltip">Lịch sử hiến máu</span>
+              <span className="tooltip">Quản lí lịch hẹn</span>
             </li>
 
+
+
             <li>
-              <a href="#" className={activeComponent === "reminder" ? "active" : ""}>
+              <a href="#"
+                onClick={() => setActiveComponent("AppointmentList")}
+                className={activeComponent === "AppointmentList" ? "active" : ""}>
                 <i className="bi bi-journal-bookmark-fill"></i>
-                <span className="link_name">Nhắc nhở hiến máu</span>
+                <span className="link_name">Lịch sử lịch hẹn hiến máu</span>
               </a>
-              <span className="tooltip">Nhắc nhở hiến máu</span>
+              <span className="tooltip">Lịch sử lịch hẹn hiến máu</span>
             </li>
 
           </ul>
@@ -84,6 +93,9 @@ const ThongTin = () => {
               </button>
             </>
           )}
+          {activeComponent === "ScheduleManagement" && <ScheduleManagement />}
+          {activeComponent === "AppointmentList" && <AppointmentList />}
+
 
           {activeComponent === "emergencyForm" && <EmergencyForm />}
         </main>

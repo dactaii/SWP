@@ -1,3 +1,4 @@
+
 // import React, { useState, useEffect, useRef } from "react";
 // import logo from "../../assets/img/logos/logo.png";
 // import logoDefault from "../../assets/img/icons/logoDefault.png";
@@ -7,6 +8,17 @@
 // import ScrollToAnchorLink from "../../assets/js/ScrollToAnchorLink";
 
 // const Default_Avatar = logoDefault;
+
+import React, { useState, useEffect, useRef } from "react";
+import logo from "../../assets/img/logos/logo.png";
+import logoDefault from "../../assets/img/icons/logoDefault.png";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
+import axios from "axios";
+import ScrollToAnchorLink from "../../assets/js/ScrollToAnchorLink";
+import BloodDonation from "../Blood/BloodDonation";
+const Default_Avatar = logoDefault;
+
 
 // const Header = () => {
 //   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -295,6 +307,7 @@
 //             </ul>
 //           </nav>
 
+
 //           {!isLoginPage &&
 //             (name ? (
 //               <div
@@ -322,6 +335,35 @@
 //                           e.preventDefault();
 //                           const token = localStorage.getItem("token");
 //                           const email = localStorage.getItem("email");
+
+          {!isLoginPage &&
+            (name ? (
+              <div
+                ref={dropdownRef}
+                className={`name-btn dropdown ${dropdownOpen ? "open" : ""}`}
+                onClick={() => setDropdownOpen(!dropdownOpen)}
+              >
+                <img src={avatar} alt="avatar" />
+                <span>{name}</span>{" "}
+                <i className="bi bi-chevron-down toggle-dropdown"></i>
+                {dropdownOpen && (
+                  <ul className="dropdown-menu">
+                    <li>
+                      <Link to="/thongtin">Thông Tin Cá Nhân</Link>
+                    </li>
+                    <li>
+                      <Link to="/ScheduleManagement">Lịch Sử Hiến Máu</Link>
+                    </li>
+                    <li>
+                      <Link to="/note">Nhắc Nhở Hiến Máu</Link>
+                    </li>
+                    <li>
+                      <a
+                        onClick={(e) => {
+                          e.preventDefault();
+                          const token = localStorage.getItem("token");
+                          const email = localStorage.getItem("email");
+
 
 //                           if (window.google && email) {
 //                             window.google.accounts.id.revoke(email, () => {
