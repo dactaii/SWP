@@ -73,6 +73,7 @@ function BloodDonation() {
                 note: formData.note,
             };
 
+            if (!token) return;
             const response = await axios.post("http://localhost:8080/api/donor/register", fullData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -93,7 +94,7 @@ function BloodDonation() {
             }
         } catch (error) {
             console.error("Lỗi gửi API:", error);
-            setMessage(" Lỗi kết nối tới server");
+            setMessage(" Lỗi kết nối tới server hoặc bạn đã đăng ký trước đó.");
         }
     };
 
@@ -157,7 +158,7 @@ function BloodDonation() {
                 </div>
 
                 <button type="submit" className="submit-btn">Gửi đăng ký</button>
-                {message && <p className="message" style={{ marginTop: "1rem", color: message.startsWith("") ? "green" : "blue" }}>{message}</p>}
+                {message && <p className="message" style={{ marginTop: "1rem", color: message.startsWith("") ? "Red" : "Green" }}>{message}</p>}
             </form>
         </div>
     );
