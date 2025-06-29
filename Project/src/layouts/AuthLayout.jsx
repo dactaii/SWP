@@ -4,7 +4,7 @@ const AuthLayout = ({ children }) => {
 
     return (
         <>
-            <Header /> 
+            {/* <Header />  */}
             <main>{children}</main>
         </>
     );

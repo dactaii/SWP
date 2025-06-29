@@ -65,25 +65,6 @@ const ThongTin = () => {
               <span className="tooltip">Lịch sử lịch hẹn hiến máu</span>
             </li>
 
-            <li>
-              <a href="#" className={activeComponent === "notification" ? "active" : ""}>
-                <i className="bi bi-bell-fill"></i>
-                <span className="link_name">Thông Báo Cần Máu</span>
-              </a>
-              <span className="tooltip">Thông Báo Cần Máu</span>
-            </li>
-
-            <li>
-              <a
-                href="#"
-                onClick={handleEmergencyClick}
-                className={activeComponent === "emergencyForm" ? "active" : ""}
-              >
-                <i className="bi bi-exclamation-square-fill"></i>
-                <span className="link_name">Cần Máu Khẩn Cấp</span>
-              </a>
-              <span className="tooltip">Cần Máu Khẩn Cấp</span>
-            </li>
           </ul>
         </div>
 

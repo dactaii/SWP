@@ -13,6 +13,7 @@ const BloodCardGrid = ({ card }) => (
         <div className="card_body">
           <h4>{card.title}</h4>
           <p>{card.content}</p>
+          <button onClick={() => handleLearnMore(card)}>Tìm hiểu thêm về {card.title}</button>
         </div>
       </div>
     ))}
@@ -29,7 +30,7 @@ const TypeOfBlood = () => {
     const fetchArticles = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:8080/api/article/category?category=tài liệu về các loại máu",
+          "http://localhost:8080/api/article/category?category=Tổng quan nhóm máu",
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,

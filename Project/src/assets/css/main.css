@@ -14,5 +14,7 @@
 @import './components/home/LocationCard.css';
 @import './components/User/NewThongTin.css';
 @import './components/Blood/BloodDonation.css';
+@import './components/Layout/Sidebar.css';
+@import './components/staff/bloodUnit.css';
 @import './components/staff/ScheduleManagement.css';
 @import './components/staff/AppointmentList.css';

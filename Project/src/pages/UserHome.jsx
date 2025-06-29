@@ -6,7 +6,6 @@ import Standard from "../components/home/standard";
 import { useLocation } from "react-router-dom";
 import Blog from "../components/home/blog";
 import LocationCard from "../components/home/locationCard";
-import UserMap from "../components/home/UserMap";
 
 const UserHome = () => {
   const location = useLocation();
@@ -27,10 +26,10 @@ const UserHome = () => {
           }}
         />
       )}
-      <Hero />
-      <About />
-      <Standard />
-      <Blog />
+        {/* <Hero /> */}
+        <About />
+        <Standard />
+        <Blog />
     </UserLayout>
   );
 };

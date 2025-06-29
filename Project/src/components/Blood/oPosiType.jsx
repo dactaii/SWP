@@ -12,7 +12,7 @@ const oPosiType = () => {
     const fetchArticles = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:8080/api/article/category?category=nhóm máu o+",
+          "http://localhost:8080/api/article/category?category=nhóm máu oposi",
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
