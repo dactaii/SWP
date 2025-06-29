@@ -99,7 +99,7 @@ function LoginForm() {
       } else if (role === "ROLE_MEMBER") {
         navigate("/", { state: { justLoggedIn: true } });
       } else if (role === "ROLE_STAFF") {
-        navigate("/staffHome");
+        navigate("/", { state: { justLoggedIn: true } });
       } else {
         setErrorMessage("Vai trò không hợp lệ!");
       }

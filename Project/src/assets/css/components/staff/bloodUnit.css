@@ -1,0 +1,34 @@
+.table-wrapper {
+  overflow-x: auto;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.08);
+  background-color: white;
+}
+
+.blood-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--default-font);
+  font-size: 1.05rem;
+}
+
+.blood-table thead {
+  background-color: #e0e0e0;
+}
+
+.blood-table th, .blood-table td {
+  padding: 0.9rem 1.2rem;
+  border: 1px solid #ccc;
+  text-align: left;
+}
+
+.blood-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.main-content h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  color: var(--heading-color);
+}

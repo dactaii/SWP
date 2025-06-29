@@ -1,7 +1,7 @@
-/* Header */
+Header
 .header {
   color: var(--default-color);
-  z-index: 997; /* Lớp chồng trên z<997 */
+  z-index: 997; 
 }
 
 .header,

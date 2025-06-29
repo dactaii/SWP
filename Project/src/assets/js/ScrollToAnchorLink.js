@@ -12,7 +12,7 @@ const ScrollToAnchorLink = ({ to, anchorId, children }) => {
       
       const element = document.getElementById(anchorId);
       if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
+        element.scrollIntoView({ behavior: "smooth", block: "start" });
       }
     } else {
       navigate(to, { state: { scrollToId: anchorId } });

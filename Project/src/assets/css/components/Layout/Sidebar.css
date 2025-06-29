@@ -1,0 +1,317 @@
+:root {
+  --accent-color: #e60023;
+  --staff-accent-color: #009d71;
+}
+
+/* Sidebar tổng thể */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 320px;
+  height: 100vh;
+  background-color: #fff;
+  border-right: 1px solid #dbdbdb;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  z-index: 1000;
+  font-family: "Segoe UI", Roboto, sans-serif;
+}
+
+.sidebar.staff-mode a:hover,
+.sidebar.staff-mode summary:hover,
+.sidebar.staff-mode .user-dropdown a:hover,
+.sidebar.staff-mode button.sidebar-more-btn:hover {
+  background-color: rgba(0, 123, 255, 0.05);
+  border: 1px solid var(--staff-accent-color);
+  box-shadow: 0 0 5px var(--staff-accent-color);
+  color: var(--staff-accent-color);
+}
+
+.sidebar.staff-mode a.active,
+.sidebar.staff-mode summary.active,
+.sidebar.staff-mode .user-dropdown a.active,
+.sidebar.staff-mode button.sidebar-more-btn.active {
+  background-color: rgba(0, 123, 255, 0.1);
+  color: var(--staff-accent-color);
+  font-weight: bold;
+}
+
+.sidebar.staff-mode a.active .sidebar-icon,
+.sidebar.staff-mode summary.active .sidebar-icon,
+.sidebar.staff-mode .user-dropdown a.active .sidebar-icon,
+.sidebar.staff-mode button.sidebar-more-btn.active .sidebar-icon {
+  color: var(--staff-accent-color);
+}
+
+/* Logo */
+.sidebar-logo-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 24px 0;
+  border-bottom: 1px solid #dbdbdb;
+}
+
+.sidebar-logo img {
+  width: 200px;
+  height: auto;
+}
+
+/* Vùng chính chứa nav */
+.sidebar-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding-top: 18px;
+  padding-left: 20px;
+}
+
+/* Navigation */
+.sidebar-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.sidebar-nav li {
+  margin: 0;
+}
+
+.sidebar-nav a,
+.sidebar-nav summary {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 21px;
+  font-weight: 500;
+  text-decoration: none;
+  color: #000;
+  padding: 10px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.sidebar-nav a:hover,
+.sidebar-nav summary:hover {
+  background-color: rgba(230, 0, 35, 0.05);
+  border: 1px solid var(--accent-color);
+  box-shadow: 0 0 5px var(--accent-color);
+  color: var(--accent-color);
+}
+
+.sidebar-nav .active {
+  font-weight: 600;
+  color: #000;
+}
+
+.sidebar-nav summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Mục con */
+.sidebar-nav ul ul {
+  margin-top: 6px;
+  padding-left: 17px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sidebar-nav ul ul li a {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 17px;
+  font-weight: 500;
+  color: #000;
+  text-decoration: none;
+  padding: 10px 12px;
+  border-radius: 10px;
+  transition: all 0.2s;
+}
+
+.sidebar-nav ul ul li a:hover {
+  background-color: rgba(230, 0, 35, 0.05);
+  border: 1px solid var(--accent-color);
+  box-shadow: 0 0 5px var(--accent-color);
+  color: var(--accent-color);
+}
+
+/* Người dùng */
+.sidebar-user {
+  border-top: 1px solid #dbdbdb;
+  padding: 16px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-left: 20px;
+  padding-right: 12px;
+  margin-bottom: 16px;
+}
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  font-weight: 500;
+  color: #000;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+
+.user-info:hover {
+  background-color: rgba(230, 0, 35, 0.05);
+  border: 1px solid var(--accent-color);
+  box-shadow: 0 0 5px var(--accent-color);
+  color: var(--accent-color);
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.username {
+  font-size: 21px;
+  font-weight: 500;
+  color: #000;
+  position: unset;
+  top: unset;
+}
+
+/* Nút xem thêm */
+.sidebar-more-btn {
+  background: none;
+  border: none;
+  color: #000;
+  font-size: 21px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  transition: all 0.2s;
+}
+
+.sidebar-more-btn:hover {
+  background-color: rgba(230, 0, 35, 0.05);
+  border: 1px solid var(--accent-color);
+  box-shadow: 0 0 5px var(--accent-color);
+  color: var(--accent-color);
+}
+
+/* Dropdown người dùng */
+.user-dropdown {
+  list-style: none;
+  margin: 0;
+  padding: 0 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.user-dropdown li a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 17px;
+  font-weight: 500;
+  color: #000;
+  text-decoration: none;
+  padding: 10px 12px;
+  border-radius: 10px;
+  transition: all 0.2s;
+}
+
+.user-dropdown li a:hover {
+  background-color: rgba(230, 0, 35, 0.05);
+  border: 1px solid var(--accent-color);
+  box-shadow: 0 0 5px var(--accent-color);
+  color: var(--accent-color);
+}
+
+/* Đăng nhập */
+.sidebar-login-btn {
+  text-align: center;
+  padding: 16px 0;
+}
+
+.sidebar-login-btn a {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--accent-color);
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.sidebar-login-btn a:hover {
+  text-decoration: underline;
+}
+
+/* Icon */
+.sidebar-icon {
+  font-size: 33px;
+  color: #000;
+  transition: all 0.2s;
+}
+
+.sidebar a.active,
+.sidebar summary.active,
+.sidebar .user-dropdown a.active,
+.sidebar button.sidebar-more-btn.active {
+  background-color: rgba(220, 53, 69, 0.1);
+  color: var(--accent-color, #dc3545);
+  font-weight: bold;
+  border-radius: 8px;
+}
+
+.sidebar a.active .sidebar-icon,
+.sidebar summary.active .sidebar-icon,
+.sidebar .user-dropdown a.active .sidebar-icon,
+.sidebar button.sidebar-more-btn.active .sidebar-icon {
+  color: var(--accent-color, #dc3545);
+}
+
+.sidebar-nav a:hover .sidebar-icon,
+.sidebar-nav summary:hover .sidebar-icon,
+.sidebar-nav ul ul li a:hover .sidebar-icon,
+.sidebar-more-btn:hover .sidebar-icon,
+.user-info:hover .sidebar-icon,
+.user-dropdown li a:hover .sidebar-icon {
+  color: var(--accent-color);
+}
+
+.sidebar.staff-mode .sidebar-nav a:hover .sidebar-icon,
+.sidebar.staff-mode .sidebar-nav summary:hover .sidebar-icon,
+.sidebar.staff-mode .sidebar-nav ul ul li a:hover .sidebar-icon,
+.sidebar.staff-mode .sidebar-more-btn:hover .sidebar-icon,
+.sidebar.staff-mode .user-info:hover .sidebar-icon,
+.sidebar.staff-mode .user-dropdown li a:hover .sidebar-icon {
+  color: var(--staff-accent-color);
+}
+
+.sidebar.staff-mode .user-info:hover {
+  background-color: rgba(0, 123, 255, 0.05);
+  border: 1px solid var(--staff-accent-color);
+  box-shadow: 0 0 5px var(--staff-accent-color);
+  color: var(--staff-accent-color);
+}
+
+.sidebar.staff-mode .user-info:hover .sidebar-icon {
+  color: var(--staff-accent-color);
+}

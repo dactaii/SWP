@@ -1,112 +1,152 @@
-/*--------------------------------------------------------------
-# Blog Section
---------------------------------------------------------------*/
+/* Blog Section container */
 #blog {
-  padding-top: 50px;
-  padding-bottom: 50px;
+  padding: 50px 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+/* Content wrapper */
 #blog .container {
   max-width: 900px;
   margin: 0 auto;
   padding: 0 15px;
 }
 
+/* Blog title */
 #blog h2 {
   font-size: 32px;
   font-weight: 700;
-  margin-bottom: 20px;
-  padding-bottom: 20px;
-  position: relative;
+  margin-bottom: 30px;
   text-align: center;
-
+  position: relative;
 }
 
 #blog h2::after {
   content: "";
-  position: absolute;
   width: 80px;
   height: 3px;
-  background: var(--accent-color);
+  background-color: var(--accent-color, #dc3545);
+  position: absolute;
+  bottom: -10px;
   left: 50%;
   transform: translateX(-50%);
-  bottom: -10px;
   border-radius: 2px;
 }
 
-#blog article {
-  margin-bottom: 30px;
-  padding-bottom: 15px;
-  border-bottom: 1px solid #ddd;
+/* Blog card (comment-style) */
+.comment-box {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  border-left: 5px solid var(--accent-color, #dc3545);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-#blog article:last-child {
-  border-bottom: none;
+.comment-box:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
 }
 
-#blog article h3 {
-  font-size: 1.75rem;
-  font-weight: 700;
+/* Tiêu đề bài viết */
+.comment-title {
+  font-weight: bold;
+  color: #222;
+  font-size: 1.2rem;
   margin-bottom: 8px;
-  color: #333;
 }
 
-#blog article p {
-  font-size: 0.9rem;
-  color: #555;
+/* Nội dung bài viết */
+.comment-text {
+  font-size: 0.95rem;
+  color: #444;
+  line-height: 1.5;
   margin-bottom: 10px;
 }
 
-#blog article p strong {
-  color: var(--accent-color);
+/* Nút xem thêm */
+.see-more {
+  color: #007bff;
+  cursor: pointer;
+  text-decoration: underline;
+  font-size: 0.9rem;
+  margin-top: 8px;
+  display: inline-block;
 }
 
-#blog article div {
-  font-size: 1rem;
-  line-height: 1.5;
-  color: #444;
+/* Hình ảnh (ẩn ban đầu, hiện khi bấm) */
+.comment-image {
+  margin-top: 12px;
+  max-width: 100%;
+  max-height: 240px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Error message */
-#blog p[style*="color: red"] {
-  text-align: center;
-  font-weight: 600;
+/* Footer: người viết + ngày đăng */
+.comment-footer {
+  margin-top: 16px;
+  font-size: 0.85rem;
+  color: #777;
+  display: flex;
+  flex-direction: column;
+}
+
+.comment-footer .author {
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.comment-footer .date {
+  color: #999;
 }
 
 /* Responsive */
-@media (max-width: 575.98px) {
+@media (max-width: 576px) {
   #blog h2 {
     font-size: 28px;
   }
 
-  #blog article h3 {
-    font-size: 1.5rem;
+  .comment-title {
+    font-size: 1rem;
   }
 
-  #blog article p,
-  #blog article div {
+  .comment-text {
     font-size: 0.9rem;
   }
-}
 
-/* Image inside blog article */
-#blog .article-image {
-  margin-top: 15px;
-  text-align: center;
-}
-
-#blog .article-image img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  object-fit: cover;
-}
-
-/* Responsive image */
-@media (max-width: 575.98px) {
-  #blog .article-image img {
-    border-radius: 6px;
+  .comment-image {
+    max-height: 160px;
   }
 }
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  gap: 8px;
+}
+
+.page-btn {
+  padding: 6px 12px;
+  border: 1px solid var(--accent-color);
+  background-color: #fff;
+  color: var(--accent-color);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+
+.page-btn:hover {
+  background-color: var(--accent-color);
+  color: #fff;
+}
+
+.page-btn.active {
+  background-color: var(--accent-color);
+  color: #fff;
+  font-weight: bold;
+}
+
