@@ -1,15 +1,201 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Góc chia sẻ kinh nghiệm</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f5f5f5;
+    }
+
+    /* Layout tổng */
+    .layout {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 300px;
+      background-color: #dc3545;
+      color: white;
+      padding: 30px 20px;
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+    }
+
+    .sidebar h2 {
+      margin-top: 0;
+      font-size: 24px;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 30px;
+    }
+
+    .sidebar ul li {
+      margin-bottom: 15px;
+    }
+
+    .sidebar ul li a {
+      color: white;
+      text-decoration: none;
+      font-size: 16px;
+      transition: 0.2s;
+    }
+
+    .sidebar ul li a:hover {
+      text-decoration: underline;
+    }
+
+    /* Main content */
+    .main-content {
+      margin-left: 300px;
+      flex: 1;
+      padding: 40px 30px;
+    }
+
+    .blog-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .blog-header h1 {
+      font-size: 32px;
+      color: #dc3545;
+      margin-bottom: 10px;
+    }
+
+    .blog-header p {
+      font-size: 16px;
+      color: #666;
+    }
+
+    .blog-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .blog-card {
+      background-color: white;
+      border-left: 5px solid #dc3545;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      transition: 0.2s;
+    }
+
+    .blog-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .blog-card h3 {
+      margin: 0 0 10px;
+      font-size: 20px;
+      color: #222;
+    }
+
+    .blog-card p {
+      font-size: 15px;
+      color: #444;
+      line-height: 1.6;
+    }
+
+    .pagination {
+      display: flex;
+      justify-content: center;
+      margin-top: 30px;
+      gap: 10px;
+    }
+
+    .page-btn {
+      padding: 6px 12px;
+      border: 1px solid #dc3545;
+      color: #dc3545;
+      background-color: white;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .page-btn:hover,
+    .page-btn.active {
+      background-color: #dc3545;
+      color: white;
+      font-weight: bold;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .sidebar {
+        display: none;
+      }
+      .main-content {
+        margin-left: 0;
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
 <body>
-  <input list="bloodtype" placeholder="Select">
-  <datalist id="bloodtype">
-    <option value="Nhóm máu A+"></option>
-    <option value="Nhóm máu A-"></option>
-    <option value="Nhóm máu B+"></option>
-    <option value="Nhóm máu B-"></option>
-    <option value="Nhóm máu AB+"></option>
-    <option value="Nhóm máu AB-"></option>
-    <option value="Nhóm máu O+"></option>
-    <option value="Nhóm máu O-"></option>
-  </datalist>
+
+<div class="layout">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <h2>DonorPoint</h2>
+    <ul>
+      <li><a href="#">Trang chủ</a></li>
+      <li><a href="#">Các loại máu</a></li>
+      <li><a href="#">Đăng ký hiến máu</a></li>
+      <li><a href="#">Tìm người hiến máu</a></li>
+      <li><a href="#">Tìm người cần máu</a></li>
+      <li><a href="#">Góc chia sẻ</a></li>
+    </ul>
+  </aside>
+
+  <!-- Main content -->
+  <div class="main-content">
+    <div class="blog-header">
+      <h1>Góc chia sẻ kinh nghiệm</h1>
+      <p>Những câu chuyện thực tế và truyền cảm hứng từ cộng đồng hiến máu</p>
+    </div>
+
+    <div class="blog-list">
+      <div class="blog-card">
+        <h3>Lần đầu hiến máu, cảm giác rất đặc biệt</h3>
+        <p>Tôi đã từng rất sợ kim tiêm, nhưng lần đầu tiên hiến máu khiến tôi thay đổi suy nghĩ. Không chỉ không đau như tưởng tượng, mà tôi còn cảm thấy tự hào vì đã làm điều gì đó có ích.</p>
+      </div>
+
+      <div class="blog-card">
+        <h3>Hiến máu cùng bạn bè – một trải nghiệm đáng nhớ</h3>
+        <p>Chúng tôi đã rủ nhau đi hiến máu theo nhóm. Không khí rất vui, giống như một hoạt động tập thể ý nghĩa. Mọi người cùng cười, cùng động viên nhau. Chắc chắn sẽ còn tham gia nữa!</p>
+      </div>
+
+      <div class="blog-card">
+        <h3>Tôi đã hiến máu 5 lần</h3>
+        <p>Mỗi lần hiến máu là một lần tôi cảm thấy hạnh phúc. Biết rằng giọt máu của mình có thể cứu sống ai đó là điều không gì so sánh được.</p>
+      </div>
+    </div>
+
+    <div class="pagination">
+      <span class="page-btn active">1</span>
+      <span class="page-btn">2</span>
+      <span class="page-btn">3</span>
+    </div>
+  </div>
+</div>
+
 </body>
-
-
+</html>

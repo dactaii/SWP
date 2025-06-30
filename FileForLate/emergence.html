@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <title>Yêu cầu Hiến Máu Khẩn Cấp</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      height: 100vh;
+    }
+
+    .sidebar {
+      width: 220px;
+      background-color: #2c3e50;
+      color: white;
+      padding: 20px;
+    }
+
+    .main {
+      position: relative;
+      flex: 1;
+      background-color: #f5f5f5;
+      overflow: hidden;
+    }
+
+    .content {
+      width: 100%;
+      padding: 30px;
+      transition: width 0.5s ease;
+    }
+
+    .content.shrink {
+      width: 66.666%;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 8px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin-right: 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .check-stock {
+      background-color: #3498db;
+      color: white;
+    }
+
+    .find-donor {
+      background-color: #e74c3c;
+      color: white;
+    }
+
+    /* Panel không chiếm chỗ, trượt ra khi show */
+    .donor-panel {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 33.333%;
+      height: 100%;
+      background: white;
+      padding: 20px;
+      box-shadow: -2px 0 6px rgba(0,0,0,0.2);
+      transform: translateX(100%);
+      transition: transform 0.5s ease;
+      z-index: 10;
+    }
+
+    .donor-panel.show {
+      transform: translateX(0);
+    }
+
+    .donor-card {
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 15px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .donor-card h3 {
+      margin: 0 0 10px;
+    }
+
+    .donor-card button {
+      margin-top: 10px;
+      background-color: #27ae60;
+      color: white;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .pagination {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .pagination span {
+      display: inline-block;
+      padding: 6px 10px;
+      margin: 0 5px;
+      background: #eee;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .pagination .active {
+      background: #3498db;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="sidebar">
+    <h2>Staff</h2>
+    <ul>
+      <li>Quản lý người dùng</li>
+      <li>Kho máu</li>
+      <li>Hiến khẩn cấp</li>
+    </ul>
+  </div>
+
+  <div class="main">
+    <div class="content" id="formContent">
+      <h1>Yêu cầu hiến máu khẩn cấp</h1>
+
+      <div class="form-group">
+        <label for="hospitalId">Mã bệnh viện</label>
+        <input type="number" id="hospitalId" value="21" />
+      </div>
+
+      <div class="form-group">
+        <label for="bloodType">Nhóm máu</label>
+        <select id="bloodType">
+          <option>B+</option><option>O+</option><option>A+</option><option>AB+</option>
+          <option>B-</option><option>O-</option><option>A-</option><option>AB-</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="componentType">Loại chế phẩm</label>
+        <select id="componentType">
+          <option>Whole Blood</option>
+          <option>Plasma</option>
+          <option>Platelets</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="quantity">Số lượng (đơn vị)</label>
+        <input type="number" id="quantity" value="14" />
+      </div>
+
+      <div class="form-group">
+        <label for="note">Ghi chú</label>
+        <textarea id="note">Cần máu cho tai nạn</textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="neededTime">Thời gian cần</label>
+        <input type="datetime-local" id="neededTime" value="2025-06-24T10:00" />
+      </div>
+
+      <div class="button-group">
+        <button class="check-stock">Kiểm tra kho máu</button>
+        <button class="find-donor" onclick="toggleDonorPanel()">Tìm người hiến phù hợp</button>
+      </div>
+    </div>
+
+    <div class="donor-panel" id="donorPanel">
+      <h2>Người hiến phù hợp</h2>
+
+      <div class="donor-card">
+        <h3>Nguyễn Văn A</h3>
+        <p>📍 Quận 1, TP.HCM</p>
+        <p>📞 0909123456</p>
+        <p>🩸 Nhóm máu: B+</p>
+        <button>Xác nhận hiến máu</button>
+      </div>
+
+      <div class="donor-card">
+        <h3>Trần Thị B</h3>
+        <p>📍 Quận 5, TP.HCM</p>
+        <p>📞 0911123456</p>
+        <p>🩸 Nhóm máu: B+</p>
+        <button>Xác nhận hiến máu</button>
+      </div>
+
+      <div class="pagination">
+        <span class="active">1</span>
+        <span>2</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function toggleDonorPanel() {
+      const panel = document.getElementById("donorPanel");
+      const form = document.getElementById("formContent");
+
+      const isOpen = panel.classList.toggle("show");
+      form.classList.toggle("shrink", isOpen);
+    }
+  </script>
+
+</body>
+</html>

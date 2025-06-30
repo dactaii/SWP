@@ -29,7 +29,6 @@ const UserHome = () => {
         {/* <Hero /> */}
         <About />
         <Standard />
-        <Blog />
     </UserLayout>
   );
 };

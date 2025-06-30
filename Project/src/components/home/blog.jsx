@@ -39,10 +39,8 @@ const Blog = () => {
     indexOfLastArticle
   );
 
-  // Tính tổng số trang
   const totalPages = Math.ceil(articles.length / articlesPerPage);
 
-  // Chuyển trang
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
@@ -64,6 +62,7 @@ const Blog = () => {
         <div className="pagination">
           {[...Array(totalPages)].map((_, index) => (
             <span
+              key={index}
               className={`page-btn ${
                 currentPage === index + 1 ? "active" : ""
               }`}

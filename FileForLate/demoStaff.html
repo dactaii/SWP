@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tra cứu thành phần & đơn vị máu</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      height: 100vh;
+    }
+    .sidebar {
+      width: 220px;
+      background-color: #2c3e50;
+      color: white;
+      padding: 20px;
+    }
+    .sidebar h2 {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+    .sidebar a {
+      display: block;
+      color: white;
+      padding: 10px;
+      text-decoration: none;
+      margin-bottom: 5px;
+      border-radius: 5px;
+    }
+    .sidebar a:hover,
+    .sidebar a.active {
+      background-color: #34495e;
+    }
+    .main {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 30px;
+    }
+    table, th, td {
+      border: 1px solid #ccc;
+    }
+    th, td {
+      padding: 10px;
+      text-align: left;
+    }
+    h3 {
+      border-bottom: 2px solid #ccc;
+      padding-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <h2>Tra cứu</h2>
+    <a href="#component" class="active">Thành phần máu</a>
+    <a href="#unit">Đơn vị máu</a>
+    <a href="#map">Thành phần & Đơn vị</a>
+  </div>
+  <div class="main">
+    <section id="component">
+      <h3>1. Thành phần máu</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Tên</th>
+            <th>Mô tả chi tiết</th>
+            <th>Thời gian bảo quản</th>
+            <th>Nhiệt độ bảo quản</th>
+            <th>Ứng dụng lâm sàng</th>
+            <th>Ghi chú</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Hồng cầu</td>
+            <td>Vận chuyển oxy và CO2, cung cấp năng lượng cho tế bào</td>
+            <td>35–42 ngày</td>
+            <td>2–6°C</td>
+            <td>Thiếu máu mạn, mất máu cấp, sau phẫu thuật</td>
+            <td>Chỉ truyền khi nhóm máu tương thích</td>
+          </tr>
+          <tr>
+            <td>Huyết tương</td>
+            <td>Chứa các protein đông máu, globulin miễn dịch và albumin</td>
+            <td>1 năm</td>
+            <td>-18°C trở xuống</td>
+            <td>Rối loạn đông máu, bệnh gan, hội chứng đông máu tiêu thụ</td>
+            <td>Phải rã đông đúng quy trình trước khi sử dụng</td>
+          </tr>
+          <tr>
+            <td>Tiểu cầu</td>
+            <td>Giúp đông máu, ngăn ngừa và điều trị xuất huyết</td>
+            <td>5–7 ngày</td>
+            <td>20–24°C (lắc liên tục)</td>
+            <td>Giảm tiểu cầu, xuất huyết nặng, sốt xuất huyết</td>
+            <td>Không được làm lạnh</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="unit">
+      <h3>2. Đơn vị máu</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Tên đơn vị máu</th>
+            <th>Mô tả</th>
+            <th>Nhóm máu phù hợp</th>
+            <th>Dung tích (ml)</th>
+            <th>Thành phần chính</th>
+            <th>Ghi chú sử dụng</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Máu toàn phần</td>
+            <td>Chứa đầy đủ hồng cầu, huyết tương và tiểu cầu</td>
+            <td>Phải cùng nhóm máu ABO và Rh</td>
+            <td>450–500</td>
+            <td>Hồng cầu, huyết tương, tiểu cầu</td>
+            <td>Chỉ định trong cấp cứu mất máu nặng</td>
+          </tr>
+          <tr>
+            <td>Hồng cầu lắng</td>
+            <td>Đơn vị máu đã loại bỏ huyết tương</td>
+            <td>Tùy nhóm máu người nhận</td>
+            <td>250–300</td>
+            <td>Hồng cầu</td>
+            <td>Sử dụng cho bệnh nhân thiếu máu mạn tính</td>
+          </tr>
+          <tr>
+            <td>Tiểu cầu đậm đặc</td>
+            <td>Tách từ nhiều đơn vị máu toàn phần</td>
+            <td>ABO và Rh phù hợp</td>
+            <td>50–70</td>
+            <td>Tiểu cầu</td>
+            <td>Dùng cho bệnh nhân giảm tiểu cầu nặng</td>
+          </tr>
+          <tr>
+            <td>Huyết tương tươi đông lạnh</td>
+            <td>Huyết tương tách ra và đông lạnh ngay sau khi hiến</td>
+            <td>Thường dùng loại AB để tương thích rộng</td>
+            <td>200–250</td>
+            <td>Huyết tương</td>
+            <td>Chứa đầy đủ yếu tố đông máu</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="map">
+      <h3>3. Thành phần máu và đơn vị máu tương ứng</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Thành phần máu</th>
+            <th>Đơn vị máu chứa thành phần này</th>
+            <th>Vai trò trong điều trị</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Hồng cầu</td>
+            <td>Máu toàn phần, Hồng cầu lắng</td>
+            <td>Truyền cho bệnh nhân thiếu máu, mất máu cấp</td>
+          </tr>
+          <tr>
+            <td>Huyết tương</td>
+            <td>Máu toàn phần, Huyết tương tươi đông lạnh</td>
+            <td>Điều trị rối loạn đông máu, bệnh gan</td>
+          </tr>
+          <tr>
+            <td>Tiểu cầu</td>
+            <td>Máu toàn phần, Tiểu cầu đậm đặc</td>
+            <td>Điều trị giảm tiểu cầu, sốt xuất huyết, xuất huyết nặng</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </div>
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tra cứu nhóm máu tương thích (demo offline)</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f8f9fa;
+    }
+    h2 {
+      color: #c0392b;
+    }
+    form {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    label {
+      display: block;
+      margin: 10px 0 5px;
+      font-weight: bold;
+    }
+    select, button {
+      padding: 8px;
+      font-size: 16px;
+      width: 100%;
+      margin-bottom: 15px;
+    }
+    button {
+      background: #e74c3c;
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #c0392b;
+    }
+    .result {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    ul {
+      padding-left: 20px;
+    }
+    li {
+      margin: 5px 0;
+    }
+  </style>
+</head>
+<body>
+  <h2>🔍 Demo: Tra cứu nhóm máu tương thích theo thành phần máu</h2>
+  <form id="matchForm">
+    <label for="bloodType">Nhóm máu người nhận:</label>
+    <select id="bloodType" required>
+      <option value="">-- Chọn nhóm máu --</option>
+      <option>O-</option>
+      <option>O+</option>
+      <option>A-</option>
+      <option>A+</option>
+      <option>B-</option>
+      <option>B+</option>
+      <option>AB-</option>
+      <option>AB+</option>
+    </select>
+
+    <label for="component">Thành phần máu:</label>
+    <select id="component" required>
+      <option value="">-- Chọn thành phần --</option>
+      <option value="RBC">Hồng cầu</option>
+      <option value="PLASMA">Huyết tương</option>
+      <option value="PLATELET">Tiểu cầu</option>
+    </select>
+
+    <button type="submit">Tìm kiếm</button>
+  </form>
+
+  <div id="result" class="result" style="display: none;">
+    <h3>Kết quả:</h3>
+    <p id="message"></p>
+    <ul id="donorList"></ul>
+  </div>
+
+  <script>
+    const compatibilityMap = {
+      RBC: {
+        "O-": ["O-"],
+        "O+": ["O-", "O+"],
+        "A-": ["O-", "A-"],
+        "A+": ["O-", "O+", "A-", "A+"],
+        "B-": ["O-", "B-"],
+        "B+": ["O-", "O+", "B-", "B+"],
+        "AB-": ["O-", "A-", "B-", "AB-"],
+        "AB+": ["O-", "O+", "A-", "A+", "B-", "B+", "AB-", "AB+"]
+      },
+      PLASMA: {
+        "O-": ["O-"],
+        "O+": ["O-", "O+"],
+        "A-": ["O-", "A-"],
+        "A+": ["O-", "O+", "A-", "A+"],
+        "B-": ["O-", "B-"],
+        "B+": ["O-", "O+", "B-", "B+"],
+        "AB-": ["O-", "A-", "B-", "AB-"],
+        "AB+": ["O-", "O+", "A-", "A+", "B-", "B+", "AB-", "AB+"]
+      },
+      PLATELET: {
+        "O-": ["O-"],
+        "O+": ["O-", "O+"],
+        "A-": ["O-", "A-"],
+        "A+": ["O-", "O+", "A-", "A+"],
+        "B-": ["O-", "B-"],
+        "B+": ["O-", "O+", "B-", "B+"],
+        "AB-": ["O-", "A-", "B-", "AB-"],
+        "AB+": ["O-", "O+", "A-", "A+", "B-", "B+", "AB-", "AB+"]
+      }
+    };
+
+    const form = document.getElementById("matchForm");
+    const resultDiv = document.getElementById("result");
+    const messageP = document.getElementById("message");
+    const donorList = document.getElementById("donorList");
+
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
+      const bloodType = document.getElementById("bloodType").value;
+      const component = document.getElementById("component").value;
+
+      const compatible = compatibilityMap[component]?.[bloodType] || [];
+
+      if (compatible.length === 0) {
+        messageP.textContent = "Không tìm thấy dữ liệu phù hợp.";
+      } else {
+        messageP.textContent = `Các nhóm máu có thể hiến cho người nhận ${bloodType} theo thành phần ${component}:`;
+      }
+
+      donorList.innerHTML = "";
+      compatible.forEach(type => {
+        const li = document.createElement("li");
+        li.textContent = type;
+        donorList.appendChild(li);
+      });
+
+      resultDiv.style.display = "block";
+    });
+  </script>
+</body>
+</html>
