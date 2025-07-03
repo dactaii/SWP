@@ -184,7 +184,6 @@ body.no-scroll {
 }
 
 .login-page .overlay-panel {
-  position: absolute;
   display: flex;
   align-items: center;
   justify-content: center;

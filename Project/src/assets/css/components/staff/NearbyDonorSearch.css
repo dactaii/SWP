@@ -1,0 +1,171 @@
+/* Main layout */
+.main-content {
+  padding: 2rem;
+}
+
+.main-content h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  color: var(--heading-color);
+}
+
+/* Form group */
+.form-group {
+  margin-bottom: 1.5rem;
+  font-size: 1.05rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+/* Select */
+.nds-select {
+  width: 100%;
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1.05rem;
+  font-family: var(--default-font);
+}
+
+/* Search button */
+.nds-search-btn {
+  background-color: #2563eb;
+  color: white;
+  padding: 0.5rem 1.2rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 1.05rem;
+  font-family: var(--default-font);
+  transition: background-color 0.3s ease;
+  margin-bottom: 1.5rem;
+}
+
+.nds-search-btn:hover {
+  background-color: #1e40af;
+}
+
+/* Subtitle */
+.nds-subtitle {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+.text-highlight {
+  color: #e11d48;
+  font-weight: bold;
+}
+
+/* Table */
+.table-wrapper {
+  overflow-x: auto;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.08);
+  background-color: white;
+}
+
+.blood-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--default-font);
+  font-size: 1.05rem;
+}
+
+.blood-table thead {
+  background-color: #e0e0e0;
+}
+
+.blood-table th,
+.blood-table td {
+  padding: 0.9rem 1.2rem;
+  border: 1px solid #ccc;
+  text-align: left;
+}
+
+.blood-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* Action button */
+.nds-action-btn {
+  background-color: #16a34a;
+  color: white;
+  padding: 0.4rem 1rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  font-family: var(--default-font);
+  font-size: 1rem;
+}
+
+.nds-action-btn:hover {
+  background-color: #15803d;
+}
+
+/* Detail section */
+.nds-detail-row {
+  background-color: #f5f5f5;
+}
+
+.nds-detail-card {
+  padding: 1rem;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  margin-top: 0.5rem;
+}
+
+.nds-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 0.5rem 2rem;
+  margin-bottom: 1rem;
+}
+
+/* For full width items inside grid */
+.nds-detail-full {
+  grid-column: 1 / -1;
+  padding-top: 0.3rem;
+}
+
+/* Buttons inside detail card */
+.nds-detail-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.nds-contact-btn,
+.nds-close-btn {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-family: var(--default-font);
+  font-size: 1rem;
+}
+
+.nds-contact-btn {
+  background-color: #2563eb;
+  color: white;
+}
+
+.nds-contact-btn:hover {
+  background-color: #1e40af;
+}
+
+.nds-close-btn {
+  background-color: #e11d48;
+  color: white;
+}
+
+.nds-close-btn:hover {
+  background-color: #b91c1c;
+}

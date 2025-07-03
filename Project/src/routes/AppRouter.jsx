@@ -13,10 +13,9 @@ import BloodDonation from "../pages/BloodDonation";
 import BlogPage from "../pages/BlogPage";
 import BloodUnitPage from "../pages/BloodUnitPage";
 import EmergencyFormPage from "../pages/EmergencyFormPage";
-
-
-import ScheduleManagement from "../components/staff/ScheduleManagement";
-
+import NearbyDonorSearchPage from "../pages/NearbyDonorSearchPage";
+import ScheduleManagementPage from "../pages/ScheduleManagementPage";
+import AppointmentListPage from "../pages/AppointmentListPage";
 function AppRouter() {
     return (
         <Routes>
@@ -29,14 +28,12 @@ function AppRouter() {
             <Route path="/UpdateUserInfo" element={<UpdateUserInfo />} />
             <Route path="/BloodTypeFake" element={<BloodTypeFake />} />
             <Route path="/BloodDonation" element={<BloodDonation />} />
-
             <Route path="/blog" element={<BlogPage />} />
             <Route path="/BloodUnitPage" element={<BloodUnitPage />} />
             <Route path="/EmergencyFormPage" element={<EmergencyFormPage />} />
-
-            <Route path="/ScheduleManagement" element={<ScheduleManagement />} />
-
-
+            <Route path="/NearbyDonorSearchPage" element={<NearbyDonorSearchPage />} />
+            <Route path="/ScheduleManagementPage" element={<ScheduleManagementPage />} />
+            <Route path="/AppointmentListPage" element={<AppointmentListPage />} />
         </Routes>
     );
 };

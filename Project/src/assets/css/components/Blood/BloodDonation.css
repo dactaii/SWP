@@ -1,124 +1,155 @@
 /* Reset */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+.blood-donation-page * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 /* Wrapper */
-.form-wrapper {
-    max-width: 650px;
-    margin: 40px auto;
-    padding: 30px 40px;
-    background: linear-gradient(135deg, #fff, #f9f9f9);
-    border-radius: 20px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-    font-family: 'Segoe UI', sans-serif;
-    transition: all 0.3s ease-in-out;
+.blood-donation-page .form-wrapper {
+  max-width: 650px;
+  margin: 40px auto;
+  padding: 30px 40px;
+  background: linear-gradient(135deg, #fff, #f9f9f9);
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  font-family: "Segoe UI", sans-serif;
+  transition: all 0.3s ease-in-out;
 }
 
 /* Title */
-.form-wrapper h1 {
-    text-align: center;
-    margin-bottom: 25px;
-    color: #d61c4e;
-    font-size: 2rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+.blood-donation-page .form-wrapper h1 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #d61c4e;
+  font-size: 2rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
-/* Head section with two inputs side by side */
-.Head {
-    display: flex;
-    gap: 15px;
-    margin-bottom: 20px;
+/* Head section */
+.blood-donation-page .Head {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
 }
 
-/* Each input in Head */
-.avatar1,
-.avatar2 {
-    flex: 1;
+.blood-donation-page .avatar1,
+.blood-donation-page .avatar2 {
+  flex: 1;
 }
 
 /* Input, Select, Textarea */
-input[type="text"],
-input[type="date"],
-input[type="tel"],
-input[type="email"],
-input[type="datetime-local"],
-select,
-textarea {
-    width: 100%;
-    padding: 12px 14px;
-    margin-bottom: 20px;
-    border: 2px solid #ccc;
-    border-radius: 12px;
-    font-size: 1rem;
-    background-color: #fff;
-    transition: border-color 0.3s;
+.blood-donation-page input[type="text"],
+.blood-donation-page input[type="date"],
+.blood-donation-page input[type="tel"],
+.blood-donation-page input[type="email"],
+.blood-donation-page select,
+.blood-donation-page textarea {
+  width: 100%;
+  padding: 12px 14px;
+  margin-bottom: 20px;
+  border: 2px solid #ccc;
+  border-radius: 12px;
+  font-size: 1rem;
+  background-color: #fff;
+  transition: border-color 0.3s;
 }
 
-input:focus,
-select:focus,
-textarea:focus {
-    border-color: #d61c4e;
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(214, 28, 78, 0.2);
+.blood-donation-page input:focus,
+.blood-donation-page select:focus,
+.blood-donation-page textarea:focus {
+  border-color: #d61c4e;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(214, 28, 78, 0.2);
 }
 
-/* Placeholder color */
-::placeholder {
-    color: #aaa;
+.blood-donation-page ::placeholder {
+  color: #aaa;
 }
 
-/* Textarea */
-textarea {
-    resize: vertical;
-    min-height: 80px;
+.blood-donation-page textarea {
+  resize: vertical;
+  min-height: 80px;
 }
 
 /* Submit Button */
-.submit-btn {
-    width: 100%;
-    padding: 14px;
-    background: linear-gradient(to right, #d61c4e, #ff5b77);
-    border: none;
-    border-radius: 16px;
-    color: #fff;
-    font-size: 1.1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.3s ease, transform 0.2s ease;
+.blood-donation-page .submit-btn {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(to right, #d61c4e, #ff5b77);
+  border: none;
+  border-radius: 16px;
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
 }
 
-.submit-btn:hover {
-    background: linear-gradient(to right, #ff5b77, #d61c4e);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(214, 28, 78, 0.4);
+.blood-donation-page .submit-btn:hover {
+  background: linear-gradient(to right, #ff5b77, #d61c4e);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(214, 28, 78, 0.4);
 }
 
-.message {
-    font-weight: bold;
-    font-size: 1rem;
+.blood-donation-page .message {
+  font-weight: bold;
+  font-size: 1rem;
 }
 
+/* Time selection buttons */
+/* Time selection buttons */
+.blood-donation-page .time-buttons {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 12px;
+  margin-top: 0.5rem;
+  margin-bottom: 20px;
+}
+
+.blood-donation-page .time-buttons button {
+  padding: 10px 0;
+  border-radius: 8px;
+  border: 2px solid #ccc;
+  background-color: #fff;
+  color: #222;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s ease;
+  width: 100%;
+}
+
+.blood-donation-page .time-buttons button:hover {
+  background-color: #fce4ec;
+  border-color: #d61c4e;
+}
+
+.blood-donation-page .time-buttons .active-time {
+  border: 2px solid #d61c4e;
+  background-color: #fdecef;
+  color: #d61c4e;
+  font-weight: 600;
+}
 
 /* Responsive */
 @media (max-width: 600px) {
-    .form-wrapper {
-        padding: 20px;
-    }
+  .blood-donation-page .form-wrapper {
+    padding: 20px;
+  }
 
-    .form-wrapper h1 {
-        font-size: 1.5rem;
-    }
+  .blood-donation-page .form-wrapper h1 {
+    font-size: 1.5rem;
+  }
 
-    .Head {
-        flex-direction: column;
-    }
+  .blood-donation-page .Head {
+    flex-direction: column;
+  }
 
-    .submit-btn {
-        font-size: 1rem;
-    }
+  .blood-donation-page .submit-btn {
+    font-size: 1rem;
+  }
 }

@@ -42,27 +42,13 @@ const ThongTin = () => {
             </li>
 
             <li>
-              <a
-                href="#"
-                onClick={() => setActiveComponent("ScheduleManagement")}
-                className={activeComponent === "ScheduleManagement" ? "active" : ""}
-              >
-                <i className="bi bi-calendar3"></i>
-                <span className="link_name">Quản lí lịch hẹn </span>
-              </a>
-              <span className="tooltip">Quản lí lịch hẹn</span>
-            </li>
-
-
-
-            <li>
               <a href="#"
-                onClick={() => setActiveComponent("AppointmentList")}
-                className={activeComponent === "AppointmentList" ? "active" : ""}>
+                onClick={() => setActiveComponent("userInfo")}
+                className={activeComponent === "" ? "active" : ""}>
                 <i className="bi bi-journal-bookmark-fill"></i>
-                <span className="link_name">Lịch sử lịch hẹn hiến máu</span>
+                <span className="link_name">Lịch sử hiến máu</span>
               </a>
-              <span className="tooltip">Lịch sử lịch hẹn hiến máu</span>
+              <span className="tooltip">Lịch sử hiến máu</span>
             </li>
 
           </ul>

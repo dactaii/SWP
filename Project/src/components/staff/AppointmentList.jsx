@@ -57,12 +57,12 @@ const AppointmentList = () => {
     return (
         <div className="appointment-container">
             <h2>Danh sách lịch hẹn khẩn cấp</h2>
-
+            <div className="table-wrapper">
             <table className="appointment-table">
                 <thead>
                     <tr>
                         <th>Người hiến</th>
-                        <th>Người nhận</th>
+                        <th>Nhân viên xác nhận</th>
                         <th>Địa điểm</th>
                         <th>Ngày hẹn</th>
                         <th>Trạng thái</th>
@@ -93,7 +93,7 @@ const AppointmentList = () => {
                     ))}
                 </tbody>
             </table>
-
+            </div>       
 
             {showAlert && (
                 <div className="custom-alert">

@@ -14,6 +14,9 @@ import { PiChatsCircleBold } from "react-icons/pi";
 import { FaUserFriends } from "react-icons/fa";
 import { MdOutlineStorage } from "react-icons/md";
 import { BiDonateBlood } from "react-icons/bi";
+import { GrMapLocation } from "react-icons/gr";
+import { FaRegCalendarAlt } from "react-icons/fa";
+import { RiCalendarScheduleLine } from "react-icons/ri";
 
 const Default_Avatar = logoDefault;
 
@@ -212,6 +215,25 @@ const Sidebar = () => {
                       Cần Máu Khẩn Cấp
                     </Link>
                   </li>
+                  <li>
+                    <Link to="/NearbyDonorSearchPage" className={isActive("/NearbyDonorSearchPage")}>
+                      <GrMapLocation className="sidebar-icon" />
+                      Tìm người hiến gần cơ sở
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/ScheduleManagementPage" className={isActive("/ScheduleManagementPage")}>
+                      <FaRegCalendarAlt className="sidebar-icon" />
+                      Quản Lý Lịch Hẹn
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/AppointmentListPage" className={isActive("/AppointmentListPage")}>
+                      <RiCalendarScheduleLine className="sidebar-icon" />
+                      Xác Nhận Hiến Máu
+                    </Link>
+                  </li>
+                  
                 </>
               )}
             </ul>

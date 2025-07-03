@@ -17,7 +17,8 @@ function BloodDonation() {
 
   const [formData, setFormData] = useState({
     bloodType: "",
-    readyTime: "",
+    readyDate: "",
+    readyHour: "",
     note: "",
   });
 
@@ -64,27 +65,40 @@ function BloodDonation() {
       return;
     }
 
+    const { readyDate, readyHour } = formData;
+
+    if (!readyDate || !readyHour) {
+      alert("Vui lòng chọn ngày và giờ.");
+      return;
+    }
+
     const latitude = localStorage.getItem("user_lat");
     const longitude = localStorage.getItem("user_lng");
 
     try {
+      const readyTime = `${readyDate}T${readyHour}:00`;
+
       const fullData = {
         bloodType: formData.bloodType,
-        readyTime: new Date(formData.readyTime).toISOString(),
+        readyTime: readyTime,
         note: formData.note,
         latitude,
         longitude,
       };
 
-      const response = await axios.post("http://localhost:8080/api/donor/register", fullData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await axios.post(
+        "http://localhost:8080/api/donor/register",
+        fullData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       if (response.status === 200 || response.status === 201) {
-        setFormData({ bloodType: "", readyTime: "", note: "" });
+        setFormData({ bloodType: "", readyDate: "", readyHour: "", note: "" });
         setMessage(response.data.message || "Đăng ký thành công!");
       } else {
         setMessage("Có lỗi xảy ra khi gửi đăng ký.");
@@ -96,66 +110,129 @@ function BloodDonation() {
   };
 
   return (
-    <div className="form-wrapper">
-      <h1>Đăng ký hiến máu</h1>
-      <form className="blood-form" onSubmit={handleSubmit}>
-        <div className="Head">
-          <div className="avatar1">
-            <input type="text" value={userInfo.name} placeholder="Họ và Tên" readOnly />
+    <div className="blood-donation-page">
+      <div className="form-wrapper">
+        <h1>Đăng ký hiến máu</h1>
+        <form className="blood-form" onSubmit={handleSubmit}>
+          <div className="Head">
+            <div className="avatar1">
+              <input
+                type="text"
+                value={userInfo.name}
+                placeholder="Họ và Tên"
+                readOnly
+              />
+            </div>
+            <div className="avatar2">
+              <input
+                type="text"
+                value={userInfo.gender}
+                placeholder="Giới tính"
+                readOnly
+              />
+            </div>
           </div>
-          <div className="avatar2">
-            <input type="text" value={userInfo.gender} placeholder="Giới tính" readOnly />
-          </div>
-        </div>
 
-        <input type="text" value={userInfo.yearOfBirth} placeholder="Năm sinh" readOnly />
-        <input type="email" value={userInfo.email} placeholder="Email" readOnly />
-        <input type="text" value={userInfo.address} placeholder="Địa chỉ thường trú" readOnly />
-        <input type="tel" value={userInfo.phoneNumber} placeholder="Số điện thoại" readOnly />
-
-        <div className="form-group">
-          <select name="bloodType" value={formData.bloodType} onChange={handleChange} required>
-            <option value="">-- Chọn nhóm máu --</option>
-            <option value="A+">A+</option>
-            <option value="A-">A-</option>
-            <option value="B+">B+</option>
-            <option value="B-">B-</option>
-            <option value="AB+">AB+</option>
-            <option value="AB-">AB-</option>
-            <option value="O+">O+</option>
-            <option value="O-">O-</option>
-          </select>
-        </div>
-
-        <div className="form-group">
-          <label>Thời gian bạn sẵn sàng hiến máu</label>
           <input
-            type="datetime-local"
-            name="readyTime"
-            value={formData.readyTime}
-            onChange={handleChange}
-            min={getCurrentDateTime()}
-            required
+            type="text"
+            value={userInfo.yearOfBirth}
+            placeholder="Năm sinh"
+            readOnly
           />
-        </div>
-
-        <div className="form-group">
-          <textarea
-            name="note"
-            placeholder="Ghi chú (tùy chọn)"
-            value={formData.note}
-            onChange={handleChange}
-            rows="3"
+          <input
+            type="email"
+            value={userInfo.email}
+            placeholder="Email"
+            readOnly
           />
-        </div>
+          <input
+            type="text"
+            value={userInfo.address}
+            placeholder="Địa chỉ thường trú"
+            readOnly
+          />
+          <input
+            type="tel"
+            value={userInfo.phoneNumber}
+            placeholder="Số điện thoại"
+            readOnly
+          />
 
-        <button type="submit" className="submit-btn">Gửi đăng ký</button>
-        {message && (
-          <p className="message" style={{ marginTop: "1rem", color: message.includes("thành công") ? "green" : "red" }}>
-            {message}
-          </p>
-        )}
-      </form>
+          <div className="form-group">
+            <select
+              name="bloodType"
+              value={formData.bloodType}
+              onChange={handleChange}
+              required
+            >
+              <option value="">-- Chọn nhóm máu --</option>
+              <option value="A+">A+</option>
+              <option value="A-">A-</option>
+              <option value="B+">B+</option>
+              <option value="B-">B-</option>
+              <option value="AB+">AB+</option>
+              <option value="AB-">AB-</option>
+              <option value="O+">O+</option>
+              <option value="O-">O-</option>
+            </select>
+          </div>
+
+          <div className="form-group">
+            <label>Ngày bạn sẵn sàng hiến máu</label>
+            <input
+              type="date"
+              name="readyDate"
+              value={formData.readyDate || ""}
+              min={getCurrentDateTime().slice(0, 10)}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Chọn giờ:</label>
+            <div className="time-buttons">
+              {["07:30", "09:30", "14:00", "15:00"].map((time) => (
+                <button
+                  type="button"
+                  key={time}
+                  className={formData.readyHour === time ? "active-time" : ""}
+                  onClick={() =>
+                    setFormData((prev) => ({ ...prev, readyHour: time }))
+                  }
+                >
+                  {time}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="form-group">
+            <textarea
+              name="note"
+              placeholder="Ghi chú (tùy chọn)"
+              value={formData.note}
+              onChange={handleChange}
+              rows="3"
+            />
+          </div>
+
+          <button type="submit" className="submit-btn">
+            Gửi đăng ký
+          </button>
+          {message && (
+            <p
+              className="message"
+              style={{
+                marginTop: "1rem",
+                color: message.includes("thành công") ? "green" : "red",
+              }}
+            >
+              {message}
+            </p>
+          )}
+        </form>
+      </div>
     </div>
   );
 }
