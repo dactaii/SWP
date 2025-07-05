@@ -5,9 +5,13 @@ import UserLayout from "../layouts/UserLayout";
 import EmergencyForm from "../components/staff/emergencyForm";
 import ScheduleManagement from "../components/staff/ScheduleManagement";
 import AppointmentList from "../components/staff/AppointmentList";
+import UserManagement from "../components/Admin/UserManagement";
+import DonationHistory from "../components/Blood/DonationHistory";
 const ThongTin = () => {
   const [activeComponent, setActiveComponent] = useState("userInfo");
   const [isCollapsed, setIsCollapsed] = useState(false);
+
+
 
   const handleEmergencyClick = () => {
     setActiveComponent("emergencyForm");
@@ -43,13 +47,34 @@ const ThongTin = () => {
 
             <li>
               <a href="#"
-                onClick={() => setActiveComponent("userInfo")}
-                className={activeComponent === "" ? "active" : ""}>
+                onClick={() => setActiveComponent("DonationHistory")}
+                className={activeComponent === "DonationHistory" ? "active" : ""}>
                 <i className="bi bi-journal-bookmark-fill"></i>
                 <span className="link_name">Lịch sử hiến máu</span>
               </a>
               <span className="tooltip">Lịch sử hiến máu</span>
             </li>
+
+            <li>
+              <a href="#"
+                onClick={() => setActiveComponent("UserManagement")}
+                className={activeComponent === "UserManagement" ? "active" : ""}>
+                <i className="bi bi-journal-bookmark-fill"></i>
+                <span className="link_name">Vai trò</span>
+              </a>
+              <span className="tooltip">Vai trò</span>
+            </li>
+
+            <li>
+              <a href="#"
+                onClick={() => setActiveComponent("")}
+                className={activeComponent === "" ? "active" : ""}>
+                <i className="bi bi-journal-bookmark-fill"></i>
+                <span className="link_name">Lịch sử nhiều user</span>
+              </a>
+              <span className="tooltip">Lịch sử nhiều user</span>
+            </li>
+
 
           </ul>
         </div>
@@ -81,6 +106,8 @@ const ThongTin = () => {
           )}
           {activeComponent === "ScheduleManagement" && <ScheduleManagement />}
           {activeComponent === "AppointmentList" && <AppointmentList />}
+          {activeComponent === "UserManagement" && <UserManagement />}
+          {activeComponent === "DonationHistory" && <DonationHistory />}
 
 
           {activeComponent === "emergencyForm" && <EmergencyForm />}
