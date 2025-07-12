@@ -9,6 +9,10 @@ const Blog = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const articlesPerPage = 4;
 
+  // Comment input
+  const [comment, setComment] = useState("");
+  const [attachment, setAttachment] = useState(null);
+
   useEffect(() => {
     axios
       .get(
@@ -30,7 +34,17 @@ const Blog = () => {
       });
   }, []);
 
-  if (loading) return <p>Đang tải dữ liệu...</p>;
+  const handleCommentSubmit = () => {
+    console.log("Bình luận:", comment);
+    console.log("File:", attachment);
+    alert("Bình luận đã được gửi (giả lập)");
+    setComment("");
+    setAttachment(null);
+  };
+
+  const handleFileChange = (e) => {
+    setAttachment(e.target.files[0]);
+  };
 
   const indexOfLastArticle = currentPage * articlesPerPage;
   const indexOfFirstArticle = indexOfLastArticle - articlesPerPage;
@@ -49,8 +63,39 @@ const Blog = () => {
     <section id="blog" className="blog section">
       <div className="container">
         <h2>Blog Chia Sẻ Kinh Nghiệm</h2>
+
+        {/* Comment Box at top */}
+        <div className="global-comment-box">
+          <textarea
+            className="comment-input"
+            placeholder="Chia sẻ cảm nghĩ của bạn..."
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+          ></textarea>
+
+          <div className="comment-actions">
+            <label className="attach-btn">
+              📎 Đính kèm
+              <input
+                type="file"
+                style={{ display: "none" }}
+                onChange={handleFileChange}
+              />
+            </label>
+            {attachment && <span className="file-name">{attachment.name}</span>}
+            <button className="submit-btn" onClick={handleCommentSubmit}>
+              Gửi
+            </button>
+          </div>
+        </div>
+
+        {/* Error */}
         {error && <p style={{ color: "red" }}>{error}</p>}
-        {currentArticles.length === 0 ? (
+
+        {/* Blog list */}
+        {loading ? (
+          <p>Đang tải dữ liệu...</p>
+        ) : currentArticles.length === 0 ? (
           <p>Không có bài viết nào</p>
         ) : (
           currentArticles.map((article, index) => (

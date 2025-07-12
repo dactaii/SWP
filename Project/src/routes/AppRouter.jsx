@@ -9,10 +9,8 @@ import RenderForBlood from "../components/Blood/RenderForBlood";
 import UpdateUserInfo from "../components/User/UpdateUserInfo";
 import BloodTypeFake from "../pages/BloodTypeFake";
 import BloodDonation from "../pages/BloodDonation";
-
 import BlogPage from "../pages/BlogPage";
 import BloodUnitPage from "../pages/BloodUnitPage";
-import EmergencyFormPage from "../pages/EmergencyFormPage";
 import NearbyDonorSearchPage from "../pages/NearbyDonorSearchPage";
 import ScheduleManagementPage from "../pages/ScheduleManagementPage";
 import AppointmentListPage from "../pages/AppointmentListPage";
@@ -30,7 +28,6 @@ function AppRouter() {
             <Route path="/BloodDonation" element={<BloodDonation />} />
             <Route path="/blog" element={<BlogPage />} />
             <Route path="/BloodUnitPage" element={<BloodUnitPage />} />
-            <Route path="/EmergencyFormPage" element={<EmergencyFormPage />} />
             <Route path="/NearbyDonorSearchPage" element={<NearbyDonorSearchPage />} />
             <Route path="/ScheduleManagementPage" element={<ScheduleManagementPage />} />
             <Route path="/AppointmentListPage" element={<AppointmentListPage />} />
