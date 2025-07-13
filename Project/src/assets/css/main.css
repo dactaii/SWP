@@ -20,3 +20,5 @@
 @import './components/staff/AppointmentList.css';
 @import './components/staff/NearbyDonorSearch.css';
 @import './components/Admin/UserManagement.css';
+@import './components/Blood/DonationHistory.css';
+@import './components/Blood/DonationUserList.css';

@@ -7,6 +7,7 @@ import ScheduleManagement from "../components/staff/ScheduleManagement";
 import AppointmentList from "../components/staff/AppointmentList";
 import UserManagement from "../components/Admin/UserManagement";
 import DonationHistory from "../components/Blood/DonationHistory";
+import DonationUserList from "../components/Blood/DonationUserList";
 const ThongTin = () => {
   const [activeComponent, setActiveComponent] = useState("userInfo");
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -67,8 +68,8 @@ const ThongTin = () => {
 
             <li>
               <a href="#"
-                onClick={() => setActiveComponent("")}
-                className={activeComponent === "" ? "active" : ""}>
+                onClick={() => setActiveComponent("DonationUserList")}
+                className={activeComponent === "DonationUserList" ? "active" : ""}>
                 <i className="bi bi-journal-bookmark-fill"></i>
                 <span className="link_name">Lịch sử nhiều user</span>
               </a>
@@ -108,6 +109,7 @@ const ThongTin = () => {
           {activeComponent === "AppointmentList" && <AppointmentList />}
           {activeComponent === "UserManagement" && <UserManagement />}
           {activeComponent === "DonationHistory" && <DonationHistory />}
+          {activeComponent === "DonationUserList" && <DonationUserList />}
 
 
           {activeComponent === "emergencyForm" && <EmergencyForm />}
