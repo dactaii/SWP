@@ -15,6 +15,7 @@ export default function ScheduleManagement() {
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [expandedRow, setExpandedRow] = useState(null);
+  const [loading, setLoading] = useState(false); // loading state
 
   useEffect(() => {
     fetchSchedules();
@@ -75,6 +76,7 @@ export default function ScheduleManagement() {
     if (!formData.componentType || !formData.quantity || !formData.hospital)
       return;
 
+    setLoading(true); // Bắt đầu loading
     const donorId = selectedUser?.donorId;
     const payload = {
       componentType: formData.componentType,
@@ -99,11 +101,11 @@ export default function ScheduleManagement() {
       );
 
       setAlertMessage("Đã gửi yêu cầu thành công!");
-      setShowAlert(true);
-      setTimeout(() => setShowAlert(false), 5000);
     } catch (err) {
       console.error("❌ Lỗi khi gửi yêu cầu:", err);
       setAlertMessage("Gửi thất bại!");
+    } finally {
+      setLoading(false); // Kết thúc loading
       setShowAlert(true);
       setTimeout(() => setShowAlert(false), 5000);
     }
@@ -256,7 +258,9 @@ export default function ScheduleManagement() {
             </select>
 
             <div className="form-buttons">
-              <button onClick={handleSubmit}>Gửi yêu cầu</button>
+              <button onClick={handleSubmit} disabled={loading}>
+                Gửi yêu cầu
+              </button>
               <button onClick={closeForm} className="cancel">
                 Hủy bỏ
               </button>
@@ -266,6 +270,15 @@ export default function ScheduleManagement() {
       )}
 
       {showAlert && <div className="custom-alert">{alertMessage}</div>}
+
+      {loading && (
+        <div className="global-loading-overlay">
+          <div className="global-loading-content">
+            <div className="global-spinner"></div>
+            <p className="loading-text">Đang xử lý...</p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
