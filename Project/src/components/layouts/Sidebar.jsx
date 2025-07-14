@@ -30,6 +30,7 @@ const Sidebar = () => {
   const [isStaffMode, setIsStaffMode] = useState(() => {
     return localStorage.getItem("isStaffMode") === "true";
   });
+  const [isAdminMode, setIsAdminMode] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -73,8 +74,23 @@ const Sidebar = () => {
         navigate("/login");
         return;
       }
+
       setName(decoded.name || "");
       setRole(decoded.role || null);
+
+      if (decoded.role === "ROLE_ADMIN") {
+        setIsAdminMode(true);
+        setIsStaffMode(false);
+        localStorage.setItem("isStaffMode", "false");
+      } else if (decoded.role === "ROLE_STAFF") {
+        setIsStaffMode(true);
+        setIsAdminMode(false);
+        localStorage.setItem("isStaffMode", "true");
+      } else {
+        setIsStaffMode(false);
+        setIsAdminMode(false);
+        localStorage.setItem("isStaffMode", "false");
+      }
 
       axios
         .get("http://localhost:8080/api/profile", {
@@ -107,105 +123,93 @@ const Sidebar = () => {
     return () => window.removeEventListener("storage", handleStorageChange);
   }, []);
 
-  const handleAccessLink = (e, path) => {
+  const handleBloodDonationClick = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem("token");
     if (!token) {
-      alert("Vui lòng đăng nhập để tiếp tục!");
-      navigate("/login");
-    } else {
-      navigate(path);
+      Swal.fire({
+        icon: "warning",
+        title: "Chưa đăng nhập",
+        text: "Vui lòng đăng nhập để tiếp tục.",
+      }).then(() => {
+        navigate("/login");
+      });
+      return;
+    }
+
+    try {
+      const res = await axios.get("http://localhost:8080/api/profile", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      const { phoneNumber } = res.data;
+      const lat = localStorage.getItem("user_lat");
+      const lng = localStorage.getItem("user_lng");
+
+      if (!phoneNumber) {
+        Swal.fire({
+          icon: "info",
+          title: "Chưa cập nhật thông tin người dùng",
+          text: "Vui lòng cập nhật thông tin để tiếp tục.",
+          confirmButtonText: "Cập nhật ngay",
+          showCancelButton: true,
+          cancelButtonText: "Để sau",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            navigate("/thongtin");
+          }
+        });
+      } else if (!lat || !lng) {
+        Swal.fire({
+          icon: "info",
+          title: "Thiếu thông tin vị trí",
+          text: "Hệ thống cần vị trí hiện tại của bạn để tìm cơ sở hiến máu phù hợp.",
+          confirmButtonText: "Chia sẻ vị trí",
+          showCancelButton: true,
+          cancelButtonText: "Để sau",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            if (navigator.geolocation) {
+              navigator.geolocation.getCurrentPosition(
+                (position) => {
+                  const { latitude, longitude } = position.coords;
+                  localStorage.setItem("user_lat", latitude);
+                  localStorage.setItem("user_lng", longitude);
+                  navigate("/BloodDonation");
+                },
+                (error) => {
+                  switch (error.code) {
+                    case error.PERMISSION_DENIED:
+                      Swal.fire("Lỗi", "Bạn đã từ chối chia sẻ vị trí.", "error");
+                      break;
+                    case error.POSITION_UNAVAILABLE:
+                      Swal.fire("Lỗi", "Không thể xác định vị trí.", "error");
+                      break;
+                    case error.TIMEOUT:
+                      Swal.fire("Lỗi", "Hết thời gian lấy vị trí.", "error");
+                      break;
+                    default:
+                      Swal.fire("Lỗi", "Lỗi không xác định.", "error");
+                  }
+                }
+              );
+            } else {
+              Swal.fire("Lỗi", "Trình duyệt không hỗ trợ định vị.", "error");
+            }
+          }
+        });
+      } else {
+        navigate("/BloodDonation");
+      }
+    } catch (err) {
+      console.error("Lỗi khi kiểm tra profile:", err);
+      Swal.fire({
+        icon: "error",
+        title: "Lỗi",
+        text: "Đã xảy ra lỗi khi kiểm tra thông tin người dùng.",
+      });
     }
   };
-
-  const handleBloodDonationClick = async (e) => {
-  e.preventDefault();
-  const token = localStorage.getItem("token");
-  if (!token) {
-    Swal.fire({
-      icon: "warning",
-      title: "Chưa đăng nhập",
-      text: "Vui lòng đăng nhập để tiếp tục.",
-    }).then(() => {
-      navigate("/login");
-    });
-    return;
-  }
-
-  try {
-    const res = await axios.get("http://localhost:8080/api/profile", {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-
-    const { phoneNumber } = res.data;
-    const lat = localStorage.getItem("user_lat");
-    const lng = localStorage.getItem("user_lng");
-
-    if (!phoneNumber) {
-      Swal.fire({
-        icon: "info",
-        title: "Chưa cập nhật thông tin người dùng",
-        text: "Vui lòng cập nhật thông tin để tiếp tục.",
-        confirmButtonText: "Cập nhật ngay",
-        showCancelButton: true,
-        cancelButtonText: "Để sau",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          navigate("/thongtin");
-        }
-      });
-    } else if (!lat || !lng) {
-      Swal.fire({
-        icon: "info",
-        title: "Thiếu thông tin vị trí",
-        text: "Hệ thống cần vị trí hiện tại của bạn để tìm cơ sở hiến máu phù hợp.",
-        confirmButtonText: "Chia sẻ vị trí",
-        showCancelButton: true,
-        cancelButtonText: "Để sau",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-              (position) => {
-                const { latitude, longitude } = position.coords;
-                localStorage.setItem("user_lat", latitude);
-                localStorage.setItem("user_lng", longitude);
-                navigate("/BloodDonation");
-              },
-              (error) => {
-                switch (error.code) {
-                  case error.PERMISSION_DENIED:
-                    Swal.fire("Lỗi", "Bạn đã từ chối chia sẻ vị trí.", "error");
-                    break;
-                  case error.POSITION_UNAVAILABLE:
-                    Swal.fire("Lỗi", "Không thể xác định vị trí.", "error");
-                    break;
-                  case error.TIMEOUT:
-                    Swal.fire("Lỗi", "Hết thời gian lấy vị trí.", "error");
-                    break;
-                  default:
-                    Swal.fire("Lỗi", "Lỗi không xác định.", "error");
-                }
-              }
-            );
-          } else {
-            Swal.fire("Lỗi", "Trình duyệt không hỗ trợ định vị.", "error");
-          }
-        }
-      });
-    } else {
-      navigate("/BloodDonation");
-    }
-  } catch (err) {
-    console.error("Lỗi khi kiểm tra profile:", err);
-    Swal.fire({
-      icon: "error",
-      title: "Lỗi",
-      text: "Đã xảy ra lỗi khi kiểm tra thông tin người dùng.",
-    });
-  }
-};
-
 
   return (
     <aside className={`sidebar full-height ${isStaffMode ? "staff-mode" : ""}`}>
@@ -219,58 +223,28 @@ const Sidebar = () => {
         <div className="sidebar-top">
           <nav className="sidebar-nav">
             <ul>
-              {!isStaffMode ? (
+              {isAdminMode ? (
                 <>
                   <li>
-                    <Link to="/" className={isActive("/")}>
-                      <MdHomeFilled className="sidebar-icon" />
-                      Trang Chủ
-                    </Link>
-                  </li>
-                  <li>
-                    <details>
-                      <summary className={isSubActive("/bloodtype")}>
-                        <LuSwatchBook className="sidebar-icon" />
-                        Tìm Hiểu Về Máu
-                      </summary>
-                      <ul>
-                        <li>
-                          <Link
-                            to="/bloodtype"
-                            className={isActive("/bloodtype")}
-                          >
-                            Các Loại Máu
-                          </Link>
-                        </li>
-                        <li>
-                          <Link
-                            to="/BloodTypeFake"
-                            className={isActive("/BloodTypeFake")}
-                          >
-                            Cách Sử Dụng Máu
-                          </Link>
-                        </li>
-                      </ul>
-                    </details>
-                  </li>
-                  <li>
-                    <Link to="/blog" className={isActive("/blog")}>
-                      <PiChatsCircleBold className="sidebar-icon" />
-                      Nhật ký hiến máu
-                    </Link>
-                  </li>
-                  <li>
-                    <a
-                      href="#blood"
-                      onClick={handleBloodDonationClick}
-                      className={isActive("/BloodDonation")}
+                    <Link
+                      to="/DashBoardPage"
+                      className={isActive("/DashBoardPage")}
                     >
-                      <MdBloodtype className="sidebar-icon" />
-                      Đăng ký hiến máu
-                    </a>
+                      <RiCalendarScheduleLine className="sidebar-icon" />
+                      Dashboard
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/ReportPage"
+                      className={isActive("/ReportPage")}
+                    >
+                      <RiCalendarScheduleLine className="sidebar-icon" />
+                      Report
+                    </Link>
                   </li>
                 </>
-              ) : (
+              ) : isStaffMode ? (
                 <>
                   <li>
                     <Link
@@ -318,6 +292,51 @@ const Sidebar = () => {
                     </Link>
                   </li>
                 </>
+              ) : (
+                <>
+                  <li>
+                    <Link to="/" className={isActive("/")}>
+                      <MdHomeFilled className="sidebar-icon" />
+                      Trang Chủ
+                    </Link>
+                  </li>
+                  <li>
+                    <details>
+                      <summary className={isSubActive("/bloodtype")}>
+                        <LuSwatchBook className="sidebar-icon" />
+                        Tìm Hiểu Về Máu
+                      </summary>
+                      <ul>
+                        <li>
+                          <Link to="/bloodtype" className={isActive("/bloodtype")}>
+                            Các Loại Máu
+                          </Link>
+                        </li>
+                        <li>
+                          <Link to="/BloodTypeFake" className={isActive("/BloodTypeFake")}>
+                            Cách Sử Dụng Máu
+                          </Link>
+                        </li>
+                      </ul>
+                    </details>
+                  </li>
+                  <li>
+                    <Link to="/blog" className={isActive("/blog")}>
+                      <PiChatsCircleBold className="sidebar-icon" />
+                      Nhật ký hiến máu
+                    </Link>
+                  </li>
+                  <li>
+                    <a
+                      href="#blood"
+                      onClick={handleBloodDonationClick}
+                      className={isActive("/BloodDonation")}
+                    >
+                      <MdBloodtype className="sidebar-icon" />
+                      Đăng ký hiến máu
+                    </a>
+                  </li>
+                </>
               )}
             </ul>
           </nav>
@@ -331,7 +350,7 @@ const Sidebar = () => {
             <span className="username">{name}</span>
           </Link>
 
-          {role === "ROLE_STAFF" && (
+          {role === "ROLE_STAFF" && !isAdminMode && (
             <>
               <button
                 className="sidebar-more-btn"

@@ -32,3 +32,64 @@
   margin-bottom: 1.5rem;
   color: var(--heading-color);
 }
+.table-wrapper {
+  overflow-x: auto;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.blood-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--default-font, 'Segoe UI', Tahoma, sans-serif);
+  font-size: 1rem;
+  color: #333;
+}
+
+.blood-table thead {
+  background-color: #f0f0f0;
+}
+
+.blood-table th,
+.blood-table td {
+  padding: 0.9rem 1.2rem;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.blood-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.blood-table tbody tr:hover {
+  background-color: #eef6ff;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.main-content {
+  padding: 1.5rem;
+}
+
+.main-content h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--heading-color, #2c3e50);
+  margin-bottom: 1.5rem;
+}
+
+select {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  outline: none;
+  font-family: var(--default-font);
+  transition: border-color 0.2s;
+}
+
+select:focus {
+  border-color: #007bff;
+}

@@ -14,6 +14,8 @@ import BloodUnitPage from "../pages/BloodUnitPage";
 import NearbyDonorSearchPage from "../pages/NearbyDonorSearchPage";
 import ScheduleManagementPage from "../pages/ScheduleManagementPage";
 import AppointmentListPage from "../pages/AppointmentListPage";
+import DashBoardPage from "../pages/DashBoardPage";
+import ReportPage from "../pages/ReportPage";
 function AppRouter() {
     return (
         <Routes>
@@ -31,6 +33,8 @@ function AppRouter() {
             <Route path="/NearbyDonorSearchPage" element={<NearbyDonorSearchPage />} />
             <Route path="/ScheduleManagementPage" element={<ScheduleManagementPage />} />
             <Route path="/AppointmentListPage" element={<AppointmentListPage />} />
+            <Route path="/DashBoardPage" element={<DashBoardPage />} />
+            <Route path="/ReportPage" element={<ReportPage />} />
         </Routes>
     );
 };
