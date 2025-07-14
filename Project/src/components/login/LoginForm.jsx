@@ -95,7 +95,7 @@ function LoginForm() {
       const role = decoded.role;
 
       if (role === "ROLE_ADMIN") {
-        navigate("/adminPage");
+        navigate("/", { state: { justLoggedIn: true } });
       } else if (role === "ROLE_MEMBER") {
         navigate("/", { state: { justLoggedIn: true } });
       } else if (role === "ROLE_STAFF") {
