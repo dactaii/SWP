@@ -1,7 +1,6 @@
-// UserManagement.jsx
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "../../assets/css/components/staff/ScheduleManagement.css";
+
 
 export default function UserManagement() {
     const [users, setUsers] = useState([]);
@@ -17,7 +16,14 @@ export default function UserManagement() {
 
     const fetchUsers = async () => {
         try {
-            const res = await axios.get("http://localhost:8080/api/profile/all");
+            const token = localStorage.getItem("token");
+            if (!token) return;
+
+            const res = await axios.get("http://localhost:8080/api/profile/all", {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
             setUsers(res.data);
         } catch (error) {
             console.error("Lỗi khi lấy danh sách user:", error);
@@ -40,10 +46,21 @@ export default function UserManagement() {
         if (!newRole || !selectedUser) return;
 
         try {
-            await axios.post("http://localhost:8080/api/profile/edit-role", {
-                userId: selectedUser.userId,
-                roleName: newRole,
-            });
+            const token = localStorage.getItem("token");
+            if (!token) return;
+
+            await axios.post(
+                "http://localhost:8080/api/profile/edit-role",
+                {
+                    userId: selectedUser.userId,
+                    roleName: newRole,
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
 
             const updatedUsers = users.map((user) =>
                 user.userId === selectedUser.userId
@@ -66,11 +83,20 @@ export default function UserManagement() {
 
     const handleSoftDelete = async (userId) => {
         try {
-            await axios.delete(`http://localhost:8080/api/profile/${userId}`);
+            const token = localStorage.getItem("token");
+            if (!token) return;
+
+            await axios.delete(`http://localhost:8080/api/profile/${userId}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
             const updatedUsers = users.map((user) =>
                 user.userId === userId ? { ...user, status: "DELETED" } : user
             );
             setUsers(updatedUsers);
+
             setAlertMessage("Đã vô hiệu hóa tài khoản thành công!");
             setShowAlert(true);
             setTimeout(() => setShowAlert(false), 4000);
@@ -112,7 +138,6 @@ export default function UserManagement() {
                                         >
                                             Chỉnh sửa
                                         </button>
-
                                         {user.status !== "DELETED" && (
                                             <button
                                                 className="nds-contact-btn"
@@ -123,8 +148,6 @@ export default function UserManagement() {
                                         )}
                                     </div>
                                 </td>
-
-
                             </tr>
                         ))}
                     </tbody>
