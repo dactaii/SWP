@@ -9,18 +9,19 @@ const BloodUnit = () => {
   }, []);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) return;
-
     const fetchBloodUnits = async () => {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+
       try {
-        const response = await axios.get("http://localhost:8080/api/blood-units", {
+        const response = await axios.get("http://localhost:8080/api/inventory/all-Inventory", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
 
-        setBloodUnits(response.data || []);
+        console.log("Dữ liệu API trả về:", response.data);
+        setBloodUnits(response.data.data || []);
       } catch (error) {
         console.error("Lỗi khi tải danh sách kho máu:", error);
       }
@@ -28,6 +29,21 @@ const BloodUnit = () => {
 
     fetchBloodUnits();
   }, []);
+
+  const convertComponentType = (type) => {
+    switch (type) {
+      case "Whole":
+        return "Máu toàn phần";
+      case "RBC":
+        return "Hồng cầu";
+      case "Platelet":
+        return "Tiểu cầu";
+      case "Plasma":
+        return "Huyết tương";
+      default:
+        return type;
+    }
+  };
 
   return (
     <div className="main-content">
@@ -50,7 +66,7 @@ const BloodUnit = () => {
               <tr key={unit.bloodUnitId}>
                 <td>{index + 1}</td>
                 <td>{unit.bloodType}</td>
-                <td>{unit.componentType}</td>
+                <td>{convertComponentType(unit.componentType)}</td>
                 <td>{unit.name}</td>
                 <td>{unit.quantity}</td>
                 <td>{unit.expiryDate}</td>

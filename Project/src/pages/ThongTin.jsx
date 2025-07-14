@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import UserInfo from "../components/User/UserInfo";
 import UpdateUserInfo from "../components/User/UpdateUserInfo";
 import UserLayout from "../layouts/UserLayout";
-import EmergencyForm from "../components/staff/emergencyForm";
 import ScheduleManagement from "../components/staff/ScheduleManagement";
 import AppointmentList from "../components/staff/AppointmentList";
 import UserManagement from "../components/Admin/UserManagement";
@@ -110,7 +109,6 @@ const ThongTin = () => {
           {activeComponent === "DonationHistory" && <DonationHistory />}
 
 
-          {activeComponent === "emergencyForm" && <EmergencyForm />}
         </main>
       </div>
     </UserLayout>

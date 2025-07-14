@@ -12,11 +12,12 @@
 .lc-card {
   width: 90%;
   max-width: 420px;
-  background-color: #ffffff;
+  background: linear-gradient(135deg, #fff, #f9f9f9);
   border-radius: 20px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
   padding: 32px 24px;
   text-align: center;
+  font-family: "Segoe UI", sans-serif;
   animation: fadeIn 0.3s ease-in-out;
 }
 
@@ -52,23 +53,22 @@
   transition: all 0.6s ease-in-out;
 }
 
-/* Icon 1: Map Alt - xuất hiện đầu, sau đó mờ đi */
+/* Hiệu ứng icon */
 .icon-alt {
   opacity: 1;
   transform: scale(1);
   animation: fadeOutIcon 2s ease-in-out infinite;
-  background: linear-gradient(135deg, #f97316, #facc15);
+  background: #d61c4e;
   color: transparent;
   -webkit-background-clip: text;
   background-clip: text;
 }
 
-/* Icon 2: Map Pin - xuất hiện sau, thay thế icon-alt */
 .icon-pin {
   opacity: 0;
   transform: scale(0.5);
   animation: fadeInIcon 2s ease-in-out infinite;
-  color: #f97316;
+  color: #d61c4e;
 }
 
 @keyframes fadeOutIcon {
@@ -117,32 +117,36 @@
 }
 
 .lc-btn {
-  padding: 10px 24px;
-  font-size: 15px;
+  padding: 12px 24px;
+  font-size: 1rem;
   font-weight: 600;
   border: none;
-  border-radius: 10px;
+  border-radius: 12px;
   cursor: pointer;
   transition: all 0.3s ease;
-  min-width: 100px;
+  min-width: 120px;
 }
 
+/* Nút Đồng ý */
 .lc-accept {
-  background-color: #ddad81;
+  background: #d61c4e;
   color: #fff;
 }
 
 .lc-accept:hover {
-  background-color: #c38f6a;
+  background: #d61c4e;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(214, 28, 78, 0.4);
 }
 
+/* Nút Từ chối */
 .lc-decline {
-  background-color: #f1f1f1;
+  background-color: #f0f0f0;
   color: #333;
 }
 
 .lc-decline:hover {
-  background-color: #ddd;
+  background-color: #e0e0e0;
 }
 
 .lc-error {

@@ -4,6 +4,7 @@ import { jwtDecode } from "jwt-decode";
 import axios from "axios";
 import logo from "../../assets/img/logos/logo.png";
 import logoDefault from "../../assets/img/icons/logoDefault.png";
+import Swal from "../../assets/js/swalConfig";
 
 import { MdHomeFilled } from "react-icons/md";
 import { IoSearch } from "react-icons/io5";
@@ -117,6 +118,95 @@ const Sidebar = () => {
     }
   };
 
+  const handleBloodDonationClick = async (e) => {
+  e.preventDefault();
+  const token = localStorage.getItem("token");
+  if (!token) {
+    Swal.fire({
+      icon: "warning",
+      title: "Chưa đăng nhập",
+      text: "Vui lòng đăng nhập để tiếp tục.",
+    }).then(() => {
+      navigate("/login");
+    });
+    return;
+  }
+
+  try {
+    const res = await axios.get("http://localhost:8080/api/profile", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    const { phoneNumber } = res.data;
+    const lat = localStorage.getItem("user_lat");
+    const lng = localStorage.getItem("user_lng");
+
+    if (!phoneNumber) {
+      Swal.fire({
+        icon: "info",
+        title: "Chưa cập nhật thông tin người dùng",
+        text: "Vui lòng cập nhật thông tin để tiếp tục.",
+        confirmButtonText: "Cập nhật ngay",
+        showCancelButton: true,
+        cancelButtonText: "Để sau",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/thongtin");
+        }
+      });
+    } else if (!lat || !lng) {
+      Swal.fire({
+        icon: "info",
+        title: "Thiếu thông tin vị trí",
+        text: "Hệ thống cần vị trí hiện tại của bạn để tìm cơ sở hiến máu phù hợp.",
+        confirmButtonText: "Chia sẻ vị trí",
+        showCancelButton: true,
+        cancelButtonText: "Để sau",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+              (position) => {
+                const { latitude, longitude } = position.coords;
+                localStorage.setItem("user_lat", latitude);
+                localStorage.setItem("user_lng", longitude);
+                navigate("/BloodDonation");
+              },
+              (error) => {
+                switch (error.code) {
+                  case error.PERMISSION_DENIED:
+                    Swal.fire("Lỗi", "Bạn đã từ chối chia sẻ vị trí.", "error");
+                    break;
+                  case error.POSITION_UNAVAILABLE:
+                    Swal.fire("Lỗi", "Không thể xác định vị trí.", "error");
+                    break;
+                  case error.TIMEOUT:
+                    Swal.fire("Lỗi", "Hết thời gian lấy vị trí.", "error");
+                    break;
+                  default:
+                    Swal.fire("Lỗi", "Lỗi không xác định.", "error");
+                }
+              }
+            );
+          } else {
+            Swal.fire("Lỗi", "Trình duyệt không hỗ trợ định vị.", "error");
+          }
+        }
+      });
+    } else {
+      navigate("/BloodDonation");
+    }
+  } catch (err) {
+    console.error("Lỗi khi kiểm tra profile:", err);
+    Swal.fire({
+      icon: "error",
+      title: "Lỗi",
+      text: "Đã xảy ra lỗi khi kiểm tra thông tin người dùng.",
+    });
+  }
+};
+
+
   return (
     <aside className={`sidebar full-height ${isStaffMode ? "staff-mode" : ""}`}>
       <div className="sidebar-logo-wrapper">
@@ -145,12 +235,18 @@ const Sidebar = () => {
                       </summary>
                       <ul>
                         <li>
-                          <Link to="/bloodtype" className={isActive("/bloodtype")}>
+                          <Link
+                            to="/bloodtype"
+                            className={isActive("/bloodtype")}
+                          >
                             Các Loại Máu
                           </Link>
                         </li>
                         <li>
-                          <Link to="/BloodTypeFake" className={isActive("/BloodTypeFake")}>
+                          <Link
+                            to="/BloodTypeFake"
+                            className={isActive("/BloodTypeFake")}
+                          >
                             Cách Sử Dụng Máu
                           </Link>
                         </li>
@@ -164,76 +260,63 @@ const Sidebar = () => {
                     </Link>
                   </li>
                   <li>
-                    <Link to="/BloodDonation" onClick={(e) => handleAccessLink(e, "/BloodDonation")} className={isActive("/BloodDonation")}>
+                    <a
+                      href="#blood"
+                      onClick={handleBloodDonationClick}
+                      className={isActive("/BloodDonation")}
+                    >
                       <MdBloodtype className="sidebar-icon" />
                       Đăng ký hiến máu
-                    </Link>
-                  </li>
-                  <li>
-                    <details>
-                      <summary className={isSubActive("/tracuu") || isSubActive("/timnguoi")}>
-                        <MdOutlineBloodtype className="sidebar-icon" />
-                        Tìm Máu
-                      </summary>
-                      <ul>
-                        <li>
-                          <Link to="/tracuu" onClick={(e) => handleAccessLink(e, "/tracuu")} className={isActive("/tracuu")}>
-                            Tra cứu nhóm máu phù hợp
-                          </Link>
-                        </li>
-                        <li>
-                          <Link to="/timnguoiHM" onClick={(e) => handleAccessLink(e, "/timnguoiHM")} className={isActive("/timnguoiHM")}>
-                            Tìm người hiến máu gần bạn
-                          </Link>
-                        </li>
-                        <li>
-                          <Link to="/timnguoiCM" onClick={(e) => handleAccessLink(e, "/timnguoiCM")} className={isActive("/timnguoiCM")}>
-                            Tìm người cần máu
-                          </Link>
-                        </li>
-                      </ul>
-                    </details>
+                    </a>
                   </li>
                 </>
               ) : (
                 <>
                   <li>
-                    <Link to="/bloodUnitPage" className={isActive("/bloodUnitPage")}>
+                    <Link
+                      to="/bloodUnitPage"
+                      className={isActive("/bloodUnitPage")}
+                    >
                       <IoSearch className="sidebar-icon" />
                       Tra Cứu Kho Máu
                     </Link>
                   </li>
                   <li>
-                    <Link to="/staff/manage-blood" className={isActive("/staff/manage-blood")}>
-                      <MdOutlineStorage  className="sidebar-icon" />
+                    <Link
+                      to="/staff/manage-blood"
+                      className={isActive("/staff/manage-blood")}
+                    >
+                      <MdOutlineStorage className="sidebar-icon" />
                       Quản Lý Kho Máu
                     </Link>
                   </li>
                   <li>
-                    <Link to="/EmergencyFormPage" className={isActive("/EmergencyFormPage")}>
-                      <BiDonateBlood className="sidebar-icon" />
-                      Cần Máu Khẩn Cấp
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/NearbyDonorSearchPage" className={isActive("/NearbyDonorSearchPage")}>
+                    <Link
+                      to="/NearbyDonorSearchPage"
+                      className={isActive("/NearbyDonorSearchPage")}
+                    >
                       <GrMapLocation className="sidebar-icon" />
                       Tìm người hiến gần cơ sở
                     </Link>
                   </li>
                   <li>
-                    <Link to="/ScheduleManagementPage" className={isActive("/ScheduleManagementPage")}>
+                    <Link
+                      to="/ScheduleManagementPage"
+                      className={isActive("/ScheduleManagementPage")}
+                    >
                       <FaRegCalendarAlt className="sidebar-icon" />
                       Quản Lý Lịch Hẹn
                     </Link>
                   </li>
                   <li>
-                    <Link to="/AppointmentListPage" className={isActive("/AppointmentListPage")}>
+                    <Link
+                      to="/AppointmentListPage"
+                      className={isActive("/AppointmentListPage")}
+                    >
                       <RiCalendarScheduleLine className="sidebar-icon" />
                       Xác Nhận Hiến Máu
                     </Link>
                   </li>
-                  
                 </>
               )}
             </ul>
@@ -250,29 +333,40 @@ const Sidebar = () => {
 
           {role === "ROLE_STAFF" && (
             <>
-              <button className="sidebar-more-btn" onClick={() => setSwitchOpen(!switchOpen)}>
+              <button
+                className="sidebar-more-btn"
+                onClick={() => setSwitchOpen(!switchOpen)}
+              >
                 <FaUserFriends className="sidebar-icon" />
                 Chuyển đổi trạng thái
               </button>
               {switchOpen && (
                 <ul className="user-dropdown">
                   <li>
-                    <a href="#user" onClick={(e) => {
-                      e.preventDefault();
-                      setIsStaffMode(false);
-                      localStorage.setItem("isStaffMode", "false");
-                      setSwitchOpen(false);
-                    }} className={!isStaffMode ? "active" : ""}>
+                    <a
+                      href="#user"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setIsStaffMode(false);
+                        localStorage.setItem("isStaffMode", "false");
+                        setSwitchOpen(false);
+                      }}
+                      className={!isStaffMode ? "active" : ""}
+                    >
                       Người dùng
                     </a>
                   </li>
                   <li>
-                    <a href="#staff" onClick={(e) => {
-                      e.preventDefault();
-                      setIsStaffMode(true);
-                      localStorage.setItem("isStaffMode", "true");
-                      setSwitchOpen(false);
-                    }} className={isStaffMode ? "active" : ""}>
+                    <a
+                      href="#staff"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setIsStaffMode(true);
+                        localStorage.setItem("isStaffMode", "true");
+                        setSwitchOpen(false);
+                      }}
+                      className={isStaffMode ? "active" : ""}
+                    >
                       Nhân viên
                     </a>
                   </li>
@@ -281,21 +375,42 @@ const Sidebar = () => {
             </>
           )}
 
-          <button className="sidebar-more-btn" onClick={() => setMoreOpen(!moreOpen)}>
+          <button
+            className="sidebar-more-btn"
+            onClick={() => setMoreOpen(!moreOpen)}
+          >
             <TiThMenu className="sidebar-icon" />
             Xem thêm
           </button>
           {moreOpen && (
             <ul className="user-dropdown">
-              <li><Link to="/thongtin">Thông Tin Cá Nhân</Link></li>
-              <li><Link to="/history">Lịch Sử Hiến Máu</Link></li>
-              <li><Link to="/note">Nhắc Nhở Hiến Máu</Link></li>
-              <li><a href="#logout" onClick={(e) => { e.preventDefault(); logout(); }}>Đăng Xuất</a></li>
+              <li>
+                <Link to="/thongtin">Thông Tin Cá Nhân</Link>
+              </li>
+              <li>
+                <Link to="/history">Lịch Sử Hiến Máu</Link>
+              </li>
+              <li>
+                <Link to="/note">Nhắc Nhở Hiến Máu</Link>
+              </li>
+              <li>
+                <a
+                  href="#logout"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    logout();
+                  }}
+                >
+                  Đăng Xuất
+                </a>
+              </li>
             </ul>
           )}
         </div>
       ) : (
-        <div className="sidebar-login-btn"><Link to="/login">Đăng Nhập</Link></div>
+        <div className="sidebar-login-btn">
+          <Link to="/login">Đăng Nhập</Link>
+        </div>
       )}
     </aside>
   );

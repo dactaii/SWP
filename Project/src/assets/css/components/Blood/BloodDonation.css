@@ -153,3 +153,54 @@
     font-size: 1rem;
   }
 }
+
+/* SweetAlert2 */
+
+.custom-swal-popup {
+  font-family: "Segoe UI", sans-serif;
+  border-radius: 20px;
+  padding: 30px;
+  background: linear-gradient(135deg, #fff, #f9f9f9);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  max-width: 420px;
+}
+
+.custom-swal-title {
+  color: #d61c4e;
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  letter-spacing: 0.5px;
+}
+
+.custom-swal-confirm-btn,
+.custom-swal-cancel-btn {
+  border-radius: 12px !important;
+  padding: 10px 20px !important;
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.custom-swal-confirm-btn {
+  background: #d61c4e !important;
+  color: #fff !important;
+  border: none !important;
+}
+
+.custom-swal-confirm-btn:hover {
+  background: #d61c4e !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(214, 28, 78, 0.4);
+}
+
+.custom-swal-cancel-btn {
+  background-color: #f0f0f0 !important;
+  color: #333 !important;
+  border: none !important;
+}
+
+.custom-swal-cancel-btn:hover {
+  background-color: #e0e0e0 !important;
+}
