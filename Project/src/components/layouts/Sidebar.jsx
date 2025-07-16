@@ -257,15 +257,6 @@ const Sidebar = () => {
                   </li>
                   <li>
                     <Link
-                      to="/staff/manage-blood"
-                      className={isActive("/staff/manage-blood")}
-                    >
-                      <MdOutlineStorage className="sidebar-icon" />
-                      Quản Lý Kho Máu
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
                       to="/NearbyDonorSearchPage"
                       className={isActive("/NearbyDonorSearchPage")}
                     >
