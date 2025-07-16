@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import extractListFromColonToDot from "../../assets/js/extractListFromColonToDot";
 import splitText from "../../assets/js/splitText";
 
-const OPosiType = () => {
+const ONegaType = () => {
   const [articles, setArticles] = useState([]);
 
   useEffect(() => {
@@ -12,7 +11,7 @@ const OPosiType = () => {
     const fetchArticles = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:8080/api/article/category?category=nhóm máu oposi",
+          "http://localhost:8080/api/article/category?category=nhóm máu onega",
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -27,17 +26,7 @@ const OPosiType = () => {
           imgPath: item.img_path || item.imgPath || "",
         }));
 
-        const titlesToExtract = [
-          "Người có nhóm máu O+ có thể nhận máu từ những nhóm nào?",
-        ];
-
-        const updatedArticles = normalizedData.map((item) =>
-          titlesToExtract.includes(item.title)
-            ? extractListFromColonToDot(item)
-            : item
-        );
-
-        setArticles(updatedArticles);
+        setArticles(normalizedData);
       } catch (err) {
         console.error("Lỗi khi tải bài viết:", err);
       }
@@ -48,7 +37,7 @@ const OPosiType = () => {
 
   return (
     <section className="blood-section">
-      <h2>Nhóm máu O+</h2>
+      <h2>Nhóm máu O-</h2>
       {articles.length > 0 ? (
         articles.map((item, index) => (
           <div className="article-block" key={index}>
@@ -99,4 +88,4 @@ const OPosiType = () => {
   );
 };
 
-export default OPosiType;
+export default ONegaType;

@@ -129,3 +129,33 @@
   background-color: color-mix(in srgb, var(--accent-color), transparent 20%);
 }
 
+/* Ảnh chi tiết cho từng nhóm máu: dùng chung cho 8 nhóm */
+.blooddetail-image {
+  margin: 24px 0;
+  text-align: center;
+}
+
+.blooddetail-image img {
+  max-width: 30%;
+  height: auto;
+  border-radius: 12px;
+  border: 2px solid var(--accent-color);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.card-btn {
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: var(--accent-color);
+  color: var(--contrast-color);
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.card-btn:hover {
+  background-color: color-mix(in srgb, var(--accent-color), transparent 20%);
+}

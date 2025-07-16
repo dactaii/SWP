@@ -9,11 +9,24 @@ const Blog = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const articlesPerPage = 4;
 
-  // Comment input
+  // Inputs
+  const [title, setTitle] = useState("");
   const [comment, setComment] = useState("");
   const [attachment, setAttachment] = useState(null);
+  const [previewImage, setPreviewImage] = useState(null);
 
+  // Cleanup object URL khi unmount hoặc thay đổi file
   useEffect(() => {
+    return () => {
+      if (previewImage) {
+        URL.revokeObjectURL(previewImage);
+      }
+    };
+  }, [previewImage]);
+
+  // Lấy danh sách bài viết
+  const fetchArticles = () => {
+    setLoading(true);
     axios
       .get(
         "http://localhost:8080/api/article/category?category=blog chia sẻ kinh nghiệm"
@@ -32,27 +45,74 @@ const Blog = () => {
       .finally(() => {
         setLoading(false);
       });
+  };
+
+  useEffect(() => {
+    fetchArticles();
   }, []);
 
-  const handleCommentSubmit = () => {
-    console.log("Bình luận:", comment);
-    console.log("File:", attachment);
-    alert("Bình luận đã được gửi (giả lập)");
-    setComment("");
-    setAttachment(null);
-  };
-
+  // Xử lý chọn file ảnh
   const handleFileChange = (e) => {
-    setAttachment(e.target.files[0]);
+    const file = e.target.files[0];
+    if (file) {
+      setAttachment(file);
+      const url = URL.createObjectURL(file);
+      setPreviewImage(url);
+    }
   };
 
+  // Gửi bài viết mới
+  const handleCommentSubmit = async () => {
+    if (!title.trim() || !comment.trim()) {
+      alert("Vui lòng nhập đầy đủ tiêu đề và nội dung.");
+      return;
+    }
+
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("Bạn cần đăng nhập để đăng bài viết.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("content", comment);
+    formData.append("category", "blog chia sẻ kinh nghiệm");
+    if (attachment) {
+      formData.append("image", attachment);
+    }
+
+    try {
+      // axios tự set Content-Type khi dùng FormData
+      const response = await axios.post(
+        "http://localhost:8080/api/article/save",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.status === 200 && response.data.code === 200) {
+        alert("Bài viết đã được đăng thành công!");
+        setTitle("");
+        setComment("");
+        setAttachment(null);
+        setPreviewImage(null);
+        fetchArticles();
+      } else {
+        alert("Có lỗi xảy ra khi gửi bài viết.");
+      }
+    } catch (error) {
+      alert("Lỗi kết nối khi gửi bài viết: " + error.message);
+    }
+  };
+
+  // Phân trang
   const indexOfLastArticle = currentPage * articlesPerPage;
   const indexOfFirstArticle = indexOfLastArticle - articlesPerPage;
-  const currentArticles = articles.slice(
-    indexOfFirstArticle,
-    indexOfLastArticle
-  );
-
+  const currentArticles = articles.slice(indexOfFirstArticle, indexOfLastArticle);
   const totalPages = Math.ceil(articles.length / articlesPerPage);
 
   const handlePageChange = (pageNumber) => {
@@ -64,8 +124,16 @@ const Blog = () => {
       <div className="container">
         <h2>Blog Chia Sẻ Kinh Nghiệm</h2>
 
-        {/* Comment Box at top */}
+        {/* Form đăng bài */}
         <div className="global-comment-box">
+          <input
+            type="text"
+            className="title-input"
+            placeholder="Tiêu đề bài viết..."
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+
           <textarea
             className="comment-input"
             placeholder="Chia sẻ cảm nghĩ của bạn..."
@@ -78,6 +146,7 @@ const Blog = () => {
               📎 Đính kèm
               <input
                 type="file"
+                accept="image/*"
                 style={{ display: "none" }}
                 onChange={handleFileChange}
               />
@@ -87,12 +156,23 @@ const Blog = () => {
               Gửi
             </button>
           </div>
+
+          {/* Ảnh xem trước */}
+          {previewImage && (
+            <div style={{ marginTop: "10px" }}>
+              <img
+                src={previewImage}
+                alt="preview"
+                style={{ maxWidth: "200px", borderRadius: "8px" }}
+              />
+            </div>
+          )}
         </div>
 
-        {/* Error */}
+        {/* Thông báo lỗi */}
         {error && <p style={{ color: "red" }}>{error}</p>}
 
-        {/* Blog list */}
+        {/* Danh sách bài viết */}
         {loading ? (
           <p>Đang tải dữ liệu...</p>
         ) : currentArticles.length === 0 ? (
@@ -103,14 +183,12 @@ const Blog = () => {
           ))
         )}
 
-        {/* Pagination */}
+        {/* Phân trang */}
         <div className="pagination">
           {[...Array(totalPages)].map((_, index) => (
             <span
               key={index}
-              className={`page-btn ${
-                currentPage === index + 1 ? "active" : ""
-              }`}
+              className={`page-btn ${currentPage === index + 1 ? "active" : ""}`}
               onClick={() => handlePageChange(index + 1)}
             >
               {index + 1}

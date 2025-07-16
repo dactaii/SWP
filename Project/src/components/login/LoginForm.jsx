@@ -5,22 +5,32 @@ import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { IoMdCloseCircleOutline } from "react-icons/io";
 
-function LoginForm() {
+function LoginForm({ onClose }) {
   const [rightPanelActive, setRightPanelActive] = useState(false);
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
   const [fullName, setFullName] = useState("");
   const [signUpUserName, setSignUpUserName] = useState("");
   const [signUpPassword, setSignUpPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState("");
   const [signUpError, setSignUpError] = useState("");
 
-  /* ===== Add class no-scroll ======*/
+  const [isResetPassword, setIsResetPassword] = useState(false);
+  const [resetEmail, setResetEmail] = useState("");
+  const [otp, setOtp] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmNewPassword, setConfirmNewPassword] = useState("");
+  const [resetError, setResetError] = useState("");
+  const [resetSuccessMsg, setResetSuccessMsg] = useState("");
+  const [otpSent, setOtpSent] = useState(false);
+  const [otpCooldown, setOtpCooldown] = useState(0);
+
   useEffect(() => {
     document.body.classList.add("no-scroll");
     return () => {
@@ -28,7 +38,15 @@ function LoginForm() {
     };
   }, []);
 
-  /*================ Handle Google Login ================*/
+  useEffect(() => {
+    if (otpCooldown > 0) {
+      const timer = setInterval(() => {
+        setOtpCooldown((prev) => prev - 1);
+      }, 1000);
+      return () => clearInterval(timer);
+    }
+  }, [otpCooldown]);
+
   const handleGoogleLogin = () => {
     axios
       .get("http://localhost:8080/api/auth/social?loginType=google")
@@ -42,7 +60,6 @@ function LoginForm() {
       });
   };
 
-  /*================ Handle Sign Up ================*/
   const handleSignUp = async (e) => {
     e.preventDefault();
     if (signUpPassword !== confirmPassword) {
@@ -68,38 +85,29 @@ function LoginForm() {
       }
     } catch (err) {
       setSignUpError("Đã xảy ra lỗi khi đăng ký. Vui lòng thử lại sau.");
-      console.error(err);
     }
   };
-  /*================ End Handle Sign Up ================*/
 
-  /*================ Handle login ================*/
   const handleLogin = async (e) => {
     e.preventDefault();
-
     try {
       const res = await axios.post("http://localhost:8080/api/login", {
         userName,
         password,
       });
-      console.log("Server response:", res);
       const token = res.data.data;
-      console.log("token", token);
       if (!token) {
-        alert("Đăng nhập thất bại!");
+        setErrorMessage("Đăng nhập thất bại!");
         return;
       }
       localStorage.setItem("token", token);
-
       const decoded = jwtDecode(token);
       const role = decoded.role;
-
-      if (role === "ROLE_ADMIN") {
+      if (["ROLE_ADMIN", "ROLE_MEMBER", "ROLE_STAFF"].includes(role)) {
+        localStorage.setItem("token", token);
+        window.dispatchEvent(new Event("loginSuccess"));
         navigate("/", { state: { justLoggedIn: true } });
-      } else if (role === "ROLE_MEMBER") {
-        navigate("/", { state: { justLoggedIn: true } });
-      } else if (role === "ROLE_STAFF") {
-        navigate("/", { state: { justLoggedIn: true } });
+        onClose();
       } else {
         setErrorMessage("Vai trò không hợp lệ!");
       }
@@ -107,19 +115,69 @@ function LoginForm() {
       setErrorMessage("Sai tài khoản hoặc mật khẩu!");
     }
   };
-  /*================ End Handle login ================*/
+
+  const handleRequestOTP = async () => {
+    try {
+      await axios.post("http://localhost:8080/api/auth/request-reset", {
+        email: resetEmail,
+      });
+      setOtpSent(true);
+      setOtpCooldown(120);
+      setResetError("");
+      setResetSuccessMsg("OTP đã được gửi đến email của bạn!");
+    } catch (error) {
+      setResetError("Không thể gửi OTP. Vui lòng kiểm tra email và thử lại.");
+      setResetSuccessMsg("");
+    }
+  };
+
+  const handleResetPassword = async (e) => {
+    e.preventDefault();
+    if (newPassword !== confirmNewPassword) {
+      setResetError("Mật khẩu xác nhận không khớp!");
+      setResetSuccessMsg("");
+      return;
+    }
+    try {
+      await axios.post("http://localhost:8080/api/auth/reset-password", {
+        email: resetEmail,
+        otp: otp,
+        newPassword: newPassword,
+      });
+      setIsResetPassword(false);
+      setResetEmail("");
+      setOtp("");
+      setNewPassword("");
+      setConfirmNewPassword("");
+      setResetError("");
+      setResetSuccessMsg("");
+      setOtpCooldown(0);
+      setOtpSent(false);
+      alert("Đổi mật khẩu thành công! Vui lòng đăng nhập.");
+    } catch (error) {
+      setResetError("OTP không chính xác hoặc đã hết hạn.");
+      setResetSuccessMsg("");
+    }
+  };
 
   return (
     <>
       <Helmet>
         <title>Login Page</title>
       </Helmet>
+
       <div className="login-page">
+        <button className="floating-close-btn" onClick={onClose} title="Đóng">
+          <IoMdCloseCircleOutline />
+        </button>
+
         <div
           id="container"
-          className={`container ${rightPanelActive ? "right-panel-active" : ""
-            }`}
+          className={`container ${
+            rightPanelActive ? "right-panel-active" : ""
+          }`}
         >
+          {/* ===== Đăng ký ===== */}
           <div className="form-container sign-up-container">
             <form onSubmit={handleSignUp}>
               <h1>Register as a Donor</h1>
@@ -154,12 +212,10 @@ function LoginForm() {
                 <span
                   className="show-password-toggle"
                   onClick={() => setShowPassword(!showPassword)}
-                  title={showPassword ? "Ẩn mật khẩu" : "Hiện mật khẩu"}
                 >
                   <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
                 </span>
               </div>
-
               <div className="input-wrapper">
                 <input
                   type={showPassword ? "text" : "password"}
@@ -171,7 +227,6 @@ function LoginForm() {
                 <span
                   className="show-password-toggle"
                   onClick={() => setShowPassword(!showPassword)}
-                  title={showPassword ? "Ẩn mật khẩu" : "Hiện mật khẩu"}
                 >
                   <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
                 </span>
@@ -181,56 +236,129 @@ function LoginForm() {
             </form>
           </div>
 
+          {/* ===== Đăng nhập hoặc Đặt lại mật khẩu ===== */}
           <div className="form-container sign-in-container">
-            <form onSubmit={handleLogin}>
-              <h1>Đăng Nhập</h1>
-              <div className="social-container">
-                <a href="#" className="social" onClick={handleGoogleLogin}>
-                  <i className="bi bi-google"></i>
-                </a>
-              </div>
-              <span>Or use your account</span>
+            {isResetPassword ? (
+              <form onSubmit={handleResetPassword}>
+                <h1>Đặt lại mật khẩu</h1>
 
-              {/*================ Input login ================*/}
-              <input
-                type="text"
-                placeholder="Tên Đăng Nhập"
-                value={userName}
-                onChange={(e) => setUserName(e.target.value)}
-                required
-              />
-
-              <div className="input-wrapper">
                 <input
-                  type={showPassword ? "text" : "password"}
-                  placeholder="Mật Khẩu"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  type="email"
+                  placeholder="Email"
+                  value={resetEmail}
+                  onChange={(e) => setResetEmail(e.target.value)}
                   required
                 />
-                <span
-                  className="show-password-toggle"
-                  onClick={() => setShowPassword(!showPassword)}
-                  title={showPassword ? "Ẩn mật khẩu" : "Hiện mật khẩu"}
-                >
-                  <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
-                </span>
-              </div>
-              {/*================ End Input login ================*/}
 
-              <a href="#">Forgot your password?</a>
-              <button type="submit">Đăng Nhập</button>
-              {errorMessage && <p className="error-message">{errorMessage}</p>}
-            </form>
+                <button
+                  type="button"
+                  onClick={handleRequestOTP}
+                  disabled={otpCooldown > 0 || !resetEmail}
+                  style={{
+                    backgroundColor: otpCooldown > 0 ? "#ccc" : "",
+                    cursor: otpCooldown > 0 ? "not-allowed" : "pointer",
+                  }}
+                >
+                  {otpCooldown > 0 ? `Nhận OTP (${otpCooldown}s)` : "Nhận OTP"}
+                </button>
+
+                <input
+                  type="text"
+                  placeholder="Nhập mã OTP"
+                  value={otp}
+                  onChange={(e) => setOtp(e.target.value)}
+                  required
+                />
+
+                <div className="input-wrapper">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Mật khẩu mới"
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                    required
+                  />
+                  <span
+                    className="show-password-toggle"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+                  </span>
+                </div>
+
+                <div className="input-wrapper">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Xác nhận mật khẩu mới"
+                    value={confirmNewPassword}
+                    onChange={(e) => setConfirmNewPassword(e.target.value)}
+                    required
+                  />
+                  <span
+                    className="show-password-toggle"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+                  </span>
+                </div>
+
+                <button type="submit">Xác nhận đổi mật khẩu</button>
+                <a href="#" onClick={() => setIsResetPassword(false)}>
+                  Quay lại đăng nhập
+                </a>
+                {resetError && <p className="error-message">{resetError}</p>}
+                {resetSuccessMsg && (
+                  <p className="success-message">{resetSuccessMsg}</p>
+                )}
+              </form>
+            ) : (
+              <form onSubmit={handleLogin}>
+                <h1>Đăng Nhập</h1>
+                <div className="social-container">
+                  <a href="#" className="social" onClick={handleGoogleLogin}>
+                    <i className="bi bi-google"></i>
+                  </a>
+                </div>
+                <span>Or use your account</span>
+                <input
+                  type="text"
+                  placeholder="Tên Đăng Nhập"
+                  value={userName}
+                  onChange={(e) => setUserName(e.target.value)}
+                  required
+                />
+                <div className="input-wrapper">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Mật Khẩu"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                  />
+                  <span
+                    className="show-password-toggle"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+                  </span>
+                </div>
+                <a href="#" onClick={() => setIsResetPassword(true)}>
+                  Quên mật khẩu?
+                </a>
+                <button type="submit">Đăng Nhập</button>
+                {errorMessage && (
+                  <p className="error-message">{errorMessage}</p>
+                )}
+              </form>
+            )}
           </div>
 
+          {/* ===== Overlay ===== */}
           <div className="overlay-container">
             <div className="overlay">
               <div className="overlay-panel overlay-left">
                 <h1>Donate Today, Save Tomorrow!</h1>
                 <p>Together, we save lives and ensure blood for everyone</p>
-
-                {/*================ JS ================*/}
                 <button
                   className="ghost"
                   id="signIn"
@@ -238,7 +366,6 @@ function LoginForm() {
                 >
                   Give Hope - Sign In
                 </button>
-                {/*================ End JS ================*/}
               </div>
               <div className="overlay-panel overlay-right">
                 <h1>Your Blood, Their Future!</h1>
@@ -246,8 +373,6 @@ function LoginForm() {
                   Join us to save more lives. Everyone deserves access to blood
                   transfusion.
                 </p>
-
-                {/*================ JS ================*/}
                 <button
                   className="ghost"
                   id="signUp"
@@ -255,7 +380,6 @@ function LoginForm() {
                 >
                   Start Saving Lives - Sign Up
                 </button>
-                {/*================ End JS ================*/}
               </div>
             </div>
           </div>

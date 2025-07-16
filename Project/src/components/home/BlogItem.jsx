@@ -1,9 +1,12 @@
-import React, { useState } from "react";
-
 const BlogItem = ({ article }) => {
-  const [showImage, setShowImage] = useState(false);
-
   const hasImage = article.imgPath?.includes("/upload/");
+
+  // Nếu imgPath chưa có domain, nối thêm
+  const baseURL = "http://localhost:8080";
+  const imgSrc =
+    article.imgPath && !article.imgPath.startsWith("http")
+      ? baseURL + article.imgPath
+      : article.imgPath;
 
   return (
     <article className="comment-box">
@@ -11,18 +14,10 @@ const BlogItem = ({ article }) => {
         <p className="comment-title">{article.title}</p>
         <p className="comment-text">{article.content}</p>
 
-        {hasImage && !showImage && (
-          <p className="see-more" onClick={() => setShowImage(true)}>
-            Xem thêm
-          </p>
-        )}
-
-        {hasImage && showImage && (
-          <img
-            src={article.imgPath}
-            alt={article.title}
-            className="comment-image"
-          />
+        {hasImage && (
+          <div className="blooddetail-image">
+            <img src={imgSrc} alt={article.title} />
+          </div>
         )}
       </div>
 
