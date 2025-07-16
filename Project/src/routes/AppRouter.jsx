@@ -16,25 +16,30 @@ import ScheduleManagementPage from "../pages/ScheduleManagementPage";
 import AppointmentListPage from "../pages/AppointmentListPage";
 import DashBoardPage from "../pages/DashBoardPage";
 import ReportPage from "../pages/ReportPage";
+import ChatBox from "../layouts/ChatBox";
 function AppRouter() {
     return (
         <Routes>
-            <Route path="/" element={<UserHome />} />
+            <Route element={<ChatBox />}>
+                <Route path="/" element={<UserHome />} />
+                <Route path="/thongtin" element={<ThongTin />} />
+                <Route path="/bloodtype" element={<BloodType />} />
+                <Route path="/blood/:bloodType" element={<RenderForBlood />} />
+                <Route path="/UpdateUserInfo" element={<UpdateUserInfo />} />
+                <Route path="/BloodTypeFake" element={<BloodTypeFake />} />
+                <Route path="/BloodDonation" element={<BloodDonation />} />
+                <Route path="/blog" element={<BlogPage />} />
+                <Route path="/BloodUnitPage" element={<BloodUnitPage />} />
+                <Route path="/NearbyDonorSearchPage" element={<NearbyDonorSearchPage />} />
+                <Route path="/ScheduleManagementPage" element={<ScheduleManagementPage />} />
+                <Route path="/AppointmentListPage" element={<AppointmentListPage />} />
+                <Route path="/DashBoardPage" element={<DashBoardPage />} />
+                <Route path="/ReportPage" element={<ReportPage />} />
+            </Route>
             <Route path="/login" element={<LoginPage />} />
-            <Route path="/thongtin" element={<ThongTin />} />
-            <Route path="/bloodtype" element={<BloodType />} />
-            <Route path="/blood/:bloodType" element={<RenderForBlood />} />
             <Route path="/auth/social/callback/google" element={<OAuth2RedirectHandler />} />
-            <Route path="/UpdateUserInfo" element={<UpdateUserInfo />} />
-            <Route path="/BloodTypeFake" element={<BloodTypeFake />} />
-            <Route path="/BloodDonation" element={<BloodDonation />} />
-            <Route path="/blog" element={<BlogPage />} />
-            <Route path="/BloodUnitPage" element={<BloodUnitPage />} />
-            <Route path="/NearbyDonorSearchPage" element={<NearbyDonorSearchPage />} />
-            <Route path="/ScheduleManagementPage" element={<ScheduleManagementPage />} />
-            <Route path="/AppointmentListPage" element={<AppointmentListPage />} />
-            <Route path="/DashBoardPage" element={<DashBoardPage />} />
-            <Route path="/ReportPage" element={<ReportPage />} />
+
+
         </Routes>
     );
 };
