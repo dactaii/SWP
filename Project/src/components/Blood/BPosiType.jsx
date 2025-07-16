@@ -3,7 +3,7 @@ import axios from "axios";
 import extractListFromColonToDot from "../../assets/js/extractListFromColonToDot";
 import splitText from "../../assets/js/splitText";
 
-const OPosiType = () => {
+const BPosiType = () => {
   const [articles, setArticles] = useState([]);
 
   useEffect(() => {
@@ -12,7 +12,7 @@ const OPosiType = () => {
     const fetchArticles = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:8080/api/article/category?category=nhóm máu oposi",
+          "http://localhost:8080/api/article/category?category=nhóm máu bposi",
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -28,7 +28,7 @@ const OPosiType = () => {
         }));
 
         const titlesToExtract = [
-          "Người có nhóm máu O+ có thể nhận máu từ những nhóm nào?",
+          "Người có nhóm máu B+ có thể nhận máu từ nhóm nào?",
         ];
 
         const updatedArticles = normalizedData.map((item) =>
@@ -48,7 +48,7 @@ const OPosiType = () => {
 
   return (
     <section className="blood-section">
-      <h2>Nhóm máu O+</h2>
+      <h2>Nhóm máu B+</h2>
       {articles.length > 0 ? (
         articles.map((item, index) => (
           <div className="article-block" key={index}>
@@ -99,4 +99,4 @@ const OPosiType = () => {
   );
 };
 
-export default OPosiType;
+export default BPosiType;
