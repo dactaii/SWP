@@ -2,7 +2,7 @@ import Report from '../components/Admin/report';
 import UserLayout from '../layouts/UserLayout';
 
 const ReportPage = () => {
-    return(
+    return (
         <UserLayout>
             <Report />
         </UserLayout>

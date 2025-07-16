@@ -24,7 +24,7 @@ export default function UserManagement() {
                     Authorization: `Bearer ${token}`,
                 },
             });
-            setUsers(res.data);
+            setUsers(res.data.data.body);
         } catch (error) {
             console.error("Lỗi khi lấy danh sách user:", error);
         }

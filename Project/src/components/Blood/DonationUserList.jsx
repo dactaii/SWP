@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-
 const DonationUserList = () => {
     const [donationList, setDonationList] = useState([]);
 
@@ -9,14 +8,23 @@ const DonationUserList = () => {
         try {
             const token = localStorage.getItem("token");
             if (!token) return;
+
             const res = await axios.get("http://localhost:8080/api/profile/history/all", {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
             });
-            setDonationList(res.data);
+
+            const body = res.data?.data; // ✅ Sửa chỗ này
+            if (Array.isArray(body)) {
+                setDonationList(body);
+            } else {
+                console.error("Lỗi: `data` không phải mảng", body);
+                setDonationList([]); // fallback để tránh lỗi .map()
+            }
         } catch (err) {
             console.error("Không thể lấy danh sách người hiến:", err);
+            setDonationList([]);
         }
     };
 
@@ -49,10 +57,10 @@ const DonationUserList = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {donationList.map((item, index) => (
+                    {Array.isArray(donationList) && donationList.map((item, index) => (
                         <tr key={item.historyId}>
                             <td>{index + 1}</td>
-                            <td>{item.userName}</td> {/* <-- Dùng userName từ API */}
+                            <td>{item.userName}</td>
                             <td>{formatDate(item.donationDate)}</td>
                             <td>{item.bloodType}</td>
                             <td>{item.recoveryStatus}</td>
@@ -60,7 +68,6 @@ const DonationUserList = () => {
                         </tr>
                     ))}
                 </tbody>
-
             </table>
         </div>
     );

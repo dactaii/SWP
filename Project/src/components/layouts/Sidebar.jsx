@@ -238,6 +238,7 @@ const Sidebar = () => {
           </Link>
         </div>
 
+
         <div className="sidebar-main">
           <div className="sidebar-top">
             <nav className="sidebar-nav">
@@ -349,6 +350,120 @@ const Sidebar = () => {
               </ul>
             </nav>
           </div>
+
+      <div className="sidebar-main">
+        <div className="sidebar-top">
+          <nav className="sidebar-nav">
+            <ul>
+              {isAdminMode ? (
+                <>
+                  <li>
+                    <Link
+                      to="/DashBoardPage"
+                      className={isActive("/DashBoardPage")}
+                    >
+                      <RiCalendarScheduleLine className="sidebar-icon" />
+                      Dashboard
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/ReportPage"
+                      className={isActive("/ReportPage")}
+                    >
+                      <RiCalendarScheduleLine className="sidebar-icon" />
+                      Report
+                    </Link>
+                  </li>
+                </>
+              ) : isStaffMode ? (
+                <>
+                  <li>
+                    <Link
+                      to="/bloodUnitPage"
+                      className={isActive("/bloodUnitPage")}
+                    >
+                      <IoSearch className="sidebar-icon" />
+                      Tra Cứu Kho Máu
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/NearbyDonorSearchPage"
+                      className={isActive("/NearbyDonorSearchPage")}
+                    >
+                      <GrMapLocation className="sidebar-icon" />
+                      Tìm người hiến gần cơ sở
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/ScheduleManagementPage"
+                      className={isActive("/ScheduleManagementPage")}
+                    >
+                      <FaRegCalendarAlt className="sidebar-icon" />
+                      Quản Lý Lịch Hẹn
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/AppointmentListPage"
+                      className={isActive("/AppointmentListPage")}
+                    >
+                      <RiCalendarScheduleLine className="sidebar-icon" />
+                      Xác Nhận Hiến Máu
+                    </Link>
+                  </li>
+                </>
+              ) : (
+                <>
+                  <li>
+                    <Link to="/" className={isActive("/")}>
+                      <MdHomeFilled className="sidebar-icon" />
+                      Trang Chủ
+                    </Link>
+                  </li>
+                  <li>
+                    <details>
+                      <summary className={isSubActive("/bloodtype")}>
+                        <LuSwatchBook className="sidebar-icon" />
+                        Tìm Hiểu Về Máu
+                      </summary>
+                      <ul>
+                        <li>
+                          <Link to="/bloodtype" className={isActive("/bloodtype")}>
+                            Các Loại Máu
+                          </Link>
+                        </li>
+                        <li>
+                          <Link to="/BloodTypeFake" className={isActive("/BloodTypeFake")}>
+                            Cách Sử Dụng Máu
+                          </Link>
+                        </li>
+                      </ul>
+                    </details>
+                  </li>
+                  <li>
+                    <Link to="/blog" className={isActive("/blog")}>
+                      <PiChatsCircleBold className="sidebar-icon" />
+                      Nhật ký hiến máu
+                    </Link>
+                  </li>
+                  <li>
+                    <a
+                      href="#blood"
+                      onClick={handleBloodDonationClick}
+                      className={isActive("/BloodDonation")}
+                    >
+                      <MdBloodtype className="sidebar-icon" />
+                      Đăng ký hiến máu
+                    </a>
+                  </li>
+                </>
+              )}
+            </ul>
+          </nav>
+
         </div>
 
         {name ? (

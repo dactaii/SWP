@@ -15,6 +15,7 @@ import ScheduleManagementPage from "../pages/ScheduleManagementPage";
 import AppointmentListPage from "../pages/AppointmentListPage";
 import DashBoardPage from "../pages/DashBoardPage";
 import ReportPage from "../pages/ReportPage";
+
 import OPosiTypePage from "../pages/OPosiTypePage";
 import ONegaTypePage from "../pages/ONegaTypePage";
 import APosiTypePage from "../pages/APosiTypePage";
@@ -53,6 +54,31 @@ function AppRouter() {
             <Route path="/blood-type/ab-negative" element={<ABNegaTypePage />} />
             <Route path="/blood-type/rare" element={<RareBloodPage />} />
             <Route path="/UseBloodPage" element={<UseBloodPage />} />
+
+import ChatBox from "../layouts/ChatBox";
+function AppRouter() {
+    return (
+        <Routes>
+            <Route element={<ChatBox />}>
+                <Route path="/" element={<UserHome />} />
+                <Route path="/thongtin" element={<ThongTin />} />
+                <Route path="/bloodtype" element={<BloodType />} />
+                <Route path="/blood/:bloodType" element={<RenderForBlood />} />
+                <Route path="/UpdateUserInfo" element={<UpdateUserInfo />} />
+                <Route path="/BloodTypeFake" element={<BloodTypeFake />} />
+                <Route path="/BloodDonation" element={<BloodDonation />} />
+                <Route path="/blog" element={<BlogPage />} />
+                <Route path="/BloodUnitPage" element={<BloodUnitPage />} />
+                <Route path="/NearbyDonorSearchPage" element={<NearbyDonorSearchPage />} />
+                <Route path="/ScheduleManagementPage" element={<ScheduleManagementPage />} />
+                <Route path="/AppointmentListPage" element={<AppointmentListPage />} />
+                <Route path="/DashBoardPage" element={<DashBoardPage />} />
+                <Route path="/ReportPage" element={<ReportPage />} />
+            </Route>
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/auth/social/callback/google" element={<OAuth2RedirectHandler />} />
+
+
 
         </Routes>
     );
