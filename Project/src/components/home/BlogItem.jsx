@@ -1,12 +1,16 @@
-const BlogItem = ({ article }) => {
-  const hasImage = article.imgPath?.includes("/upload/");
+import React, { useState } from "react";
 
-  // Nếu imgPath chưa có domain, nối thêm
+const BlogItem = ({ article }) => {
+  const [showImage, setShowImage] = useState(false);
+
+  const hasImage = article.imgPath?.includes("/upload/");
   const baseURL = "http://localhost:8080";
   const imgSrc =
     article.imgPath && !article.imgPath.startsWith("http")
       ? baseURL + article.imgPath
       : article.imgPath;
+
+  const toggleImage = () => setShowImage((prev) => !prev);
 
   return (
     <article className="comment-box">
@@ -15,9 +19,14 @@ const BlogItem = ({ article }) => {
         <p className="comment-text">{article.content}</p>
 
         {hasImage && (
-          <div className="blooddetail-image">
-            <img src={imgSrc} alt={article.title} />
-          </div>
+          <>
+            {showImage && (
+              <img src={imgSrc} alt={article.title} className="comment-image" />
+            )}
+            <button className="toggle-image-btn" onClick={toggleImage}>
+              {showImage ? "Thu gọn" : "Xem thêm"}
+            </button>
+          </>
         )}
       </div>
 

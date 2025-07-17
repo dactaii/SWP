@@ -2,10 +2,14 @@ import React, { useState, useEffect } from "react";
 import logoDefault from "../../assets/img/icons/logoDefault.png";
 import { jwtDecode } from "jwt-decode";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useAlert } from "../../layouts/AlertContext";
 
 const Default_Avatar = logoDefault;
 
 const UpdateUserInfo = () => {
+  const { showAlert } = useAlert();
+  const navigate = useNavigate();
   const [avatar, setAvatar] = useState(Default_Avatar);
   const [avatarFile, setAvatarFile] = useState(null);
   const [fullName, setFullName] = useState("");
@@ -138,11 +142,6 @@ const UpdateUserInfo = () => {
         data.append("avatarFile", avatarFile);
       }
 
-      console.log("TOKEN:", localStorage.getItem("token"));
-      console.log("HEADER:", {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      });
-
       const response = await axios.post(
         "http://localhost:8080/api/updateProfile/update",
         data,
@@ -154,32 +153,41 @@ const UpdateUserInfo = () => {
       );
 
       const result = response.data;
-      alert(result.message || "Cập nhật thành công!");
 
       if (result.avatarPath) {
         localStorage.setItem("avatar_url", result.avatarPath);
       }
-      window.location.reload();
+
+      showAlert("Thành công", "Đã cập nhật thông tin của bạn", "success");
+
+      setTimeout(() => {
+        navigate("/UserInfoPage");
+      }, 1500); // chờ alert hiển thị rồi mới chuyển
     } catch (error) {
       const status = error.response?.status;
 
-      if (status === 401) {
-        alert("Lỗi 401: Chưa xác thực. Vui lòng đăng nhập lại nếu cần.");
+      if (status === 400) {
+        showAlert(
+          "Lỗi",
+          "Email đã tồn tại. Vui lòng dùng email khác.",
+          "error"
+        );
       } else if (status === 403) {
-        alert("Lỗi 403: Bạn không có quyền thực hiện hành động này.");
-      } else if (status === 400) {
-        alert("Email đã tồn tại. Vui lòng sử dụng email khác.");
+        showAlert(
+          "Không được phép",
+          "Bạn không có quyền thực hiện hành động này",
+          "error"
+        );
       } else {
-        console.error("Lỗi cập nhật:", error);
-        const msg = error?.response?.data?.message || "Lỗi khi cập nhật hồ sơ";
-        alert(msg);
+        const msg = error.response?.data?.message || "Đã xảy ra lỗi.";
+        showAlert("Lỗi", msg, "error");
       }
     }
   };
 
   return (
-    <div className="main-content">
-      <h1>Thông tin người dùng</h1>
+    <div className="update-user-info-wrapper">
+      <h1>Chỉnh sửa thông tin người dùng</h1>
 
       <div className="avatar-container">
         <img src={avatar} alt="avatar" className="avatar" />
@@ -249,7 +257,19 @@ const UpdateUserInfo = () => {
           placeholder="Số điện thoại"
           required
         />
-        <button type="submit">Cập Nhật</button>
+        <div className="edit-user-btn-wrapper">
+          <button type="submit" className="edit-user-btn">
+            Cập nhật
+          </button>
+          <button
+            type="button"
+            className="edit-user-btn"
+            style={{ backgroundColor: "#94a3b8", marginLeft: "12px" }}
+            onClick={() => navigate("/UserInfoPage")}
+          >
+            Hủy / Quay lại
+          </button>
+        </div>
       </form>
     </div>
   );

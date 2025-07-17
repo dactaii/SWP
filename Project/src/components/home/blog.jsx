@@ -7,7 +7,8 @@ const Blog = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const articlesPerPage = 4;
+  const articlesPerPage = 5;
+  const [filterOption, setFilterOption] = useState("all");
 
   // Inputs
   const [title, setTitle] = useState("");
@@ -59,6 +60,49 @@ const Blog = () => {
       const url = URL.createObjectURL(file);
       setPreviewImage(url);
     }
+  };
+  const handleFilterChange = async (e) => {
+    const value = e.target.value;
+    setFilterOption(value);
+
+    if (value === "latest") {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        alert("Bạn cần đăng nhập để xem bài viết mới nhất.");
+        return;
+      }
+
+      setLoading(true);
+      try {
+        const response = await axios.get(
+          "http://localhost:8080/api/article/latest",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        if (response.status === 200 && response.data.code === 200) {
+          setArticles(response.data.data);
+          setCurrentPage(1);
+          setError(null);
+        } else {
+          setError("Không thể lấy danh sách bài viết mới nhất.");
+        }
+      } catch (err) {
+        setError("Lỗi khi gọi API: " + err.message);
+      } finally {
+        setLoading(false);
+      }
+    } else if (value === "all") {
+      fetchArticles();
+    }
+  };
+
+  // Reset lại tất cả bài viết
+  const handleShowAll = () => {
+    fetchArticles();
   };
 
   // Gửi bài viết mới
@@ -112,7 +156,10 @@ const Blog = () => {
   // Phân trang
   const indexOfLastArticle = currentPage * articlesPerPage;
   const indexOfFirstArticle = indexOfLastArticle - articlesPerPage;
-  const currentArticles = articles.slice(indexOfFirstArticle, indexOfLastArticle);
+  const currentArticles = articles.slice(
+    indexOfFirstArticle,
+    indexOfLastArticle
+  );
   const totalPages = Math.ceil(articles.length / articlesPerPage);
 
   const handlePageChange = (pageNumber) => {
@@ -123,6 +170,21 @@ const Blog = () => {
     <section id="blog" className="blog section">
       <div className="container">
         <h2>Blog Chia Sẻ Kinh Nghiệm</h2>
+        <div className="filter-dropdown">
+
+          <label htmlFor="filter" style={{ marginRight: "8px" }}>
+            Lọc bài viết:
+          </label>
+          <select
+            id="filter"
+            value={filterOption}
+            onChange={handleFilterChange}
+            style={{ padding: "6px 12px", borderRadius: "6px" }}
+          >
+            <option value="all">Hiển thị tất cả bài viết</option>
+            <option value="latest">5 bài viết mới nhất</option>
+          </select>
+        </div>
 
         {/* Form đăng bài */}
         <div className="global-comment-box">
@@ -188,7 +250,9 @@ const Blog = () => {
           {[...Array(totalPages)].map((_, index) => (
             <span
               key={index}
-              className={`page-btn ${currentPage === index + 1 ? "active" : ""}`}
+              className={`page-btn ${
+                currentPage === index + 1 ? "active" : ""
+              }`}
               onClick={() => handlePageChange(index + 1)}
             >
               {index + 1}

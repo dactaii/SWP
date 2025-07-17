@@ -15,12 +15,12 @@ const DonationUserList = () => {
                 },
             });
 
-            const body = res.data?.data; // ✅ Sửa chỗ này
+            const body = res.data?.data;
             if (Array.isArray(body)) {
                 setDonationList(body);
             } else {
                 console.error("Lỗi: `data` không phải mảng", body);
-                setDonationList([]); // fallback để tránh lỗi .map()
+                setDonationList([]);
             }
         } catch (err) {
             console.error("Không thể lấy danh sách người hiến:", err);

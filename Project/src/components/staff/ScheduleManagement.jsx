@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../../assets/css/components/staff/ScheduleManagement.css";
+import { useAlert } from "../../layouts/AlertContext";
 
 export default function ScheduleManagement() {
+  const { showAlert } = useAlert();
   const [schedules, setSchedules] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
@@ -12,8 +14,6 @@ export default function ScheduleManagement() {
     hospital: "",
   });
   const [hospitals, setHospitals] = useState([]);
-  const [showAlert, setShowAlert] = useState(false);
-  const [alertMessage, setAlertMessage] = useState("");
   const [expandedRow, setExpandedRow] = useState(null);
   const [loading, setLoading] = useState(false); // loading state
 
@@ -76,7 +76,7 @@ export default function ScheduleManagement() {
     if (!formData.componentType || !formData.quantity || !formData.hospital)
       return;
 
-    setLoading(true); // Bắt đầu loading
+    setLoading(true);
     const donorId = selectedUser?.donorId;
     const payload = {
       componentType: formData.componentType,
@@ -99,15 +99,13 @@ export default function ScheduleManagement() {
           },
         }
       );
-
-      setAlertMessage("Đã gửi yêu cầu thành công!");
+      console.log("Dữ liệu gửi đi:", payload);
+      showAlert("Success", "Đã gửi yêu cầu hỗ trợ thành công!");
     } catch (err) {
-      console.error("❌ Lỗi khi gửi yêu cầu:", err);
-      setAlertMessage("Gửi thất bại!");
+      console.error("Lỗi khi gửi yêu cầu:", err);
+      showAlert("Error", "Không thể gửi yêu cầu. Vui lòng thử lại!");
     } finally {
-      setLoading(false); // Kết thúc loading
-      setShowAlert(true);
-      setTimeout(() => setShowAlert(false), 5000);
+      setLoading(false);
     }
   };
 
@@ -268,8 +266,6 @@ export default function ScheduleManagement() {
           </div>
         </div>
       )}
-
-      {showAlert && <div className="custom-alert">{alertMessage}</div>}
 
       {loading && (
         <div className="global-loading-overlay">
