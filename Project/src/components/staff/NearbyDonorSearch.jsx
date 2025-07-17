@@ -1,14 +1,28 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../../assets/css/components/staff/NearbyDonorSearch.css";
+import { useAlert } from "../../layouts/AlertContext";
 
 const NearbyDonorSearch = () => {
+  const { showAlert } = useAlert();
   const [hospitals, setHospitals] = useState([]);
   const [selectedHospitalId, setSelectedHospitalId] = useState("");
   const [donors, setDonors] = useState([]);
   const [expandedRow, setExpandedRow] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [showForm, setShowForm] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const getCurrentDate = () => {
+    return new Date().toISOString().slice(0, 10);
+  };
 
+  const [formData, setFormData] = useState({
+    componentType: "",
+    quantity: "",
+    hospital: "",
+    neededDate: "",
+    neededTime: "",
+  });
   useEffect(() => {
     window.scrollTo(0, 0);
     const token = localStorage.getItem("token");
@@ -59,11 +73,89 @@ const NearbyDonorSearch = () => {
         setDonors(result);
       } else {
         console.warn("API không trả về mảng, thông báo:", result);
-        setDonors([]); // để tránh .map lỗi
+        setDonors([]);
       }
     } catch (error) {
       console.error("Lỗi khi tìm kiếm người hiến máu:", error);
       setDonors([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const openContactForm = (user) => {
+    setSelectedUser(user);
+    setFormData((prev) => ({
+      ...prev,
+      hospital: selectedHospitalId || "",
+    }));
+    setShowForm(true);
+  };
+
+  const closeForm = () => {
+    setShowForm(false);
+    setSelectedUser(null);
+    setFormData({
+      componentType: "",
+      quantity: "",
+      hospital: "",
+      neededDate: "",
+      neededTime: "",
+    });
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async () => {
+    if (
+      !formData.componentType ||
+      !formData.quantity ||
+      !formData.hospital ||
+      !formData.neededDate ||
+      !formData.neededTime
+    ) {
+      showAlert(
+        "Warning",
+        "Vui lòng điền đầy đủ thông tin trước khi gửi yêu cầu."
+      );
+      return;
+    }
+
+    setLoading(true);
+    const donorId = selectedUser?.donorId;
+    console.log("Đang gửi yêu cầu với donorId:", donorId);
+    console.log("Người được chọn để liên hệ:", donorId);
+
+    const payload = {
+      componentType: formData.componentType,
+      quantity: formData.quantity,
+      hospitalId: formData.hospital,
+      neededTime: `${formData.neededDate}T${formData.neededTime}:00`,
+    };
+
+    closeForm();
+
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+      await axios.post(
+        `http://localhost:8080/api/emergency-requests/no-available-blood?donorId=${donorId}`,
+        payload,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("Dữ liệu gửi đi:", payload);
+
+      showAlert("Success", "Đã gửi yêu cầu hỗ trợ thành công!");
+    } catch (err) {
+      console.error("Lỗi khi gửi yêu cầu:", err);
+      showAlert("Error", "Không thể gửi yêu cầu. Vui lòng thử lại!");
     } finally {
       setLoading(false);
     }
@@ -174,7 +266,26 @@ const NearbyDonorSearch = () => {
                           </div>
                         </div>
                         <div className="nds-detail-actions">
-                          <button className="nds-contact-btn">Liên hệ</button>
+                          {donors.map((donor) => (
+                            <tr key={donor.donorId}>
+                              <td>{donor.fullName}</td>
+                              <td>{donor.bloodGroup}</td>
+                              <td>
+                                <button
+                                  onClick={() => {
+                                    console.log(
+                                      "Người được chọn để liên hệ:",
+                                      donor
+                                    );
+                                    setSelectedUser(donor);
+                                    setShowForm(true);
+                                  }}
+                                >
+                                  Liên hệ
+                                </button>
+                              </td>
+                            </tr>
+                          ))}
                         </div>
                       </div>
                     </td>
@@ -192,6 +303,97 @@ const NearbyDonorSearch = () => {
           </tbody>
         </table>
       </div>
+
+      {showForm && (
+        <div className="overlay">
+          <div className="contact-form">
+            <h3>Gửi yêu cầu hiến máu</h3>
+            <p>
+              Người nhận: <strong>{selectedUser?.name}</strong>
+            </p>
+
+            <label>Thành phần máu:</label>
+            <select
+              name="componentType"
+              value={formData.componentType}
+              onChange={handleInputChange}
+            >
+              <option value="">-- Chọn loại thành phần máu --</option>
+              <option value="Whole">Toàn phần</option>
+              <option value="RBC">Hồng Cầu</option>
+              <option value="Plasma">Huyết tương</option>
+              <option value="Platelet">Tiểu cầu</option>
+            </select>
+
+            <label>Số túi máu:</label>
+            <input
+              type="number"
+              name="quantity"
+              min={1}
+              max={3}
+              value={formData.quantity}
+              onChange={handleInputChange}
+              placeholder="Nhập số lượng túi"
+            />
+
+            <label>Tên bệnh viện:</label>
+            <select
+              name="hospital"
+              value={formData.hospital}
+              onChange={handleInputChange}
+            >
+              <option value="">-- Chọn bệnh viện --</option>
+              {hospitals.map((h) => (
+                <option key={h.hospitalId} value={h.hospitalId}>
+                  {h.hospitalName}
+                </option>
+              ))}
+            </select>
+
+            <label>Hẹn lịch hiến máu:</label>
+            <input
+              type="date"
+              name="neededDate"
+              value={formData.neededDate}
+              min={getCurrentDate()}
+              onChange={handleInputChange}
+            />
+
+            <div className="time-buttons">
+              {["07:30", "09:30", "14:00", "15:00"].map((time) => (
+                <button
+                  type="button"
+                  key={time}
+                  className={formData.neededTime === time ? "active-time" : ""}
+                  onClick={() =>
+                    setFormData((prev) => ({ ...prev, neededTime: time }))
+                  }
+                >
+                  {time}
+                </button>
+              ))}
+            </div>
+
+            <div className="form-buttons">
+              <button onClick={handleSubmit} disabled={loading}>
+                Gửi yêu cầu
+              </button>
+              <button onClick={closeForm} className="cancel">
+                Hủy bỏ
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {loading && (
+        <div className="global-loading-overlay">
+          <div className="global-loading-content">
+            <div className="global-spinner"></div>
+            <p className="loading-text">Đang xử lý...</p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

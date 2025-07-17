@@ -1,5 +1,6 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
+
 import UserHome from "../pages/UserHome";
 import ThongTin from "../pages/ThongTin";
 import BloodType from "../pages/BloodType";
@@ -26,36 +27,12 @@ import ABPosiTypePage from "../pages/ABPosiTypePage";
 import ABNegaTypePage from "../pages/ABNegaTypePage";
 import RareBloodPage from "../pages/RareBloodPage";
 import UseBloodPage from "../pages/UseBloodPage";
-function AppRouter() {
-    return (
-        <Routes>
-            <Route path="/" element={<UserHome />} />
-            <Route path="/thongtin" element={<ThongTin />} />
-            <Route path="/bloodtype" element={<BloodType />} />
-            <Route path="/blood/:bloodType" element={<RenderForBlood />} />
-            <Route path="/auth/social/callback/google" element={<OAuth2RedirectHandler />} />
-            <Route path="/UpdateUserInfo" element={<UpdateUserInfo />} />
-            <Route path="/BloodTypeFake" element={<BloodTypeFake />} />
-            <Route path="/BloodDonation" element={<BloodDonation />} />
-            <Route path="/blog" element={<BlogPage />} />
-            <Route path="/BloodUnitPage" element={<BloodUnitPage />} />
-            <Route path="/NearbyDonorSearchPage" element={<NearbyDonorSearchPage />} />
-            <Route path="/ScheduleManagementPage" element={<ScheduleManagementPage />} />
-            <Route path="/AppointmentListPage" element={<AppointmentListPage />} />
-            <Route path="/DashBoardPage" element={<DashBoardPage />} />
-            <Route path="/ReportPage" element={<ReportPage />} />
-            <Route path="/blood-type/o-positive" element={<OPosiTypePage />} />
-            <Route path="/blood-type/o-negative" element={<ONegaTypePage />} />
-            <Route path="/blood-type/a-positive" element={<APosiTypePage />} />
-            <Route path="/blood-type/a-negative" element={<ANegaTypePage />} />
-            <Route path="/blood-type/b-positive" element={<BPosiTypePage />} />
-            <Route path="/blood-type/b-negative" element={<BNegaTypePage />} />
-            <Route path="/blood-type/ab-positive" element={<ABPosiTypePage />} />
-            <Route path="/blood-type/ab-negative" element={<ABNegaTypePage />} />
-            <Route path="/blood-type/rare" element={<RareBloodPage />} />
-            <Route path="/UseBloodPage" element={<UseBloodPage />} />
-
+import UserManagementPage from "../pages/UserManagementPage"
 import ChatBox from "../layouts/ChatBox";
+import DonationUserListPage from "../pages/DonationUserListPage";
+import UserInfoPage from "../pages/UserInfoPage";
+import UpdateUserInfoPage from "../pages/UpdateUserInfoPage";
+import DonationHistoryPage from "../pages/DonationHistoryPage";
 function AppRouter() {
     return (
         <Routes>
@@ -74,13 +51,27 @@ function AppRouter() {
                 <Route path="/AppointmentListPage" element={<AppointmentListPage />} />
                 <Route path="/DashBoardPage" element={<DashBoardPage />} />
                 <Route path="/ReportPage" element={<ReportPage />} />
+
+                <Route path="/blood-type/o-positive" element={<OPosiTypePage />} />
+                <Route path="/blood-type/o-negative" element={<ONegaTypePage />} />
+                <Route path="/blood-type/a-positive" element={<APosiTypePage />} />
+                <Route path="/blood-type/a-negative" element={<ANegaTypePage />} />
+                <Route path="/blood-type/b-positive" element={<BPosiTypePage />} />
+                <Route path="/blood-type/b-negative" element={<BNegaTypePage />} />
+                <Route path="/blood-type/ab-positive" element={<ABPosiTypePage />} />
+                <Route path="/blood-type/ab-negative" element={<ABNegaTypePage />} />
+                <Route path="/blood-type/rare" element={<RareBloodPage />} />
+                <Route path="/UseBloodPage" element={<UseBloodPage />} />
+                <Route path="/UserManagementPage" element={<UserManagementPage/>}/>
+                <Route path="/DonationUserListPage" element={<DonationUserListPage />} />
+                <Route path="/UserInfoPage" element={<UserInfoPage />} />
+                <Route path="/UpdateUserInfoPage" element={<UpdateUserInfoPage />} />
+                <Route path="/DonationHistoryPage" element={<DonationHistoryPage />} />
             </Route>
-            <Route path="/login" element={<LoginPage />} />
+
             <Route path="/auth/social/callback/google" element={<OAuth2RedirectHandler />} />
-
-
-
         </Routes>
     );
-};
+}
+
 export default AppRouter;

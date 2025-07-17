@@ -6,12 +6,14 @@ import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { IoMdCloseCircleOutline } from "react-icons/io";
+import { useAlert } from "../../layouts/AlertContext";
 
 function LoginForm({ onClose }) {
+  const { showAlert } = useAlert();
+
   const [rightPanelActive, setRightPanelActive] = useState(false);
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
@@ -19,15 +21,13 @@ function LoginForm({ onClose }) {
   const [signUpUserName, setSignUpUserName] = useState("");
   const [signUpPassword, setSignUpPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [signUpError, setSignUpError] = useState("");
 
   const [isResetPassword, setIsResetPassword] = useState(false);
   const [resetEmail, setResetEmail] = useState("");
   const [otp, setOtp] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
-  const [resetError, setResetError] = useState("");
-  const [resetSuccessMsg, setResetSuccessMsg] = useState("");
+
   const [otpSent, setOtpSent] = useState(false);
   const [otpCooldown, setOtpCooldown] = useState(0);
 
@@ -63,7 +63,7 @@ function LoginForm({ onClose }) {
   const handleSignUp = async (e) => {
     e.preventDefault();
     if (signUpPassword !== confirmPassword) {
-      setSignUpError("Mật khẩu xác nhận không khớp!");
+      showAlert("Mật khẩu xác nhận không khớp!", "error");
       return;
     }
     try {
@@ -73,18 +73,18 @@ function LoginForm({ onClose }) {
         password: signUpPassword,
       });
       if (res.data.code === 200 && res.data.data === 200) {
-        alert("Đăng ký thành công! Vui lòng đăng nhập.");
+        showAlert("Đăng ký thành công! Vui lòng đăng nhập.", "success");
+
         setRightPanelActive(false);
         setFullName("");
         setSignUpUserName("");
         setSignUpPassword("");
         setConfirmPassword("");
-        setSignUpError("");
       } else {
-        setSignUpError("Đăng ký thất bại!");
+        showAlert("Đăng ký thất bại!", "error");
       }
     } catch (err) {
-      setSignUpError("Đã xảy ra lỗi khi đăng ký. Vui lòng thử lại sau.");
+      showAlert("Đăng ký thất bại. Vui lòng thử lại sau!", "error");
     }
   };
 
@@ -97,7 +97,7 @@ function LoginForm({ onClose }) {
       });
       const token = res.data.data;
       if (!token) {
-        setErrorMessage("Đăng nhập thất bại!");
+        showAlert("Sai tài khoản hoặc mật khẩu!", "error");
         return;
       }
       localStorage.setItem("token", token);
@@ -109,10 +109,10 @@ function LoginForm({ onClose }) {
         navigate("/", { state: { justLoggedIn: true } });
         onClose();
       } else {
-        setErrorMessage("Vai trò không hợp lệ!");
+        showAlert("Vai trò không hợp lệ!", "error");
       }
     } catch (err) {
-      setErrorMessage("Sai tài khoản hoặc mật khẩu!");
+      showAlert("Sai tài khoản hoặc mật khẩu!", "error");
     }
   };
 
@@ -123,19 +123,21 @@ function LoginForm({ onClose }) {
       });
       setOtpSent(true);
       setOtpCooldown(120);
-      setResetError("");
-      setResetSuccessMsg("OTP đã được gửi đến email của bạn!");
+
+      showAlert("OTP đã được gửi đến email của bạn!", "success");
     } catch (error) {
-      setResetError("Không thể gửi OTP. Vui lòng kiểm tra email và thử lại.");
-      setResetSuccessMsg("");
+      showAlert(
+        "Không thể gửi OTP. Vui lòng kiểm tra email và thử lại.",
+        "error"
+      );
     }
   };
 
   const handleResetPassword = async (e) => {
     e.preventDefault();
     if (newPassword !== confirmNewPassword) {
-      setResetError("Mật khẩu xác nhận không khớp!");
-      setResetSuccessMsg("");
+      showAlert("Mật khẩu xác nhận không khớp!", "error");
+
       return;
     }
     try {
@@ -149,14 +151,12 @@ function LoginForm({ onClose }) {
       setOtp("");
       setNewPassword("");
       setConfirmNewPassword("");
-      setResetError("");
-      setResetSuccessMsg("");
+
       setOtpCooldown(0);
       setOtpSent(false);
-      alert("Đổi mật khẩu thành công! Vui lòng đăng nhập.");
+      showAlert("Đổi mật khẩu thành công! Vui lòng đăng nhập.", "success");
     } catch (error) {
-      setResetError("OTP không chính xác hoặc đã hết hạn.");
-      setResetSuccessMsg("");
+      showAlert("OTP không chính xác hoặc đã hết hạn.", "error");
     }
   };
 
@@ -232,7 +232,6 @@ function LoginForm({ onClose }) {
                 </span>
               </div>
               <button type="submit">Sign Up</button>
-              {signUpError && <p className="error-message">{signUpError}</p>}
             </form>
           </div>
 
@@ -306,10 +305,6 @@ function LoginForm({ onClose }) {
                 <a href="#" onClick={() => setIsResetPassword(false)}>
                   Quay lại đăng nhập
                 </a>
-                {resetError && <p className="error-message">{resetError}</p>}
-                {resetSuccessMsg && (
-                  <p className="success-message">{resetSuccessMsg}</p>
-                )}
               </form>
             ) : (
               <form onSubmit={handleLogin}>
@@ -346,9 +341,6 @@ function LoginForm({ onClose }) {
                   Quên mật khẩu?
                 </a>
                 <button type="submit">Đăng Nhập</button>
-                {errorMessage && (
-                  <p className="error-message">{errorMessage}</p>
-                )}
               </form>
             )}
           </div>

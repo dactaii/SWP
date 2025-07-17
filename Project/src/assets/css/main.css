@@ -1,18 +1,17 @@
 @import './base/variables.css';
-@import './components/Layout/header.css';
 @import './components/Layout/footer.css';
 @import './pages/login.css';
 @import './components/home/hero.css';
 @import './components/home/about.css';
-@import './components/User/ThongTin.css';
+/* @import './components/User/ThongTin.css'; */
 @import './components/home/standard.css';
 @import './components/Blood/TypeOfBlood.css';
 @import './components/Blood/BloodPage.css';
-@import './components/User/UserInfo.css';
+/* @import './components/User/UserInfo.css'; */
 @import './components/home/blog.css';
 @import './components/staff/emergencyForm.css';
 @import './components/home/LocationCard.css';
-@import './components/User/NewThongTin.css';
+/* @import './components/User/NewThongTin.css'; */
 @import './components/Blood/BloodDonation.css';
 @import './components/Layout/Sidebar.css';
 @import './components/staff/bloodUnit.css';
@@ -25,3 +24,7 @@
 @import './components/Blood/DonationHistory.css';
 @import './components/Blood/DonationUserList.css';
 @import './components/ChatBoxAI/ChatWidget.css';
+
+@import './components/User/UserInfoPage.css';
+@import './components/User/UpdateUserInfo.css';
+@import './components/Layout/AlertStyles.css';

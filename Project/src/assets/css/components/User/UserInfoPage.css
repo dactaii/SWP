@@ -1,0 +1,103 @@
+.user-info-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 40px 20px;
+  max-width: 1200px; /* Tăng max-width */
+  margin: 0 auto;
+  gap: 60px; /* Tăng khoảng cách giữa trái và phải */
+}
+
+/* Bên trái: Avatar */
+.user-info-wrapper .user-left {
+  flex: 1;
+  min-width: 220px;
+  max-width: 280px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.user-info-wrapper .user-avatar-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+}
+
+.user-info-wrapper .user-avatar {
+  width: 120px; /* Giảm kích thước avatar */
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #94a3b8;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.user-info-wrapper .user-name {
+  font-size: 24px; /* Tăng size tên */
+  font-weight: 700;
+  color: #1e293b;
+}
+
+/* Bên phải: Form */
+.user-info-wrapper .user-right {
+  flex: 3; /* Form rộng hơn */
+  min-width: 400px;
+}
+
+/* Tiêu đề */
+.user-info-wrapper .dashboard-title {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 32px;
+  color: #1e293b;
+  line-height: 1.3;
+  white-space: pre-line;
+}
+
+/* Form style */
+.user-info-wrapper .regis-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.user-info-wrapper .regis-form .form-row {
+  display: flex;
+  gap: 20px;
+}
+
+.user-info-wrapper .regis-form input {
+  flex: 1;
+  padding: 12px 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 16px;
+  background-color: #f8fafc;
+  color: #334155;
+}
+
+.user-info-wrapper .regis-form input:read-only {
+  background-color: #f1f5f9;
+  cursor: not-allowed;
+}
+
+/* Nút chỉnh sửa */
+.user-info-wrapper .edit-user-btn-wrapper {
+  margin-top: 28px;
+}
+
+.user-info-wrapper .edit-user-btn {
+  padding: 12px 20px;
+  background-color: var(--accent-color);
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.user-info-wrapper .edit-user-btn:hover {
+  background-color: #bc0b0b;
+}

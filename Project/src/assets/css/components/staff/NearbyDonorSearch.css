@@ -169,3 +169,23 @@
 .nds-close-btn:hover {
   background-color: #b91c1c;
 }
+.time-buttons {
+  display: flex;
+  gap: 10px;
+  margin: 8px 0 16px;
+}
+
+.time-buttons button {
+  padding: 6px 14px;
+  border-radius: 6px;
+  border: 1px solid #aaa;
+  background-color: #fff;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.time-buttons button.active-time {
+  background-color: var(--staff-accent-color);
+  color: #fff;
+  font-weight: bold;
+}

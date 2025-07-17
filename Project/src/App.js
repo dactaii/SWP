@@ -5,6 +5,7 @@ import { UserProvider } from './components/User/UserContext';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useLocation } from 'react-router-dom';
+import { AlertProvider } from './layouts/AlertContext';
 
 
 /* CSS */
@@ -22,11 +23,15 @@ import ChatWidget from './components/ChatBoxAI/ChatWidget';
 function App() {
     return (
         <BrowserRouter>
-            <UserProvider>
-                <AppRouter />
-            </UserProvider>
+            <AlertProvider>
+                <UserProvider>
+                    <AppRouter />
+                    <ToastContainer />
+                </UserProvider>
+            </AlertProvider>
         </BrowserRouter>
     );
 }
+
 
 export default App;
