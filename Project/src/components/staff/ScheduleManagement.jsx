@@ -69,6 +69,18 @@ export default function ScheduleManagement() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+
+    if (name === "quantity") {
+      const numberValue = parseInt(value, 10);
+
+      // Nếu người dùng nhập nhỏ hơn 1 thì ngăn lại
+      if (numberValue < 1 || isNaN(numberValue)) {
+        setFormData((prev) => ({ ...prev, [name]: 1 }));
+        showAlert("Error", "Số lượng túi máu phải lớn hơn hoặc bằng 1");
+        return;
+      }
+    }
+
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 

@@ -84,7 +84,7 @@ function LoginForm({ onClose }) {
         showAlert("Đăng ký thất bại!", "error");
       }
     } catch (err) {
-      showAlert("Đăng ký thất bại. Vui lòng thử lại sau!", "error");
+showAlert("Đăng ký thất bại. Vui lòng thử lại sau!", "error");
     }
   };
 
@@ -186,7 +186,7 @@ function LoginForm({ onClose }) {
                   <i className="bi bi-google"></i>
                 </a>
               </div>
-              <span>or use your email for registration</span>
+<span>or use your email for registration</span>
               <input
                 type="text"
                 placeholder="Họ và Tên"
@@ -265,7 +265,7 @@ function LoginForm({ onClose }) {
                   type="text"
                   placeholder="Nhập mã OTP"
                   value={otp}
-                  onChange={(e) => setOtp(e.target.value)}
+onChange={(e) => setOtp(e.target.value)}
                   required
                 />
 
@@ -339,7 +339,7 @@ function LoginForm({ onClose }) {
                 </div>
                 <a href="#" onClick={() => setIsResetPassword(true)}>
                   Quên mật khẩu?
-                </a>
+</a>
                 <button type="submit">Đăng Nhập</button>
               </form>
             )}

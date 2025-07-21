@@ -301,7 +301,7 @@ const Sidebar = () => {
                       className={isActive("/NearbyDonorSearchPage")}
                     >
                       <GrMapLocation className="sidebar-icon" />
-                      Tìm người hiến gần cơ sở
+                      Tìm người hiến khẩn cấp
                     </Link>
                   </li>
                   <li>

@@ -8,49 +8,46 @@ function OAuth2RedirectHandler() {
   const location = useLocation();
 
   useEffect(() => {
-    console.log("URL Search params:", location.search);
-    const query = new URLSearchParams(location.search);
-    const code = query.get("code");
-    console.log("Code extracted:", code);
+  console.log("URL Search params:", location.search);
+  const query = new URLSearchParams(location.search);
+  const code = query.get("code");
+  console.log("Code extracted:", code);
 
-    if (code) {
-      axios
-        .get("http://localhost:8080/api/auth/social/callback", {
-          params: {
-            code: code,
-            loginType: "google",
-          },
-        })
-        .then((res) => {
-          const token = res.data.data;
-          localStorage.setItem("token", token);
+  if (code) {
+    axios
+      .get("http://localhost:8080/api/auth/social/callback", {
+        params: {
+          code: code,
+          loginType: "google",
+        },
+      })
+      .then((res) => {
+        const token = res.data.data;
+        localStorage.setItem("token", token);
 
-          const decoded = jwtDecode(token);
-          // Lưu chính xác theo key token payload
-          localStorage.setItem("avatar_url", decoded.avatar || "");
-          localStorage.setItem("email", decoded.email || "");
-          localStorage.setItem("name", decoded.name || "");
-          console.log("Decoded token payload:", decoded);
+        const decoded = jwtDecode(token);
+        localStorage.setItem("avatar_url", decoded.avatar || "");
+        localStorage.setItem("email", decoded.email || "");
+        localStorage.setItem("name", decoded.name || "");
+        console.log("Decoded token payload:", decoded);
 
-          const role = decoded.role;
-          if (role === "ROLE_ADMIN") {
-            navigate("/adminPage");
-          } else if (role === "ROLE_MEMBER") {
-            navigate("/");
-          } else if (role === "ROLE_STAFF") {
-            navigate("/staffHome");
-          } else {
-            navigate("/login");
-          }
-        })
-        .catch((err) => {
-          console.error("Lỗi khi xử lý callback:", err);
-          navigate("/login");
-        });
-    } else {
-      navigate("/login");
-    }
-  }, [location]);
+        const role = decoded.role;
+        if (["ROLE_ADMIN", "ROLE_MEMBER", "ROLE_STAFF"].includes(role)) {
+          window.dispatchEvent(new Event("loginSuccess"));
+          navigate("/", { state: { justLoggedIn: true } });
+        } else {
+          alert("Vai trò không hợp lệ!");
+        }
+      })
+      .catch((err) => {
+        console.error("Lỗi khi xử lý callback:", err);
+        navigate("/");
+      });
+  } else {
+    navigate("/login");
+  }
+}, [location, navigate]);
+
 
   return (
     <div

@@ -165,7 +165,7 @@ const NearbyDonorSearch = () => {
 
   return (
     <div className="main-content">
-      <h1>Người hiến máu gần bạn</h1>
+      <h1>Người hiến máu gần cơ sở</h1>
 
       <div className="form-group">
         <label htmlFor="hospital-select">Chọn cơ sở y tế:</label>
@@ -266,26 +266,12 @@ const NearbyDonorSearch = () => {
                           </div>
                         </div>
                         <div className="nds-detail-actions">
-                          {donors.map((donor) => (
-                            <tr key={donor.donorId}>
-                              <td>{donor.fullName}</td>
-                              <td>{donor.bloodGroup}</td>
-                              <td>
-                                <button
-                                  onClick={() => {
-                                    console.log(
-                                      "Người được chọn để liên hệ:",
-                                      donor
-                                    );
-                                    setSelectedUser(donor);
-                                    setShowForm(true);
-                                  }}
-                                >
-                                  Liên hệ
-                                </button>
-                              </td>
-                            </tr>
-                          ))}
+                          <button
+                            className="nds-contact-btn"
+                            onClick={() => openContactForm(donor)}
+                          >
+                            Liên hệ
+                          </button>
                         </div>
                       </div>
                     </td>
