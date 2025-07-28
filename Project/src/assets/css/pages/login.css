@@ -89,7 +89,7 @@ body.no-scroll {
 .login-page button:not(.floating-close-btn) {
   border-radius: 20px;
   border: 1px solid #ff4b2b;
-  background-color: var(--accent-color, #ff4b2b);
+  background: linear-gradient(135deg, #ff4c4cc3, #e60023); 
   color: #ffffff;
   font-size: 12px;
   font-weight: bold;
@@ -99,6 +99,13 @@ body.no-scroll {
   transition: transform 80ms ease-in;
   cursor: pointer;
 }
+
+.login-page button:not(.floating-close-btn):hover {
+  background: linear-gradient(135deg, #f73e54cf, #b3001a);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(230, 0, 35, 0.3);
+}
+
 
 .login-page button:active {
   transform: scale(0.95);
@@ -202,7 +209,7 @@ body.no-scroll {
 }
 
 .login-page .overlay {
-  background: var(--accent-color, #ff4b2b);
+  background: linear-gradient(135deg, #ff4c4c, #e60023);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 0 0;

@@ -14,7 +14,7 @@ const UserLayout = ({ children }) => {
           minHeight: "100vh"
         }}
       >
-        <main style={{ flex: 1, padding: "20px" }}>{children}</main>
+        <main style={{ flex: 1 }}>{children}</main>
         <Footer />
       </div>
     </div>

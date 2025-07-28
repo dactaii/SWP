@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import { useAlert } from "../../layouts/AlertContext";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
 
 function LoginForm({ onClose }) {
   const { showAlert } = useAlert();
@@ -21,6 +22,7 @@ function LoginForm({ onClose }) {
   const [signUpUserName, setSignUpUserName] = useState("");
   const [signUpPassword, setSignUpPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
 
   const [isResetPassword, setIsResetPassword] = useState(false);
   const [resetEmail, setResetEmail] = useState("");
@@ -62,16 +64,47 @@ function LoginForm({ onClose }) {
 
   const handleSignUp = async (e) => {
     e.preventDefault();
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()]).{8,}$/;
+
+    if (!phoneRegex.test(phoneNumber)) {
+      showAlert(
+        "Số điện thoại phải bắt đầu bằng số 0 và dài hơn 10 chữ số.",
+        "error"
+      );
+      return;
+    }
+
+    if (!passwordRegex.test(signUpPassword)) {
+      showAlert(
+        "Mật khẩu phải có ít nhất 8 ký tự, chứa ít nhất 1 chữ hoa, 1 chữ thường, 1 số và 1 ký tự đặc biệt.",
+        "error"
+      );
+      return;
+    }
+
+    if (
+      signUpPassword.toLowerCase().includes(signUpUserName.toLowerCase()) ||
+      signUpPassword
+        .toLowerCase()
+        .includes(signUpUserName.toLowerCase().split("@")[0])
+    ) {
+      showAlert("Mật khẩu không được chứa tên đăng nhập hoặc email.", "error");
+      return;
+    }
+
     if (signUpPassword !== confirmPassword) {
       showAlert("Mật khẩu xác nhận không khớp!", "error");
       return;
     }
+
     try {
       const res = await axios.post("http://localhost:8080/api/register", {
         fullName,
         userName: signUpUserName,
         password: signUpPassword,
       });
+
       if (res.data.code === 200 && res.data.data === 200) {
         showAlert("Đăng ký thành công! Vui lòng đăng nhập.", "success");
 
@@ -80,6 +113,7 @@ function LoginForm({ onClose }) {
         setSignUpUserName("");
         setSignUpPassword("");
         setConfirmPassword("");
+        setPhoneNumber("");
       } else {
         showAlert("Đăng ký thất bại!", "error");
       }
@@ -106,8 +140,9 @@ function LoginForm({ onClose }) {
       if (["ROLE_ADMIN", "ROLE_MEMBER", "ROLE_STAFF"].includes(role)) {
         localStorage.setItem("token", token);
         window.dispatchEvent(new Event("loginSuccess"));
-        navigate("/", { state: { justLoggedIn: true } });
+
         onClose();
+        window.location.reload(); 
       } else {
         showAlert("Vai trò không hợp lệ!", "error");
       }
@@ -137,7 +172,6 @@ function LoginForm({ onClose }) {
     e.preventDefault();
     if (newPassword !== confirmNewPassword) {
       showAlert("Mật khẩu xác nhận không khớp!", "error");
-
       return;
     }
     try {
@@ -151,7 +185,6 @@ function LoginForm({ onClose }) {
       setOtp("");
       setNewPassword("");
       setConfirmNewPassword("");
-
       setOtpCooldown(0);
       setOtpSent(false);
       showAlert("Đổi mật khẩu thành công! Vui lòng đăng nhập.", "success");
@@ -180,13 +213,13 @@ function LoginForm({ onClose }) {
           {/* ===== Đăng ký ===== */}
           <div className="form-container sign-up-container">
             <form onSubmit={handleSignUp}>
-              <h1>Register as a Donor</h1>
+              <h1>Đăng ký</h1>
               <div className="social-container">
                 <a href="#" className="social" onClick={handleGoogleLogin}>
                   <i className="bi bi-google"></i>
                 </a>
               </div>
-              <span>or use your email for registration</span>
+              <span>Hoặc đăng ký tài khoản mới</span>
               <input
                 type="text"
                 placeholder="Họ và Tên"
@@ -240,7 +273,6 @@ function LoginForm({ onClose }) {
             {isResetPassword ? (
               <form onSubmit={handleResetPassword}>
                 <h1>Đặt lại mật khẩu</h1>
-
                 <input
                   type="email"
                   placeholder="Email"
@@ -248,7 +280,6 @@ function LoginForm({ onClose }) {
                   onChange={(e) => setResetEmail(e.target.value)}
                   required
                 />
-
                 <button
                   type="button"
                   onClick={handleRequestOTP}
@@ -260,7 +291,6 @@ function LoginForm({ onClose }) {
                 >
                   {otpCooldown > 0 ? `Nhận OTP (${otpCooldown}s)` : "Nhận OTP"}
                 </button>
-
                 <input
                   type="text"
                   placeholder="Nhập mã OTP"
@@ -268,7 +298,6 @@ function LoginForm({ onClose }) {
                   onChange={(e) => setOtp(e.target.value)}
                   required
                 />
-
                 <div className="input-wrapper">
                   <input
                     type={showPassword ? "text" : "password"}
@@ -284,7 +313,6 @@ function LoginForm({ onClose }) {
                     <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
                   </span>
                 </div>
-
                 <div className="input-wrapper">
                   <input
                     type={showPassword ? "text" : "password"}
@@ -300,7 +328,6 @@ function LoginForm({ onClose }) {
                     <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
                   </span>
                 </div>
-
                 <button type="submit">Xác nhận đổi mật khẩu</button>
                 <a href="#" onClick={() => setIsResetPassword(false)}>
                   Quay lại đăng nhập
@@ -314,7 +341,7 @@ function LoginForm({ onClose }) {
                     <i className="bi bi-google"></i>
                   </a>
                 </div>
-                <span>Or use your account</span>
+                <span>Hoặc sử dụng tài khoản của bạn</span>
                 <input
                   type="text"
                   placeholder="Tên Đăng Nhập"
@@ -349,28 +376,28 @@ function LoginForm({ onClose }) {
           <div className="overlay-container">
             <div className="overlay">
               <div className="overlay-panel overlay-left">
-                <h1>Donate Today, Save Tomorrow!</h1>
-                <p>Together, we save lives and ensure blood for everyone</p>
+                <h1>Hiến máu – Trao sự sống!</h1>
+                <p>Chung tay lan tỏa sự sống, để không ai thiếu máu khi cần.</p>
                 <button
                   className="ghost"
                   id="signIn"
                   onClick={() => setRightPanelActive(false)}
                 >
-                  Give Hope - Sign In
+                  <FaArrowLeft /> Đăng Nhập
                 </button>
               </div>
               <div className="overlay-panel overlay-right">
-                <h1>Your Blood, Their Future!</h1>
+                <h1>Trao máu – Gửi hy vọng!</h1>
                 <p>
-                  Join us to save more lives. Everyone deserves access to blood
-                  transfusion.
+                  Chung tay cứu sống nhiều người, vì ai cũng xứng đáng được sẻ
+                  chia sự sống.
                 </p>
                 <button
                   className="ghost"
                   id="signUp"
                   onClick={() => setRightPanelActive(true)}
                 >
-                  Start Saving Lives - Sign Up
+                  <FaArrowRight /> Đăng Ký
                 </button>
               </div>
             </div>

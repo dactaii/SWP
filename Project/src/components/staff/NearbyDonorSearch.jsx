@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../../assets/css/components/staff/NearbyDonorSearch.css";
 import { useAlert } from "../../layouts/AlertContext";
+import tableBG from "../../assets/img/backgrounds/tableBG.png";
 
 const NearbyDonorSearch = () => {
   const { showAlert } = useAlert();
@@ -125,10 +126,7 @@ const NearbyDonorSearch = () => {
     }
 
     setLoading(true);
-    const donorId = selectedUser?.donorId;
-    console.log("Đang gửi yêu cầu với donorId:", donorId);
-    console.log("Người được chọn để liên hệ:", donorId);
-
+    const donorId = selectedUser?.userId;
     const payload = {
       componentType: formData.componentType,
       quantity: formData.quantity,
@@ -164,8 +162,8 @@ const NearbyDonorSearch = () => {
   const hospitalName = localStorage.getItem("selectedHospitalName");
 
   return (
-    <div className="main-content">
-      <h1>Người hiến máu gần bạn</h1>
+    <div className="nearby-donor-search">
+      <h1>Người hiến máu gần cơ sở</h1>
 
       <div className="form-group">
         <label htmlFor="hospital-select">Chọn cơ sở y tế:</label>
@@ -195,8 +193,12 @@ const NearbyDonorSearch = () => {
         </h2>
       )}
 
-      <div className="table-wrapper">
-        <table className="blood-table">
+      <div className="nearby-donor-search-table ">
+        <div
+          className="nearby-bg-wrapper"
+          style={{ "--donation-bg": `url(${tableBG})` }}
+        >
+        <table className="nearby-blood-table">
           <thead>
             <tr>
               <th>STT</th>
@@ -266,26 +268,12 @@ const NearbyDonorSearch = () => {
                           </div>
                         </div>
                         <div className="nds-detail-actions">
-                          {donors.map((donor) => (
-                            <tr key={donor.donorId}>
-                              <td>{donor.fullName}</td>
-                              <td>{donor.bloodGroup}</td>
-                              <td>
-                                <button
-                                  onClick={() => {
-                                    console.log(
-                                      "Người được chọn để liên hệ:",
-                                      donor
-                                    );
-                                    setSelectedUser(donor);
-                                    setShowForm(true);
-                                  }}
-                                >
-                                  Liên hệ
-                                </button>
-                              </td>
-                            </tr>
-                          ))}
+                          <button
+                            className="nds-contact-btn"
+                            onClick={() => openContactForm(donor)}
+                          >
+                            Liên hệ
+                          </button>
                         </div>
                       </div>
                     </td>
@@ -302,6 +290,7 @@ const NearbyDonorSearch = () => {
             )}
           </tbody>
         </table>
+        </div>
       </div>
 
       {showForm && (

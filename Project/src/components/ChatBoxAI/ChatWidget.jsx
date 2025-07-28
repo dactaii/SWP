@@ -40,7 +40,7 @@ const ChatWidget = () => {
                 { from: "bot", text: "⚠️ Không thể kết nối tới máy chủ." },
             ]);
         } finally {
-            setLoading(false); // Ẩn typing indicator
+            setLoading(false); 
         }
     };
 

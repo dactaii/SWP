@@ -1,6 +1,5 @@
 .blood-section {
   padding: 40px 20px;
-  background-color: var(--background-color);
   color: var(--default-color);
   max-width: 1200px;
   margin: 0 auto;
@@ -146,7 +145,7 @@
 .card-btn {
   display: inline-block;
   padding: 8px 16px;
-  background-color: var(--accent-color);
+  background: linear-gradient(80deg, #ff5454, #e60023db);
   color: var(--contrast-color);
   border: none;
   border-radius: 4px;
@@ -157,5 +156,7 @@
 }
 
 .card-btn:hover {
-  background-color: color-mix(in srgb, var(--accent-color), transparent 20%);
+  background: linear-gradient(80deg, #ff001ea3, #b40000);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(230, 0, 35, 0.3);
 }

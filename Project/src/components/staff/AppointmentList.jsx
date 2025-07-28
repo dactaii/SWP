@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useAlert } from "../../layouts/AlertContext";
+import tableBG from "../../assets/img/backgrounds/tableBG.png";
+import usePagination from "../Pagination/usePagination";
+import Pagination from "../Pagination/Pagination";
 
 const AppointmentList = () => {
   const [appointments, setAppointments] = useState([]);
   const { showAlert } = useAlert();
   const token = localStorage.getItem("token");
+  const itemsPerPage = 13;
+  const { currentPage, totalPages, paginatedItems, goToPage, setCurrentPage } =
+    usePagination(appointments, itemsPerPage);
 
   useEffect(() => {
     fetchAppointments();
@@ -50,8 +56,11 @@ const AppointmentList = () => {
 
   return (
     <div className="appointment-container">
-      <h2>Danh sách lịch hẹn khẩn cấp</h2>
-      <div className="table-wrapper">
+      <h2>Danh sách lịch hẹn</h2>
+      <div
+        className="appointment-table-wrapper appointment-bg"
+        style={{ "--donation-bg": `url(${tableBG})` }}
+      >
         <table className="appointment-table">
           <thead>
             <tr>
@@ -64,31 +73,45 @@ const AppointmentList = () => {
             </tr>
           </thead>
           <tbody>
-            {appointments.map((item) => (
-              <tr key={item.appointmentId}>
-                <td>{item.donorName}</td>
-                <td>{item.recipientName}</td>
-                <td>{item.location}</td>
-                <td>{item.appointmentDate}</td>
-                <td>{item.status}</td>
-                <td>
-                  {item.status !== "Completed" ? (
-                    <button
-                      className="confirm-btn"
-                      onClick={() => handleConfirm(item.appointmentId)}
-                    >
-                      Xác nhận
-                    </button>
-                  ) : (
-                    <span className="confirmed-label">Đã hoàn tất</span>
-                  )}
+            {paginatedItems.length === 0 ? (
+              <tr>
+                <td colSpan="6" style={{ textAlign: "center" }}>
+                  Không có lịch hẹn nào
                 </td>
               </tr>
-            ))}
+            ) : (
+              paginatedItems.map((item) => (
+                <tr key={item.appointmentId}>
+                  <td>{item.donorName}</td>
+                  <td>{item.recipientName}</td>
+                  <td>{item.location}</td>
+                  <td>{item.appointmentDate}</td>
+                  <td>{item.status}</td>
+                  <td>
+                    {item.status !== "Completed" ? (
+                      <button
+                        className="confirm-btn"
+                        onClick={() => handleConfirm(item.appointmentId)}
+                      >
+                        Xác nhận
+                      </button>
+                    ) : (
+                      <span className="confirmed-label">Đã hoàn tất</span>
+                    )}
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
+        {totalPages > 1 && (
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={goToPage}
+          />
+        )}
       </div>
-
     </div>
   );
 };

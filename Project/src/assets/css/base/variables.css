@@ -40,3 +40,32 @@ a:hover{
     color: color-mix(in srgb, var(--accent-color), transparent 25%);
     text-decoration: none;
 }
+
+
+/* Toàn bộ app có nền mờ phủ full */
+.app-wrapper.has-bg {
+  position: relative;
+  min-height: 100vh; 
+  overflow: hidden;
+  z-index: 1;
+}
+
+/* Lớp nền phía sau (mờ) */
+.app-wrapper.has-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--global-bg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.3; /* mờ giống trang hiến máu */
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Nội dung toàn app nằm trên nền */
+.app-wrapper.has-bg > * {
+  position: relative;
+  z-index: 1;
+}

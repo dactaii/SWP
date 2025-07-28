@@ -37,7 +37,7 @@
   padding: 20px 24px;
   margin-bottom: 24px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
-  border-left: 5px solid #0dcaf0;
+  border-left: 5px solid #ffb49d;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -178,7 +178,7 @@
 }
 
 .submit-btn {
-  background-color: var(--accent-color, #0d6efd);
+  background: linear-gradient(80deg, #ff5454, #e60023db);
   color: white;
   padding: 6px 14px;
   border: none;
@@ -190,7 +190,7 @@
 }
 
 .submit-btn:hover {
-  background-color: #0b5ed7;
+  background: linear-gradient(80deg, #ff001ea3, #b40000);
 }
 
 /* ===== PHÂN TRANG ===== */
@@ -304,4 +304,60 @@
   margin-top: 12px;
   border-radius: 6px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+/* Nền mờ cho cả blog item + form */
+.comment-box.has-bg,
+.global-comment-box.has-bg {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.comment-box.has-bg::before,
+.global-comment-box.has-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--blog-bg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.5;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Đảm bảo nội dung nằm trên nền */
+.comment-box.has-bg > *,
+.global-comment-box.has-bg > * {
+  position: relative;
+  z-index: 1;
+}
+/* Toàn section Blog có nền mờ phủ full */
+#blog.section.has-bg {
+  position: relative;
+  min-height: 100vh; /* full màn hình như trang hiến máu */
+  overflow: hidden;
+  padding: 40px 20px;
+  z-index: 1;
+}
+
+/* Lớp nền phía sau (mờ) */
+#blog.section.has-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--donation-bg); /* truyền từ style React */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.3; /* độ mờ giống trang hiến máu */
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Nội dung trong blog nằm trên nền */
+#blog.section.has-bg > * {
+  position: relative;
+  z-index: 1;
 }

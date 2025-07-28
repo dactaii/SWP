@@ -204,3 +204,63 @@
 .custom-swal-cancel-btn:hover {
   background-color: #e0e0e0 !important;
 }
+/* Khung trang hiến máu có nền mờ */
+.blood-donation-page.has-bg {
+  position: relative;
+  min-height: 100vh; /* Đảm bảo full màn hình */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  z-index: 1;
+  padding: 40px 20px;
+}
+
+/* Nền mờ */
+.blood-donation-page.has-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--donation-bg);
+  background-size: cover;
+  background-position: center;
+  opacity: 0.3; 
+  z-index: 0;
+}
+
+/* Nội dung form nằm trên nền */
+.blood-donation-page.has-bg > * {
+  position: relative;
+  z-index: 1;
+}
+/* Form có nền ảnh mờ */
+.form-wrapper.has-bg {
+  position: relative;
+  background: rgba(255, 255, 255, 0.85); 
+  border-radius: 12px;
+  padding: 30px;
+  max-width: 600px;
+  width: 100%;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  overflow: hidden;
+}
+
+/* Lớp nền ảnh mờ bên dưới */
+.form-wrapper.has-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--form-bg);
+  background-size: cover;
+  background-position: center;
+  opacity: 0.4;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Nội dung form nằm trên ảnh */
+.form-wrapper.has-bg > * {
+  position: relative;
+  z-index: 1;
+}

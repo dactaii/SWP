@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 import UserLayout from "../layouts/UserLayout";
 import Standard from "../components/home/standard";
 import { useLocation } from "react-router-dom";
-import Blog from "../components/home/blog";
 import LocationCard from "../components/home/locationCard";
 
 const UserHome = () => {

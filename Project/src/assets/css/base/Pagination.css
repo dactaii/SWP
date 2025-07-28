@@ -1,0 +1,30 @@
+.pagination-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+  gap: 8px;
+}
+
+.pagination-wrapper button {
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  background: white;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.pagination-wrapper button.active {
+  background: linear-gradient(135deg, #ff4c4cc3, #e60023);
+  color: white;
+  border-color: #ff788c;
+}
+.pagination-wrapper button:hover {
+  background: linear-gradient(135deg, #f73e54cf, #b3001a);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(230, 0, 35, 0.3);
+}
+
+.pagination-wrapper button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

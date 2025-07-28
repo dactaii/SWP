@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-
+import LaPhongGB from "../../assets/img/backgrounds/LaPhongBG1.png";
+import PageBG from "../../assets/img/backgrounds/PageBG.png";
 function getCurrentDateTime() {
   return new Date().toISOString().slice(0, 16);
 }
@@ -99,19 +100,25 @@ function BloodDonation() {
 
       if (response.status === 200 || response.status === 201) {
         setFormData({ bloodType: "", readyDate: "", readyHour: "", note: "" });
-        setMessage(response.data.message || "Đăng ký thành công!");
+        setMessage("Đăng ký thành công!");
       } else {
         setMessage("Có lỗi xảy ra khi gửi đăng ký.");
       }
     } catch (error) {
       console.error("Lỗi gửi API:", error);
-      setMessage("Lỗi kết nối tới server hoặc bạn đã đăng ký trước đó.");
+      setMessage("Bạn đã đăng ký trước đó.");
     }
   };
 
   return (
-    <div className="blood-donation-page">
-      <div className="form-wrapper">
+    <div
+      className="blood-donation-page has-bg"
+      style={{ "--donation-bg": `url(${PageBG})` }}
+    >
+      <div
+        className="form-wrapper has-bg"
+        style={{ "--form-bg": `url(${LaPhongGB})` }}
+      >
         <h1>Đăng ký hiến máu</h1>
         <form className="blood-form" onSubmit={handleSubmit}>
           <div className="Head">

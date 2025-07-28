@@ -92,11 +92,8 @@ const Sidebar = () => {
           ? "staff"
           : "user";
 
-      if (!localStorage.getItem("sidebarMode")) {
-        localStorage.setItem("sidebarMode", defaultMode);
-      }
-
-      setSidebarMode(localStorage.getItem("sidebarMode"));
+      localStorage.setItem("sidebarMode", defaultMode);
+      setSidebarMode(defaultMode);
       setName(decoded.name || "");
       setRole(decoded.role || null);
 
@@ -301,7 +298,7 @@ const Sidebar = () => {
                       className={isActive("/NearbyDonorSearchPage")}
                     >
                       <GrMapLocation className="sidebar-icon" />
-                      Tìm người hiến gần cơ sở
+                      Tìm người hiến khẩn cấp
                     </Link>
                   </li>
                   <li>
@@ -403,60 +400,6 @@ const Sidebar = () => {
               <img src={avatar} alt="avatar" className="user-avatar" />
               <span className="username">{name}</span>
             </Link>
-
-            {(role === "ROLE_ADMIN" || role === "ROLE_STAFF") && (
-              <>
-                <button
-                  className="sidebar-more-btn"
-                  onClick={() => setSwitchOpen(!switchOpen)}
-                >
-                  <FaUserFriends className="sidebar-icon" />
-                  Chuyển đổi chế độ
-                </button>
-                {switchOpen && (
-                  <ul className="user-dropdown">
-                    {role === "ROLE_ADMIN" && (
-                      <li>
-                        <a
-                          href="#admin"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            changeSidebarMode("admin");
-                          }}
-                          className={sidebarMode === "admin" ? "active" : ""}
-                        >
-                          Quản trị viên
-                        </a>
-                      </li>
-                    )}
-                    <li>
-                      <a
-                        href="#staff"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          changeSidebarMode("staff");
-                        }}
-                        className={sidebarMode === "staff" ? "active" : ""}
-                      >
-                        Nhân viên
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#user"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          changeSidebarMode("user");
-                        }}
-                        className={sidebarMode === "user" ? "active" : ""}
-                      >
-                        Người dùng
-                      </a>
-                    </li>
-                  </ul>
-                )}
-              </>
-            )}
 
             <button
               className="sidebar-more-btn"

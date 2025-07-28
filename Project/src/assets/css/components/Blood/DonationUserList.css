@@ -1,18 +1,13 @@
 .donation-history-container {
-    padding: 2rem;
-    background-color: #fff;
-    border-radius: 12px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.08);
-    margin: 20px;
-    width: 100%;
+    padding: 1.5rem;
+    margin-left: 40px;
 }
 
 .donation-history-container h2 {
-    font-size: 2rem;
-    font-weight: bold;
-    margin-bottom: 1.5rem;
-    color: var(--heading-color, #333);
-    text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  color: var(--heading-color);
 }
 
 .donation-history-table {
@@ -31,7 +26,7 @@
 .donation-history-table td {
     padding: 0.9rem 1.2rem;
     border: 1px solid #ccc;
-    text-align: center;
+
 }
 
 .donation-history-table tbody tr:nth-child(even) {
@@ -40,4 +35,27 @@
 
 .donation-history-table tr:hover {
     background-color: #eef2f7;
+}
+
+.donation-bg {
+  position: relative;
+  width: 100%; 
+}
+
+.donation-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--donation-bg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.4;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.donation-bg > * {
+  position: relative;
+  z-index: 1;
 }

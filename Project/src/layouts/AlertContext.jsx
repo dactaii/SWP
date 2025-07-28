@@ -8,7 +8,7 @@ export const AlertProvider = ({ children }) => {
   const [alert, setAlert] = useState({
     title: "",
     message: "",
-    type: "", // "success" | "error"
+    type: "",
   });
 
   const showAlert = (title, message, type = "success") => {

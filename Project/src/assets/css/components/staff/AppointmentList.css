@@ -1,5 +1,6 @@
 .appointment-container {
-  padding: 20px;
+  padding: 1.5rem;
+  margin-left: 40px;
   font-family: var(--default-font);
 }
 
@@ -10,9 +11,8 @@
   color: var(--heading-color);
 }
 
-.table-wrapper {
+.appointment-table-wrapper {
   overflow-x: auto;
-  border-radius: 12px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.08);
   background-color: white;
 }
@@ -30,7 +30,7 @@
 .appointment-table th,
 .appointment-table td {
   padding: 0.9rem 1.2rem;
-  border: 1px solid #ccc;
+  border: 1px solid #f7c6b7;
   text-align: left;
 }
 
@@ -59,20 +59,6 @@
   font-size: 0.95rem;
 }
 
-.custom-alert {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background-color: #4caf50;
-  color: white;
-  padding: 16px 28px;
-  font-size: 1rem;
-  border-radius: 10px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
-  z-index: 9999;
-  animation: fadeOut 3s forwards;
-}
-
 @keyframes fadeOut {
   0% {
     opacity: 1;
@@ -85,4 +71,29 @@
   100% {
     opacity: 0;
   }
+}
+
+.appointment-bg {
+  position: relative;
+  min-height: 100vh;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.appointment-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--donation-bg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.5;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.appointment-bg > * {
+  position: relative;
+  z-index: 1;
 }

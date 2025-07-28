@@ -6,7 +6,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useLocation } from 'react-router-dom';
 import { AlertProvider } from './layouts/AlertContext';
-
+import pageBG from './assets/img/backgrounds/PageBG.png';
 
 /* CSS */
 import './assets/css/main.css';
@@ -19,19 +19,31 @@ import ChatWidget from './components/ChatBoxAI/ChatWidget';
 
 
 
-
 function App() {
-    return (
-        <BrowserRouter>
-            <AlertProvider>
-                <UserProvider>
-                    <AppRouter />
-                    <ToastContainer />
-                </UserProvider>
-            </AlertProvider>
-        </BrowserRouter>
-    );
+  const appStyle = {
+    background: `url(${pageBG}) center / cover no-repeat fixed`,
+    minHeight: "100vh"
+  };
+
+  return (
+    <>
+    <div
+      className="app-wrapper has-bg"
+      style={{ "--global-bg": `url(${pageBG})` }}
+    >
+      <BrowserRouter>
+        <AlertProvider>
+          <UserProvider>
+            <AppRouter />
+            <ToastContainer />
+          </UserProvider>
+        </AlertProvider>
+      </BrowserRouter>
+    </div>
+    <ChatWidget />
+    </>
+  );
 }
 
-
 export default App;
+
