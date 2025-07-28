@@ -10,8 +10,11 @@
   left: 0;
   width: 340px;
   height: 100vh;
-  background-color: #fff;
+  background: linear-gradient(180deg, #fbe4d6, #f7c6b7);
   border-right: 1px solid #dbdbdb;
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
+  box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
@@ -66,7 +69,6 @@
   display: flex;
   flex-direction: column;
   padding-top: 18px;
-  padding-left: 20px;
 }
 
 /* Navigation */
@@ -80,7 +82,7 @@
 }
 
 .sidebar-nav li {
-  margin: 0;
+  margin: 0 20px;
 }
 
 .sidebar-nav a,
@@ -92,18 +94,21 @@
   font-weight: 500;
   text-decoration: none;
   color: #000;
-  padding: 10px 12px;
+  padding: 10px 20px;
   border-radius: 10px;
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .sidebar-nav a:hover,
-.sidebar-nav summary:hover {
-  background-color: rgba(230, 0, 35, 0.05);
-  border: 1px solid var(--accent-color);
-  box-shadow: 0 0 5px var(--accent-color);
-  color: var(--accent-color);
+.sidebar-nav summary:hover,
+.sidebar-more-btn:hover,
+.user-info:hover,
+.user-dropdown li a:hover {
+  background: linear-gradient(90deg, #ffbf9f8d, #f8b391d6);
+  color: #8e3a2a;
+  box-shadow: 0 2px 6px rgba(247, 180, 160, 0.4);
+  border: none;
 }
 
 .sidebar-nav .active {
@@ -138,10 +143,10 @@
 }
 
 .sidebar-nav ul ul li a:hover {
-  background-color: rgba(230, 0, 35, 0.05);
-  border: 1px solid var(--accent-color);
-  box-shadow: 0 0 5px var(--accent-color);
-  color: var(--accent-color);
+  background: linear-gradient(90deg, #ffbf9f8d, #f8b391d6);
+  border: none;
+  box-shadow: none;
+  color: #8e3a2a;
 }
 
 /* Người dùng */
@@ -209,9 +214,9 @@
 
 .sidebar-more-btn:hover {
   background-color: rgba(230, 0, 35, 0.05);
-  border: 1px solid var(--accent-color);
-  box-shadow: 0 0 5px var(--accent-color);
-  color: var(--accent-color);
+  border: 1px solid #8e3a2a;
+  box-shadow: 0 0 5px #8e3a2a;
+  color: #8e3a2a;
 }
 
 /* Dropdown người dùng */
@@ -240,9 +245,9 @@
 
 .user-dropdown li a:hover {
   background-color: rgba(230, 0, 35, 0.05);
-  border: 1px solid var(--accent-color);
-  box-shadow: 0 0 5px var(--accent-color);
-  color: var(--accent-color);
+  border: 1px solid #8e3a2a;
+  box-shadow: 0 0 5px #8e3a2a;
+  color: #8e3a2a;
 }
 
 /* Đăng nhập */
@@ -274,26 +279,26 @@
 .sidebar summary.active,
 .sidebar .user-dropdown a.active,
 .sidebar button.sidebar-more-btn.active {
-  background-color: rgba(220, 53, 69, 0.1);
-  color: var(--accent-color, #dc3545);
+  background: linear-gradient(90deg, #f4c4b6, #f4ae8b);
+  color: #8e3a2a;
   font-weight: bold;
-  border-radius: 8px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(246, 135, 113, 0.3);
 }
 
 .sidebar a.active .sidebar-icon,
 .sidebar summary.active .sidebar-icon,
 .sidebar .user-dropdown a.active .sidebar-icon,
 .sidebar button.sidebar-more-btn.active .sidebar-icon {
-  color: var(--accent-color, #dc3545);
+  color: #8e3a2a;
 }
 
 .sidebar-nav a:hover .sidebar-icon,
 .sidebar-nav summary:hover .sidebar-icon,
-.sidebar-nav ul ul li a:hover .sidebar-icon,
 .sidebar-more-btn:hover .sidebar-icon,
 .user-info:hover .sidebar-icon,
 .user-dropdown li a:hover .sidebar-icon {
-  color: var(--accent-color);
+  color: #8e3a2a;
 }
 
 .sidebar.staff-mode .sidebar-nav a:hover .sidebar-icon,
@@ -318,7 +323,7 @@
 
 /* Nút Đăng Nhập đẹp hơn */
 .sidebar-login-btn button {
-  background-color: var(--accent-color);
+  background: linear-gradient(135deg, #ff4c4cc3, #e60023);
   color: #fff;
   font-size: 17px;
   font-weight: 600;
@@ -331,7 +336,7 @@
 }
 
 .sidebar-login-btn button:hover {
-  background-color: #cc001f;
+  background: linear-gradient(135deg, #f73e54cf, #b3001a);
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(230, 0, 35, 0.3);
 }
@@ -339,4 +344,30 @@
 .sidebar-login-btn button:active {
   transform: translateY(0);
   box-shadow: 0 2px 6px rgba(230, 0, 35, 0.2);
+}
+
+.sidebar-nav a:hover,
+.sidebar-nav summary:hover,
+.sidebar-more-btn:hover,
+.user-info:hover,
+.user-dropdown li a:hover,
+.sidebar-nav ul ul li a:hover,
+.sidebar.staff-mode a:hover,
+.sidebar.staff-mode summary:hover,
+.sidebar.staff-mode .user-dropdown a:hover,
+.sidebar.staff-mode button.sidebar-more-btn:hover,
+.sidebar.staff-mode .user-info:hover {
+  border: none !important;
+  box-shadow: none;
+}
+button.ghost {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px; /* tạo khoảng cách giữa icon và chữ */
+  font-size: 14px; 
+}
+
+button.ghost svg {
+  font-size: 18px; 
 }

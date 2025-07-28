@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-
+import LaPhongGB from "../../assets/img/backgrounds/LaPhongBG1.png";
 
 const Report = () => {
   const [reportType, setReportType] = useState("ARTICLE_STATISTICS");
@@ -197,9 +197,6 @@ const Report = () => {
             <p><strong>Ngày tạo:</strong> {new Date(latestReport.createdDate).toLocaleString()}</p>
             <div style={{ marginTop: "1rem" }}>
               {renderReportData(latestReport)}
-            </div>
-            <div style={{ marginTop: "1.5rem" }}>
-              <button className="export-button">Xuất báo cáo</button>
             </div>
           </div>
         </div>

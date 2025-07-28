@@ -1,7 +1,6 @@
-.table-wrapper {
+.blood-unit-table-wrapper {
   overflow-x: auto;
-  border-radius: 12px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.08);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.08);
   background-color: white;
 }
 
@@ -16,7 +15,8 @@
   background-color: #e0e0e0;
 }
 
-.blood-table th, .blood-table td {
+.blood-table th,
+.blood-table td {
   padding: 0.9rem 1.2rem;
   border: 1px solid #ccc;
   text-align: left;
@@ -26,25 +26,18 @@
   background-color: #f9f9f9;
 }
 
-.main-content h1 {
+.BloodUnit h1 {
   font-size: 2rem;
   font-weight: bold;
   margin-bottom: 1.5rem;
   color: var(--heading-color);
 }
-.table-wrapper {
-  overflow-x: auto;
-  background-color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-  padding: 1rem;
-  margin-top: 1rem;
-}
+
 
 .blood-table {
   width: 100%;
   border-collapse: collapse;
-  font-family: var(--default-font, 'Segoe UI', Tahoma, sans-serif);
+  font-family: var(--default-font, "Segoe UI", Tahoma, sans-serif);
   font-size: 1rem;
   color: #333;
 }
@@ -56,7 +49,7 @@
 .blood-table th,
 .blood-table td {
   padding: 0.9rem 1.2rem;
-  border: 1px solid #ddd;
+  border: 1px solid #f7c6b7;
   text-align: left;
 }
 
@@ -69,11 +62,12 @@
   transition: background-color 0.2s ease-in-out;
 }
 
-.main-content {
+.BloodUnit {
   padding: 1.5rem;
+  margin-left: 40px;
 }
 
-.main-content h1 {
+.BloodUnit h1 {
   font-size: 2rem;
   font-weight: bold;
   color: var(--heading-color, #2c3e50);
@@ -92,4 +86,128 @@ select {
 
 select:focus {
   border-color: #007bff;
+}
+.bloodunit-table-wrapper.has-bg {
+  position: relative;
+  width: 100%; /* bảng vẫn full chiều ngang */
+}
+
+/* Nền mờ phủ phía sau */
+.bloodunit-table-wrapper.has-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--donation-bg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.4;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Nội dung nằm phía trên nền */
+.bloodunit-table-wrapper.has-bg > * {
+  position: relative;
+  z-index: 1;
+}
+/* === Nút "Xuất kho máu" trong bảng === */
+.blood-table button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.blood-table button:hover {
+  background-color: #0056b3;
+}
+
+/* === Popup === */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.popup {
+  background: #fff;
+  padding: 24px;
+  border-radius: 10px;
+  width: 400px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  font-family: var(--default-font, 'Segoe UI', Tahoma, sans-serif);
+}
+
+.popup h3 {
+  margin-bottom: 12px;
+  font-size: 1.3rem;
+  color: #2c3e50;
+}
+
+.popup p {
+  margin: 6px 0;
+  font-size: 1rem;
+  color: #333;
+}
+
+.popup label {
+  display: block;
+  margin-top: 12px;
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+
+.popup input {
+  width: 100%;
+  padding: 8px 10px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  outline: none;
+}
+
+.popup input:focus {
+  border-color: #007bff;
+}
+
+/* === Nút trong popup === */
+.popup button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.popup button:first-of-type {
+  background-color: #28a745;
+  color: #fff;
+  margin-right: 10px;
+}
+
+.popup button:first-of-type:hover {
+  background-color: #218838;
+}
+
+.popup button:last-of-type {
+  background-color: #6c757d;
+  color: #fff;
+}
+
+.popup button:last-of-type:hover {
+  background-color: #5a6268;
 }

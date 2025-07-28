@@ -6,7 +6,6 @@
 }
 .standard{
     padding: 70px 0;
-    background-color: var(--background-color);
 }
 
 .standard h2 {
@@ -37,7 +36,7 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 30px;
-  padding-bottom: 40px; /* giống padding-bottom cũ cho khoảng cách */
+  padding-bottom: 40px; 
 }
 
 /* Responsive: 2 cột cho tablet, 1 cột cho mobile */

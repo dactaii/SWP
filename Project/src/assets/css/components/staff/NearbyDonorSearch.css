@@ -1,9 +1,10 @@
 /* Main layout */
-.main-content {
-  padding: 2rem;
+.nearby-donor-search {
+  padding: 1.5rem;
+  margin-left: 40px;
 }
 
-.main-content h1 {
+.nearby-donor-search h1 {
   font-size: 2rem;
   font-weight: bold;
   margin-bottom: 1.5rem;
@@ -34,8 +35,9 @@
 
 /* Search button */
 .nds-search-btn {
-  background-color: #2563eb;
+  background: linear-gradient(135deg, #ff4c4cc3, #e60023);
   color: white;
+  border-color: #ff788c;
   padding: 0.5rem 1.2rem;
   border-radius: 6px;
   border: none;
@@ -47,7 +49,9 @@
 }
 
 .nds-search-btn:hover {
-  background-color: #1e40af;
+  background: linear-gradient(135deg, #f73e54cf, #b3001a);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(230, 0, 35, 0.3);
 }
 
 /* Subtitle */
@@ -63,38 +67,37 @@
 }
 
 /* Table */
-.table-wrapper {
+.nearby-donor-search-table {
   overflow-x: auto;
-  border-radius: 12px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.08);
   background-color: white;
 }
 
-.blood-table {
+.nearby-blood-table {
   width: 100%;
   border-collapse: collapse;
   font-family: var(--default-font);
   font-size: 1.05rem;
 }
 
-.blood-table thead {
+.nearby-blood-table thead {
   background-color: #e0e0e0;
 }
 
-.blood-table th,
-.blood-table td {
+.nearby-blood-table th,
+.nearby-blood-table td {
   padding: 0.9rem 1.2rem;
   border: 1px solid #ccc;
   text-align: left;
 }
 
-.blood-table tbody tr:nth-child(even) {
+.nearby-blood-table tbody tr:nth-child(even) {
   background-color: #f9f9f9;
 }
 
 /* Action button */
 .nds-action-btn {
-  background-color: #16a34a;
+  background: linear-gradient(75deg, #00b643c9, #23ac55);
   color: white;
   padding: 0.4rem 1rem;
   border-radius: 6px;
@@ -106,7 +109,7 @@
 }
 
 .nds-action-btn:hover {
-  background-color: #15803d;
+  background: linear-gradient(75deg, #00a63dc9, #1c8b45);
 }
 
 /* Detail section */
@@ -153,12 +156,13 @@
 }
 
 .nds-contact-btn {
-  background-color: #2563eb;
+  background: linear-gradient(135deg, #ff4c4cc3, #e60023);
   color: white;
+  border-color: #ff788c;
 }
 
 .nds-contact-btn:hover {
-  background-color: #1e40af;
+  background: linear-gradient(135deg, #f73e54cf, #b3001a);
 }
 
 .nds-close-btn {
@@ -188,4 +192,28 @@
   background-color: var(--staff-accent-color);
   color: #fff;
   font-weight: bold;
+}
+
+.nearby-bg-wrapper {
+  position: relative;
+  width: 100%; /* bảng vẫn full chiều ngang */
+  display: inline-block; /* giúp co theo chiều cao thật */
+}
+
+.nearby-bg-wrapper::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--donation-bg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.4;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.nearby-bg-wrapper > * {
+  position: relative;
+  z-index: 1;
 }

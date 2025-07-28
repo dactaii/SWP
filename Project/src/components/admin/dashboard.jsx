@@ -4,6 +4,8 @@ import axios from "axios";
 import { Typography, CircularProgress, Box, Divider } from "@mui/material";
 import { FaUserPlus, FaTint, FaUsers, FaHeartbeat } from "react-icons/fa";
 import { MdEventAvailable, MdEventNote, MdEmergency } from "react-icons/md";
+import LaPhongGB from "../../assets/img/backgrounds/LaPhongGB.png";
+import bgImage from "../../assets/img/backgrounds/LaPhongBG1.png";
 import {
   ResponsiveContainer,
   BarChart,
@@ -136,7 +138,10 @@ export default function Dashboard() {
 
       <section className="dashboard-summary">
         {summary.map((item, index) => (
-          <div key={index} className="summary-card">
+          <div
+            className="summary-card summary-card-bg"
+            style={{ "--donation-bg": `url(${LaPhongGB})` }}
+          >
             {item.icon}
             <div>
               <div className="summary-value">{item.value}</div>
@@ -149,7 +154,10 @@ export default function Dashboard() {
       <Divider className="section-divider" />
 
       <section className="dashboard-charts">
-        <div className="chart-card">
+        <div
+          className="chart-card summary-card-bg"
+          style={{ "--donation-bg": `url(${bgImage})` }}
+        >
           <div className="chart-title">Tồn kho theo nhóm máu</div>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={bloodByType}>
@@ -166,7 +174,10 @@ export default function Dashboard() {
           </ResponsiveContainer>
         </div>
 
-        <div className="chart-card">
+        <div
+          className="chart-card summary-card-bg"
+          style={{ "--donation-bg": `url(${bgImage})` }}
+        >
           <div className="chart-title">Tồn kho theo thành phần máu</div>
           <ResponsiveContainer width="100%" height={300}>
             <PieChart>

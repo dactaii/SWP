@@ -36,7 +36,7 @@ import DonationHistoryPage from "../pages/DonationHistoryPage";
 function AppRouter() {
     return (
         <Routes>
-            <Route element={<ChatBox />}>
+            
                 <Route path="/" element={<UserHome />} />
                 <Route path="/thongtin" element={<ThongTin />} />
                 <Route path="/bloodtype" element={<BloodType />} />
@@ -67,7 +67,7 @@ function AppRouter() {
                 <Route path="/UserInfoPage" element={<UserInfoPage />} />
                 <Route path="/UpdateUserInfoPage" element={<UpdateUserInfoPage />} />
                 <Route path="/DonationHistoryPage" element={<DonationHistoryPage />} />
-            </Route>
+        
 
             <Route path="/auth/social/callback/google" element={<OAuth2RedirectHandler />} />
         </Routes>

@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import BlogItem from "./BlogItem";
-
+import LaPhongGB from "../../assets/img/backgrounds/LaPhongGB.png";
+import PageBG from "../../assets/img/backgrounds/PageBG.png";
+import { useAlert } from "../../layouts/AlertContext";
 const Blog = () => {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -15,6 +17,7 @@ const Blog = () => {
   const [comment, setComment] = useState("");
   const [attachment, setAttachment] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
+  const { showAlert } = useAlert();
 
   // Cleanup object URL khi unmount hoặc thay đổi file
   useEffect(() => {
@@ -68,7 +71,11 @@ const Blog = () => {
     if (value === "latest") {
       const token = localStorage.getItem("token");
       if (!token) {
-        alert("Bạn cần đăng nhập để xem bài viết mới nhất.");
+        showAlert(
+          "Thông báo",
+          "Bạn cần đăng nhập để xem bài viết mới nhất.",
+          "warning"
+        );
         return;
       }
 
@@ -108,13 +115,19 @@ const Blog = () => {
   // Gửi bài viết mới
   const handleCommentSubmit = async () => {
     if (!title.trim() || !comment.trim()) {
-      alert("Vui lòng nhập đầy đủ tiêu đề và nội dung.");
+      showAlert(
+        "Thiếu thông tin",
+        "Vui lòng nhập đầy đủ tiêu đề và nội dung.",
+        "warning"
+      );
+
       return;
     }
 
     const token = localStorage.getItem("token");
     if (!token) {
-      alert("Bạn cần đăng nhập để đăng bài viết.");
+      showAlert("Thông báo", "Bạn cần đăng nhập để đăng bài viết.", "warning");
+
       return;
     }
 
@@ -139,17 +152,20 @@ const Blog = () => {
       );
 
       if (response.status === 200 && response.data.code === 200) {
-        alert("Bài viết đã được đăng thành công!");
+        showAlert("Thành công", "Bài viết đã được đăng thành công!", "success");
+
         setTitle("");
         setComment("");
         setAttachment(null);
         setPreviewImage(null);
         fetchArticles();
       } else {
-        alert("Có lỗi xảy ra khi gửi bài viết.");
+        showAlert("Lỗi", "Có lỗi xảy ra khi gửi bài viết.", "error");
+
       }
     } catch (error) {
-      alert("Lỗi kết nối khi gửi bài viết: " + error.message);
+      showAlert("Lỗi kết nối", "Gửi bài viết thất bại: " + error.message, "error");
+
     }
   };
 
@@ -167,11 +183,14 @@ const Blog = () => {
   };
 
   return (
-    <section id="blog" className="blog section">
+    <section
+      id="blog"
+      className="blog section has-bg"
+      style={{ "--donation-bg": `url(${PageBG})` }}
+    >
       <div className="container">
         <h2>Blog Chia Sẻ Kinh Nghiệm</h2>
         <div className="filter-dropdown">
-
           <label htmlFor="filter" style={{ marginRight: "8px" }}>
             Lọc bài viết:
           </label>
@@ -187,7 +206,10 @@ const Blog = () => {
         </div>
 
         {/* Form đăng bài */}
-        <div className="global-comment-box">
+        <div
+          className="global-comment-box has-bg"
+          style={{ "--blog-bg": `url(${LaPhongGB})` }}
+        >
           <input
             type="text"
             className="title-input"

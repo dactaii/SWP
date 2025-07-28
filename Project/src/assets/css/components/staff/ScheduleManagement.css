@@ -1,5 +1,6 @@
 .schedule-management {
-  padding: 2rem;
+  padding: 1.5rem;
+  margin-left: 40px;
 }
 
 .schedule-management h2 {
@@ -10,9 +11,8 @@
 }
 
 /* Table */
-.table-wrapper {
+.schedule-table-wrapper {
   overflow-x: auto;
-  border-radius: 12px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.08);
   background-color: white;
 }
@@ -181,16 +181,6 @@
   background-color: #1e40af;
 }
 
-/* Custom alert */
-.custom-alert {
-  margin-top: 1.5rem;
-  padding: 1rem;
-  background-color: #dcfce7;
-  color: #166534;
-  border: 1px solid #22c55e;
-  border-radius: 6px;
-  font-weight: 500;
-}
 
 /* Spinner nhỏ trong nút gửi */
 .spinner {
@@ -248,4 +238,27 @@
   100% {
     transform: rotate(360deg);
   }
+}
+.schedule-bg {
+position: relative;
+  width: 100%; /* bảng vẫn full chiều ngang */
+  display: inline-block; /* giúp co theo chiều cao thật */
+}
+
+.schedule-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--donation-bg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.4;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.schedule-bg > * {
+  position: relative;
+  z-index: 1;
 }

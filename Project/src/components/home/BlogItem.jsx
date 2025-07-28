@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import bgImage from "../../assets/img/backgrounds/LaPhongBG1.png";
 
 const BlogItem = ({ article }) => {
   const [showImage, setShowImage] = useState(false);
@@ -13,7 +14,10 @@ const BlogItem = ({ article }) => {
   const toggleImage = () => setShowImage((prev) => !prev);
 
   return (
-    <article className="comment-box">
+    <article
+      className="comment-box has-bg"
+      style={{ "--blog-bg": `url(${bgImage})` }}
+    >
       <div className="comment-content">
         <p className="comment-title">{article.title}</p>
         <p className="comment-text">{article.content}</p>

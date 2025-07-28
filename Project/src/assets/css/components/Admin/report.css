@@ -6,7 +6,7 @@
   justify-content: center;
   padding: 3rem 1rem;
   font-family: 'Segoe UI', Tahoma, sans-serif;
-  background-color: #f4f6f8;
+
   min-height: 100vh;
   box-sizing: border-box;
 }
@@ -197,4 +197,33 @@
   margin: 1rem 0;
   border: none;
   border-top: 1px solid #ccc;
+}
+/* Khung trang hiến máu có nền mờ */
+.report-form-bg {
+  position: relative;
+  min-height: 100vh; /* Đảm bảo full màn hình */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  z-index: 1;
+  padding: 40px 20px;
+}
+
+/* Nền mờ */
+.report-form-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--donation-bg);
+  background-size: cover;
+  background-position: center;
+  opacity: 0.3; 
+  z-index: 0;
+}
+
+/* Nội dung form nằm trên nền */
+.report-form-bg > * {
+  position: relative;
+  z-index: 1;
 }

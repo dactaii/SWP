@@ -162,16 +162,34 @@ const UpdateUserInfo = () => {
 
       setTimeout(() => {
         navigate("/UserInfoPage");
-      }, 1500); // chờ alert hiển thị rồi mới chuyển
+      }, 1500);
     } catch (error) {
       const status = error.response?.status;
+      const apiMessage = error.response?.data?.message;
 
       if (status === 400) {
-        showAlert(
-          "Lỗi",
-          "Email đã tồn tại. Vui lòng dùng email khác.",
-          "error"
-        );
+        // Các lỗi 400 tùy theo message cụ thể
+        if (apiMessage === "Email already exists") {
+          showAlert(
+            "Lỗi",
+            "Email đã tồn tại. Vui lòng dùng email khác.",
+            "error"
+          );
+        } else if (
+          apiMessage === "Year of birth must be between 1900 and 2020"
+        ) {
+          showAlert(
+            "Lỗi",
+            "Năm sinh phải nằm trong khoảng 1900 đến 2020.",
+            "error"
+          );
+        } else {
+          showAlert(
+            "Lỗi",
+            apiMessage || "Dữ liệu gửi lên không hợp lệ.",
+            "error"
+          );
+        }
       } else if (status === 403) {
         showAlert(
           "Không được phép",

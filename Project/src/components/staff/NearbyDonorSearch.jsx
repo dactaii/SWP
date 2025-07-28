@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../../assets/css/components/staff/NearbyDonorSearch.css";
 import { useAlert } from "../../layouts/AlertContext";
+import tableBG from "../../assets/img/backgrounds/tableBG.png";
 
 const NearbyDonorSearch = () => {
   const { showAlert } = useAlert();
@@ -125,10 +126,7 @@ const NearbyDonorSearch = () => {
     }
 
     setLoading(true);
-    const donorId = selectedUser?.donorId;
-    console.log("Đang gửi yêu cầu với donorId:", donorId);
-    console.log("Người được chọn để liên hệ:", donorId);
-
+    const donorId = selectedUser?.userId;
     const payload = {
       componentType: formData.componentType,
       quantity: formData.quantity,
@@ -164,7 +162,7 @@ const NearbyDonorSearch = () => {
   const hospitalName = localStorage.getItem("selectedHospitalName");
 
   return (
-    <div className="main-content">
+    <div className="nearby-donor-search">
       <h1>Người hiến máu gần cơ sở</h1>
 
       <div className="form-group">
@@ -195,8 +193,12 @@ const NearbyDonorSearch = () => {
         </h2>
       )}
 
-      <div className="table-wrapper">
-        <table className="blood-table">
+      <div className="nearby-donor-search-table ">
+        <div
+          className="nearby-bg-wrapper"
+          style={{ "--donation-bg": `url(${tableBG})` }}
+        >
+        <table className="nearby-blood-table">
           <thead>
             <tr>
               <th>STT</th>
@@ -288,6 +290,7 @@ const NearbyDonorSearch = () => {
             )}
           </tbody>
         </table>
+        </div>
       </div>
 
       {showForm && (

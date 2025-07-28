@@ -12,7 +12,7 @@
 .lc-card {
   width: 90%;
   max-width: 420px;
-  background: linear-gradient(135deg, #fff, #f9f9f9);
+  background: linear-gradient(120deg, #e5cec0, #dda999);
   border-radius: 20px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
   padding: 32px 24px;
@@ -129,25 +129,29 @@
 
 /* Nút Đồng ý */
 .lc-accept {
-  background: #d61c4e;
+  background: linear-gradient(135deg, #ff4c4cc3, #e60023);
   color: #fff;
 }
 
 .lc-accept:hover {
-  background: #d61c4e;
+  background: linear-gradient(135deg, #f73e54cf, #b3001a);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(214, 28, 78, 0.4);
+  box-shadow: 0 4px 12px rgba(230, 0, 35, 0.3);
 }
 
 /* Nút Từ chối */
 .lc-decline {
-  background-color: #f0f0f0;
-  color: #333;
+  background: linear-gradient(135deg, #828282c3, #616161);
+  color: #fff;
 }
 
 .lc-decline:hover {
-  background-color: #e0e0e0;
+  background: linear-gradient(135deg, #6a6a6ac3, #3f3f3f);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(230, 0, 35, 0.3);
 }
+
+
 
 .lc-error {
   margin-top: 16px;
